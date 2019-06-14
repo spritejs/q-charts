@@ -18,7 +18,7 @@ npm install @qcharts/core --save
 import { Chart, Pie, Tooltip, Legend } from '@qcharts/core'
 ```
 
-2.通过 cdn 获取 CatCharts，通过下面的标签引入 CatCharts，因为CatCharts依赖Vue与spritejs，所以需要先引入这两个
+2.通过 cdn 获取 QCharts，通过下面的标签引入 QCharts，因为QCharts依赖spritejs，所以需要先引入这两个
 
 ```html
 <script src="https://unpkg.com/spritejs/dist/spritejs.min.js"></script>
