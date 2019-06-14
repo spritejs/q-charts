@@ -23,7 +23,7 @@ const chart = new Chart({
   text: 'month'
 })
 
-const line = new Line()
+const line = new Line().style('point',{color:'#fff'})
 
 let xAxis = new Axis({ })
 let yAxis = new Axis({ orient: 'left' })
