@@ -79,6 +79,6 @@ chart.render()
 
 一张折线图就绘制成功
 
-![line](https://p0.ssl.qhimg.com/d/inn/717a6a22789a/base-line.png)
+<img src="https://p0.ssl.qhimg.com/d/inn/717a6a22789a/base-line.png" width="400">
 
 
