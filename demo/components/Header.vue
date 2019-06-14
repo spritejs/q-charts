@@ -2,7 +2,7 @@
   <header>
     <nav class="navbar">
       <router-link class="navbar-brand" to="/">
-        <img src="https://p0.ssl.qhimg.com/d/inn/e8ad2d0e47f4/logo.png" height="30" alt="qchart">
+        <img src="https://p3.ssl.qhimg.com/t018d942ea2ce0270c1.png" height="30" alt="qchart">
       </router-link>
 
       <button @click="toggleShowMenu"
