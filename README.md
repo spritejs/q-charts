@@ -4,11 +4,11 @@
 
 ### 特点
 
-QCharts 是一个基于 <a target="_blank" href="https://www.spritejs.com">spritejs</a> 封装的图表库，可以让用户以组件的形式组合出各种图表。 <a target="_blank" href="https://www.spritejs.com/q-charts/">→详细文档</a>
+QCharts 是一个基于 <a target="_blank" href="https://www.spritejs.com">spritejs</a> 封装的图表库，可以让用户以组件的形式组合出各种图表。 <a target="_blank" href="https://www.spritejs.com/q-charts/">→详细文档</a>，Demo：<a target="_blank" href="https://github.com/yaotaiyang/q-charts-demo">Quickstart</a>
 
 ### 如何使用
 
-1.通过 npm 获取 QCharts，我们提供了 QCharts npm 包，通过下面的命令即可完成安装，Demo：<a target="_blank" href="https://github.com/yaotaiyang/q-charts-demo">Quickstart</a>
+1.通过 npm 获取 QCharts，我们提供了 QCharts npm 包，通过下面的命令即可完成安装
 
 ```shell
 npm install @qcharts/core --save
