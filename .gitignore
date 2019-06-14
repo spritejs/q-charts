@@ -74,5 +74,4 @@ tslint.json
 *.vscode
 
 # build
-docs/
 lib/
