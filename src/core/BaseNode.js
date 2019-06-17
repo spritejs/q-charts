@@ -4,7 +4,9 @@ import {
   invariant,
   isArray,
   isString,
-  isObject
+  isObject,
+  isEqual,
+  clone
 } from '../util'
 import Dataset from './dataset'
 import { Global } from './Global'
@@ -33,6 +35,7 @@ class BaseNode {
     this.data = null
     this.state = Object.create(null)
     this.$group = null
+    this.__data__ = null
     this.__vnode__ = null
     this.__isRendered__ = false
     this.emit(this.lifecycle.created, this)
@@ -133,13 +136,24 @@ class BaseNode {
    * @memberof BaseNode
    */
   getData() {
+    let data = null
+
     if (!this.data) {
       let layoutBy = this.attr('layoutBy')
       const names = Object.keys(this.dataset[layoutBy])
-      return this.dataset._selectDataByNames(names, layoutBy)
+      data = this.dataset._selectDataByNames(names, layoutBy)
     } else {
-      return this.data
+      data = this.data
     }
+
+    this.__data__ = clone(data)
+    return data
+  }
+
+  shouldUpdate() {
+    const prevData = this.__data__
+    const nextData = this.getData()
+    return !isEqual(prevData, nextData)
   }
 
   /**

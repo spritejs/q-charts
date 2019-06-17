@@ -14,6 +14,7 @@ export {
   isString,
   isPlainObject
 } from './is'
+export { isEqual } from './isEqual'
 export { interpolate } from './interpolate'
 export { throttle } from './throttle'
 
@@ -45,35 +46,6 @@ export const convertPercent2Number = (percent, base) => {
     return (+percent.replace('%', '') * base) / 100
   } else {
     return +percent
-  }
-}
-
-export const isEqual = (a, b) => {
-  /* eslint-disable eqeqeq */
-  if (!a || !b) {
-    return a == b
-  }
-
-  const typea = typeof a
-  const typeb = typeof b
-
-  if (typea !== typeb) {
-    return false
-  }
-
-  if (typea === 'object' && typeb === 'object') {
-    const aks = Object.keys(a)
-    const bks = Object.keys(b)
-    const akl = aks.length
-    const bkl = bks.length
-
-    if (akl !== bkl) {
-      return false
-    } else {
-      return aks.every(ak => isEqual(a[ak], b[ak]))
-    }
-  } else {
-    return a == b
   }
 }
 

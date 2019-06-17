@@ -88,17 +88,20 @@ export class Legend extends BasePlugin {
    * @param {*} i
    */
   color(i) {
+    const target = this.attr('target')
+
+    if (target) {
+      this._colors = target.color && target.color()
+    }
+
     if (isArray(i) || isString(i)) {
       return super.color(i)
     } else {
       if (!this._colors.length) {
         // 当前 legend 没有配色
         let colors
-        const target = this.attr('target')
 
-        if (target) {
-          colors = target.color && target.color()
-        } else {
+        if (this.chart) {
           colors =
             this.chart.visuals[0] &&
             this.chart.visuals[0].color &&
@@ -112,6 +115,10 @@ export class Legend extends BasePlugin {
 
       return super.color(i)
     }
+  }
+
+  shouldUpdate() {
+    return true
   }
 
   getPaginationSize() {
