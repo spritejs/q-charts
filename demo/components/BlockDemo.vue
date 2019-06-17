@@ -213,7 +213,9 @@ export default {
   justify-content: flex-end;
   align-items: center;
 }
-
+.block-demo--fixed .bock-demo__ctrl {
+  padding-right: 88px;
+}
 .bock-demo__ctrl button + button {
   margin-left: 10px;
 }
