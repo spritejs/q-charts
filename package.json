@@ -1,6 +1,6 @@
 {
   "name": "@qcharts/core",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "A visulization library based on spritejs and sprite-extend-shapes",
   "main": "lib/index.js",
   "scripts": {
@@ -91,9 +91,7 @@
     "webpack-merge": "^4.1.5"
   },
   "dependencies": {
-    "d3-geo": "^1.11.3",
-    "d3-interpolate": "^1.3.2",
-    "sprite-extend-shapes": "^1.0.6"
+    "sprite-extend-shapes": "1.0.6"
   },
   "husky": {
     "hooks": {
