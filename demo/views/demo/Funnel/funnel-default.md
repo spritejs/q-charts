@@ -30,8 +30,8 @@ const tooltip = new Tooltip({
   formatter: d => `${d.label}: ${d.value}`
 })
 const funnel = new Funnel({
-  size: ['50%', '70%'],
-  pos: ['20%', '20%'],
+  size: ['50%', '80%'],
+  pos: ['25%', '10%'],
   align: 'center',
   formatter: d => `${d.value}`
 })

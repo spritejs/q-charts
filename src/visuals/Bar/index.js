@@ -25,7 +25,10 @@ export class Bar extends BaseVisual {
     return this.attr('type')
   }
   transform(data) {
-    const dataLength = data && data.length > 1 ? data.length : data[0].length
+    if (!data || data.length === 0) {
+      return { barData: [], groupData: [] }
+    }
+    const dataLength = data.length > 1 ? data.length : data[0].length
     this.legendArr = Array.from({ length: data.length }, () => {
       return 1
     })
