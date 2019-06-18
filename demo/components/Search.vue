@@ -110,7 +110,7 @@ export default {
 .search-box {
   position: relative;
   display: inline-block;
-  padding: 0 1.5rem;
+  padding: 0 1.5rem 0 64px;
 }
 
 .search-box input {
