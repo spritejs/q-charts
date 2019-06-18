@@ -250,12 +250,12 @@ export default {
     icon: {
       width: 10,
       height: 10,
-      borderRadius: 10,
-      marginTop: 1
+      borderRadius: 10
     },
 
     text: {
-      marginLeft: 8
+      marginLeft: 8,
+      marginTop: 1
     }
   }
 }
