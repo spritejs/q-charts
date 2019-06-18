@@ -112,7 +112,8 @@ function dataHandle(attr) {
   const data = attr.dataSet || []
   const field = attr.field || '__valueGetter__'
   const arr = []
-  if (stack) {
+
+  if (stack && data.length !== 0 && data[0].length) {
     for (let i = 0, len = data[0].length; i < len; i++) {
       let sum = 0
       let sumDown = 0

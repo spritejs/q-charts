@@ -57,12 +57,23 @@ chart.source(data, {
   value: 'population'
 })
 
-const pie = new Pie({ radius: 0.8, innerRadius: 0.4 })
+const pie = new Pie({
+  innerRadius: 0.4,
+  radius: 0.7,
+  pos: [0, 0],
+  size: ['80%', '100%']
+})
 pie.style('sector', { lineWidth: 1, color: '#fff' })
 pie.style('guideLine', true)
 pie.style('guideText', { fontSize: '12px' })
 
 const legend = new Legend({ orient: 'vertical', align: ['right', 'center'] })
+legend.style('icon', (attrs, d, i) => ({
+  marginTop: i > 0 ? 10 : 0
+}))
+legend.style('text', (attrs, d, i) => ({
+  marginTop: i > 0 ? 10 : 0
+}))
 
 chart.add([pie, legend])
 chart.render()

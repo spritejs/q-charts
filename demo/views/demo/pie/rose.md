@@ -20,9 +20,13 @@ chart.source(data, {
 })
 
 const pie = new Pie({
-  radius: 0.8,
+  radius: 0.7,
+  pos: [0, 0],
+  size: ['80%', '100%'],
   rose: true
 })
+pie.style('guideLine', true)
+pie.style('guideText', { fontSize: '12px' })
 
 const legend = new Legend({ orient: 'vertical', align: ['right', 'center'] })
 legend.style('icon', (attrs, d, i) => ({
