@@ -386,38 +386,40 @@ export class Gauge extends BaseVisual {
               />
             ) : null}
 
-            {ticks.map((tick, j) => (
-              <Group
-                pos={center}
-                zIndex={1010}
-                size={[1, 1]}
-                clipOverflow={false}
-              >
-                {tickLine() !== false ? (
-                  <Polyline
-                    points={tick.points}
-                    color={strokeBgcolor}
-                    {...tickLine(d, d.dataOrigin, j)}
-                  />
-                ) : (
-                  false
-                )}
+            {tickLine() !== false || tickText() !== false
+              ? ticks.map((tick, j) => (
+                <Group
+                  pos={center}
+                  zIndex={1010}
+                  size={[1, 1]}
+                  clipOverflow={false}
+                >
+                  {tickLine() !== false ? (
+                    <Polyline
+                      points={tick.points}
+                      color={strokeBgcolor}
+                      {...tickLine(d, d.dataOrigin, j)}
+                    />
+                  ) : (
+                    false
+                  )}
 
-                {tickText() !== false ? (
-                  <Label
-                    {...tick.label}
-                    ref={el =>
-                      this.pullLabel(
-                        el,
-                        tick.label.isInner,
-                        tick.label.location
-                      )
-                    }
-                    {...tickText(d, d.dataOrigin, j)}
-                  />
-                ) : null}
-              </Group>
-            ))}
+                  {tickText() !== false ? (
+                    <Label
+                      {...tick.label}
+                      ref={el =>
+                        this.pullLabel(
+                          el,
+                          tick.label.isInner,
+                          tick.label.location
+                        )
+                      }
+                      {...tickText(d, d.dataOrigin, j)}
+                    />
+                  ) : null}
+                </Group>
+              ))
+              : null}
           </Group>
         ))}
       </Group>
