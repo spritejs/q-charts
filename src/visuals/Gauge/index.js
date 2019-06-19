@@ -128,16 +128,16 @@ export class Gauge extends BaseVisual {
         angle,
         points: isInner
           ? [
-              [
-                cos * (center[0] - lineWidth - tickLength),
-                sin * (center[0] - lineWidth - tickLength)
-              ],
-              [cos * (center[0] - lineWidth), sin * (center[0] - lineWidth)]
-            ]
-          : [
-              [cos * (center[0] - tickLength), sin * (center[0] - tickLength)],
-              [cos * center[0], sin * center[0]]
+            [
+              cos * (center[0] - lineWidth - tickLength),
+              sin * (center[0] - lineWidth - tickLength)
             ],
+            [cos * (center[0] - lineWidth), sin * (center[0] - lineWidth)]
+          ]
+          : [
+            [cos * (center[0] - tickLength), sin * (center[0] - tickLength)],
+            [cos * center[0], sin * center[0]]
+          ],
 
         label: {
           isInner,
@@ -145,13 +145,13 @@ export class Gauge extends BaseVisual {
           text: tickFormatter(i * tickStep),
           pos: isInner
             ? [
-                cos * (center[0] - lineWidth - tickLength - labelOffset),
-                sin * (center[0] - lineWidth - tickLength - labelOffset)
-              ]
+              cos * (center[0] - lineWidth - tickLength - labelOffset),
+              sin * (center[0] - lineWidth - tickLength - labelOffset)
+            ]
             : [
-                cos * (center[0] - tickLength + labelOffset),
-                sin * (center[0] - tickLength + labelOffset)
-              ]
+              cos * (center[0] - tickLength + labelOffset),
+              sin * (center[0] - tickLength + labelOffset)
+            ]
         }
       })
     }
@@ -388,37 +388,37 @@ export class Gauge extends BaseVisual {
 
             {tickLine() !== false || tickText() !== false
               ? ticks.map((tick, j) => (
-                  <Group
-                    pos={center}
-                    zIndex={1010}
-                    size={[1, 1]}
-                    clipOverflow={false}
-                  >
-                    {tickLine() !== false ? (
-                      <Polyline
-                        points={tick.points}
-                        color={strokeBgcolor}
-                        {...tickLine(d, d.dataOrigin, j)}
-                      />
-                    ) : (
-                      false
-                    )}
+                <Group
+                  pos={center}
+                  zIndex={1010}
+                  size={[1, 1]}
+                  clipOverflow={false}
+                >
+                  {tickLine() !== false ? (
+                    <Polyline
+                      points={tick.points}
+                      color={strokeBgcolor}
+                      {...tickLine(d, d.dataOrigin, j)}
+                    />
+                  ) : (
+                    false
+                  )}
 
-                    {tickText() !== false ? (
-                      <Label
-                        {...tick.label}
-                        ref={el =>
-                          this.pullLabel(
-                            el,
-                            tick.label.isInner,
-                            tick.label.location
-                          )
-                        }
-                        {...tickText(d, d.dataOrigin, j)}
-                      />
-                    ) : null}
-                  </Group>
-                ))
+                  {tickText() !== false ? (
+                    <Label
+                      {...tick.label}
+                      ref={el =>
+                        this.pullLabel(
+                          el,
+                          tick.label.isInner,
+                          tick.label.location
+                        )
+                      }
+                      {...tickText(d, d.dataOrigin, j)}
+                    />
+                  ) : null}
+                </Group>
+              ))
               : null}
           </Group>
         ))}
