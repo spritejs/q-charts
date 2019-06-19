@@ -128,16 +128,16 @@ export class Gauge extends BaseVisual {
         angle,
         points: isInner
           ? [
-              [
-                cos * (center[0] - lineWidth - tickLength),
-                sin * (center[0] - lineWidth - tickLength)
-              ],
-              [cos * (center[0] - lineWidth), sin * (center[0] - lineWidth)]
-            ]
-          : [
-              [cos * (center[0] - tickLength), sin * (center[0] - tickLength)],
-              [cos * center[0], sin * center[0]]
+            [
+              cos * (center[0] - lineWidth - tickLength),
+              sin * (center[0] - lineWidth - tickLength)
             ],
+            [cos * (center[0] - lineWidth), sin * (center[0] - lineWidth)]
+          ]
+          : [
+            [cos * (center[0] - tickLength), sin * (center[0] - tickLength)],
+            [cos * center[0], sin * center[0]]
+          ],
 
         label: {
           isInner,
@@ -145,13 +145,13 @@ export class Gauge extends BaseVisual {
           text: tickFormatter(i * tickStep),
           pos: isInner
             ? [
-                cos * (center[0] - lineWidth - tickLength - labelOffset),
-                sin * (center[0] - lineWidth - tickLength - labelOffset)
-              ]
+              cos * (center[0] - lineWidth - tickLength - labelOffset),
+              sin * (center[0] - lineWidth - tickLength - labelOffset)
+            ]
             : [
-                cos * (center[0] - tickLength + labelOffset),
-                sin * (center[0] - tickLength + labelOffset)
-              ]
+              cos * (center[0] - tickLength + labelOffset),
+              sin * (center[0] - tickLength + labelOffset)
+            ]
         }
       })
     }
