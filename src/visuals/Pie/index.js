@@ -218,81 +218,104 @@ export class Pie extends BaseVisual {
 
   toggleTranslate = (attrs, evt, el) => {
     let isTranslated = el.isTranslated
-    const offset = 20
+    const offset = Math.max(20, attrs.maxRadius * 0.1)
     const { startAngle, endAngle } = attrs
     const angle = (startAngle + endAngle) / 2
     const translate = [offset * Math.cos(angle), offset * Math.sin(angle)]
 
-    if (isTranslated) {
-      el.parentNode.transition(0.3).attr('translate', [0, 0])
-      el.isTranslated = false
-    } else {
-      el.parentNode.transition(0.3).attr('translate', translate)
-      el.isTranslated = true
+    let target = el.parentNode
+
+    if (target.attr('name') === 'pieRoot') {
+      target = el
     }
 
-    evt && evt.stopDispatch()
+    if (isTranslated) {
+      target.transition(0.3).attr('translate', [0, 0])
+      el.isTranslated = false
+    } else {
+      target.transition(0.3).attr('translate', translate)
+      el.isTranslated = true
+    }
   }
 
   render(rings = []) {
     const translateOnClick = this.attr('translateOnClick')
+    const needChildren =
+      this.style('guideLine')() ||
+      this.style('guideText')() ||
+      this.style('text')()
+
+    const renderRing = (ring, i, from, to) => {
+      return (
+        <Ring
+          ref={el => this.getRing(ring, i, el)}
+          {...ring}
+          animation={this.resolveAnimation({
+            from,
+            to,
+            duration: 300,
+            delay: 0
+          })}
+          actions={[
+            {
+              both: ['normal', 'hover'],
+              action: {
+                duration: 300
+              }
+            }
+          ]}
+          hoverState={this.style('sector:hover')(
+            ring,
+            ring.dataOrigin,
+            ring.index
+          )}
+          onMouseenter={(evt, el) => {
+            evt.stopDispatch()
+
+            el.attr('state', 'hover')
+          }}
+          onMousemove={(evt, el) => {
+            evt.stopDispatch()
+
+            this.chart.setCanvasCursor('pointer')
+            this.dataset.hoverData({
+              data: {
+                color: ring.fillColor,
+                ...ring.dataOrigin
+              },
+              ...evt
+            })
+          }}
+          onMouseleave={(evt, el) => {
+            evt.stopDispatch()
+
+            this.dataset.hoverData(null)
+            el.attr('state', 'normal')
+            this.chart.setCanvasCursor('default')
+          }}
+          onClick={(evt, el) => {
+            evt.stopDispatch()
+            if (translateOnClick) {
+              el.isTranslatedByInitiativeClick = true // 主动点击
+              this.toggleTranslate(ring, evt, el)
+            }
+          }}
+        />
+      )
+    }
 
     return (
-      <Group zIndex={100}>
+      <Group zIndex={100} enableCache={false} name="pieRoot">
         {rings.map((ring, i) => {
           const { from, to } = this.fromTos[i]
-          return (
-            <Group clipOverflow={false} size={[1, 1]}>
-              <Ring
-                ref={el => this.getRing(ring, i, el)}
-                {...ring}
-                animation={this.resolveAnimation({
-                  from,
-                  to,
-                  duration: 300,
-                  delay: 0
-                })}
-                actions={[
-                  {
-                    both: ['normal', 'hover'],
-                    action: {
-                      duration: 300
-                    }
-                  }
-                ]}
-                hoverState={this.style('sector:hover')(
-                  ring,
-                  ring.dataOrigin,
-                  ring.index
-                )}
-                onMouseenter={(_, el) => {
-                  el.attr('state', 'hover')
-                }}
-                onMousemove={(evt, el) => {
-                  this.chart.setCanvasCursor('pointer')
-                  this.dataset.hoverData({
-                    data: {
-                      color: ring.fillColor,
-                      ...ring.dataOrigin
-                    },
-                    ...evt
-                  })
-                }}
-                onMouseleave={(evt, el) => {
-                  this.dataset.hoverData(null)
-                  el.attr('state', 'normal')
-                  this.chart.setCanvasCursor('default')
-                }}
-                onClick={(evt, el) => {
-                  if (translateOnClick) {
-                    el.isTranslatedByInitiativeClick = true // 主动点击
-                    this.toggleTranslate(ring, evt, el)
-                  }
-                }}
-              />
+          return needChildren ? (
+            <Group enableCache={false} clipOverflow={false} size={[1, 1]}>
+              {renderRing(ring, i, from, to)}
               {withText(this, ring)}
               {withGuide(this, ring)}
             </Group>
+          ) : (
+            renderRing(ring, i, from, to)
           )
         })}
       </Group>

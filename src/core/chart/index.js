@@ -11,7 +11,6 @@ const global = getGlobal()
 const defaultTheme = 'default'
 const _plot = Symbol('plot')
 const _initPlot = Symbol('initPlot')
-const _isRendered = Symbol('isRendered')
 const _mountToPlot = Symbol('mountToPlot')
 const _addChild = Symbol('addChild')
 const _renderChild = Symbol('renderChild')
@@ -78,7 +77,7 @@ export class Chart extends BaseNode {
     invariant(target, `Unknown theme type! Register it first!`)
     // Object.keys(target).forEach(key => this.style(key, target[key]))
     Global.useTheme(name)
-    this[_isRendered] && this.emit('theme:change', target)
+    this.__isRendered__ && this.emit('theme:change', target)
     if (this.$group) {
       this.$group.attr(this.style('Chart')() || {})
     }
@@ -178,13 +177,13 @@ export class Chart extends BaseNode {
 
   render() {
     invariant(
-      !this[_isRendered],
+      !this.__isRendered__,
       `The chart is rendered! Do not invoke chart.render many a time!`
     )
     this.emit(this.lifecycle.beforeRender, this)
     void this.children.map(this[_renderChild].bind(this))
     this.emit(this.lifecycle.rendered, this)
-    this[_isRendered] = true
+    this.__isRendered__ = true
   }
 
   update() {

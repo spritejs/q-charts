@@ -9,8 +9,8 @@ function Tween(val) {
   this._duration = 1
   this._easing = k => k
 
-  this._onUpdate = () => { }
-  this._onStart = () => { }
+  this._onUpdate = () => {}
+  this._onStart = () => {}
 
   return this
 }
@@ -81,7 +81,7 @@ Tween.prototype = {
     return this
   },
   start() {
-    const dt = 16.7 // 每一帧 16.7 ms
+    // const dt = 16.7 // 每一帧 16.7 ms
     const e = this._easing
     const i = interpolate(this._start, this._end)
     const callback = this._onUpdate
@@ -89,12 +89,13 @@ Tween.prototype = {
     let animateTime = this._duration
     let timer = null
     let delayTime = this._delay
+    let startTime = 0
 
     return new Promise(resolve => {
       const step = () => {
         // 每次加一帧，保证帧数是对的，不在乎到底消耗多长时间
-        elapseTime += dt
-        const t = e(elapseTime / animateTime)
+        elapseTime = performance.now() - startTime
+        const t = e(Math.min(1.0, elapseTime / animateTime))
 
         if (elapseTime >= animateTime) {
           callback(i(1))
@@ -107,6 +108,7 @@ Tween.prototype = {
       }
 
       const start = () => {
+        startTime = performance.now()
         this._onStart(this._start, this._end)
         timer = requestAnimationFrame(step)
       }
