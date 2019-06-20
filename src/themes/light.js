@@ -205,11 +205,11 @@ export default {
     bgcolor: 'rgba(0, 0, 0, .8)',
     paddingBottom: 10,
     fontSize: '14px',
-    shadow: {
-      blur: 4,
-      color: 'rgba(0, 0, 0, .2)',
-      offset: [0, 2]
-    },
+    // shadow: {
+    //   blur: 4,
+    //   color: 'rgba(0, 0, 0, .2)',
+    //   offset: [0, 2]
+    // },
 
     title: {
       padding: [10, 15],

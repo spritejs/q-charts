@@ -51,6 +51,8 @@ export class Gauge extends BaseVisual {
   constructor(attrs = {}) {
     super(attrs)
     this.animations = []
+    this.style('tickText', true)
+    this.style('tickLine', true)
   }
 
   get name() {
@@ -319,8 +321,8 @@ export class Gauge extends BaseVisual {
     const center = this.center
     const ticks = this.ticks
     const colors = this.color().reverse()
-    const tickLine = this.style('tickLine')
-    const tickText = this.style('tickText')
+    const tickLine = this.isStyleExist('tickLine')
+    const tickText = this.isStyleExist('tickText')
 
     return (
       <Group
@@ -386,7 +388,7 @@ export class Gauge extends BaseVisual {
               />
             ) : null}
 
-            {tickLine() !== false || tickText() !== false
+            {tickLine !== false || tickText !== false
               ? ticks.map((tick, j) => (
                 <Group
                   pos={center}
@@ -394,17 +396,17 @@ export class Gauge extends BaseVisual {
                   size={[1, 1]}
                   clipOverflow={false}
                 >
-                  {tickLine() !== false ? (
+                  {tickLine !== false ? (
                     <Polyline
                       points={tick.points}
                       color={strokeBgcolor}
-                      {...tickLine(d, d.dataOrigin, j)}
+                      {...this.style('tickLine')(d, d.dataOrigin, j)}
                     />
                   ) : (
                     false
                   )}
 
-                  {tickText() !== false ? (
+                  {tickText !== false ? (
                     <Label
                       {...tick.label}
                       ref={el =>
@@ -414,7 +416,7 @@ export class Gauge extends BaseVisual {
                           tick.label.location
                         )
                       }
-                      {...tickText(d, d.dataOrigin, j)}
+                      {...this.style('tickText')(d, d.dataOrigin, j)}
                     />
                   ) : null}
                 </Group>

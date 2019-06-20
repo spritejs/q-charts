@@ -38,4 +38,9 @@ export function attrMixin(Component) {
       return this
     }
   }
+
+  Component.prototype.isStyleExist = function isStyleExist(name) {
+    const style = this.attr('@' + name)
+    return Boolean(style)
+  }
 }

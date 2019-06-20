@@ -241,9 +241,9 @@ export class Pie extends BaseVisual {
   render(rings = []) {
     const translateOnClick = this.attr('translateOnClick')
     const needChildren =
-      this.style('guideLine')() ||
-      this.style('guideText')() ||
-      this.style('text')()
+      this.isStyleExist('guideLine') ||
+      this.isStyleExist('guideText') ||
+      this.isStyleExist('text')
 
     const renderRing = (ring, i, from, to) => {
       return (
