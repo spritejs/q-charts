@@ -130,7 +130,7 @@ export class Bar extends BaseVisual {
 
   render(data) {
     return (
-      <Group zIndex={100}>
+      <Group zIndex={100} enableCache={false}>
         {data.groupData.map((pillar, i) => {
           const normalState = this.style('backgroundPillar')(
             pillar,
@@ -141,39 +141,38 @@ export class Bar extends BaseVisual {
             return
           }
           return (
-            <Group>
-              <Sprite
-                {...pillar}
-                {...normalState}
-                hoverState={Object.assign(
-                  { opacity: 0.05 },
-                  this.style('backgroundpillar:hover')(
-                    pillar,
-                    pillar.dataOrigin,
-                    pillar.index
-                  )
-                )}
-                onMouseenter={(_, el) =>
-                  !this.attr('mouseDisabled') && el.attr('state', 'hover')
-                }
-                onMousemove={(evt, el) => {
-                  !this.attr('mouseDisabled') &&
+
+            <Sprite
+              {...pillar}
+              {...normalState}
+              hoverState={Object.assign(
+                { opacity: 0.05 },
+                this.style('backgroundpillar:hover')(
+                  pillar,
+                  pillar.dataOrigin,
+                  pillar.index
+                )
+              )}
+              onMouseenter={(_, el) =>
+                !this.attr('mouseDisabled') && el.attr('state', 'hover')
+              }
+              onMousemove={(evt, el) => {
+                !this.attr('mouseDisabled') &&
                     this.showTooltip(evt, pillar.rects)
-                }}
-                onMouseleave={(evt, el) => {
-                  if (!this.attr('mouseDisabled')) {
-                    this.hideTooltip()
-                    el.attr('state', 'normal')
-                  }
-                }}
-              />
-            </Group>
+              }}
+              onMouseleave={(evt, el) => {
+                if (!this.attr('mouseDisabled')) {
+                  this.hideTooltip()
+                  el.attr('state', 'normal')
+                }
+              }}
+            />
           )
         })}
         {data.barData.map((pillar, i) => {
           const { from, to } = this.fromTos[i]
           return (
-            <Group>
+            <Group enableCache={false}>
               <Rect
                 {...pillar}
                 {...from}

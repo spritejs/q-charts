@@ -178,11 +178,11 @@ export class Line extends BaseVisual {
     let guideLineAttrs = { size: [1, this.attr('size')[1]], fillColor: '#ccc', opacity: 0 }
     let guideStyle = mergeStyle(this.style('guideline'), [guideLineAttrs]);
     return (
-      <Group zIndex={100}>
+      <Group zIndex={100} enableCache={false}>
         {guideStyle === false ? (null) : (
           <Rect ref={el => this.ref('guideline', el)} {...guideStyle} />
         )}
-        <Group>
+        <Group enableCache={false}>
           {lines.map((line, i) => {
             let { size, type, smooth, stack } = this.attr();
             let color = line.data[0].color || this.color(i)
@@ -218,7 +218,7 @@ export class Line extends BaseVisual {
             }
           })}
         </Group>
-        <Group clipOverflow={false}>
+        <Group clipOverflow={false} enableCache={false}>
           {lines.map((line, i) => {
             let color = line.data[0].color || this.color(i)
             let lineAttrs = { color, lineWidth: 2 }
@@ -232,6 +232,7 @@ export class Line extends BaseVisual {
                 clipOverflow={false}
                 onMousemove={this.bgMove.bind(this)}
                 onMouseleave={this.bgLeave.bind(this)}
+                enableCache={false}
               >
                 <Polyline
                   ref={el => this.$lines.push(el)}
