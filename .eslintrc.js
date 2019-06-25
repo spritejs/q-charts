@@ -8,6 +8,10 @@ module.exports = {
   env: {
     browser: true
   },
+  globals: {
+    getApp: true,
+    wx: true,
+  },
   extends: ['standard', 'plugin:react/recommended'],
   plugins: ['react'],
   // add your custom rules here

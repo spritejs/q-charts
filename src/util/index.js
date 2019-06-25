@@ -1,3 +1,4 @@
+import { isWeixinApp } from './platform'
 export { axis } from './axis'
 export { hexToRgba, randomHexColor } from './color'
 export { invariant } from './invariant'
@@ -14,6 +15,7 @@ export {
   isString,
   isPlainObject
 } from './is'
+export { isWeixinApp }
 export { isEqual } from './isEqual'
 export { interpolate } from './interpolate'
 export { throttle } from './throttle'
@@ -33,6 +35,7 @@ export const delay = time =>
   )
 
 export const getGlobal = () => {
+  if (isWeixinApp()) return getApp()
   if (typeof self !== 'undefined') return self
   if (typeof window !== 'undefined') return window
   if (typeof global !== 'undefined') return global

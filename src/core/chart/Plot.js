@@ -1,5 +1,5 @@
 import { Group, Scene } from 'spritejs'
-import { isObject, debounce, convertPercent2Number } from '../../util'
+import { isObject, debounce, convertPercent2Number, isWeixinApp } from '../../util'
 import ResizeObserver from './ResizeObserver'
 
 const isDev = process.env.NODE_ENV !== 'production'
@@ -17,17 +17,28 @@ export class Plot {
   }
 
   initScene(container, opts) {
-    if (opts.forceFit) {
+    if (!isWeixinApp() && opts.forceFit) {
       opts.viewport = 'auto'
     } else {
       opts.viewport = opts.size ? opts.size : [opts.width, opts.height]
     }
 
-    this.scene = new Scene(container, {
-      displayRatio: 'auto',
-      ...opts
-    })
-    this.layer = this.scene.layer()
+    /**
+      {
+        vwr: 1,
+        layer: 'fglayer',
+      }
+     */
+    if (isWeixinApp()) {
+      this.scene = new Scene(opts.vwr)
+    } else {
+      this.scene = new Scene(container, {
+        displayRatio: 'auto',
+        ...opts
+      })
+    }
+    const layerID = opts.layer || 'default'
+    this.layer = this.scene.layer(layerID)
 
     if (isDev) {
       this.layer.on('update', debounce(() => {
@@ -46,6 +57,7 @@ export class Plot {
   }
 
   forceFit() {
+    if (isWeixinApp()) return; // ignored
     const onResize = (w, h) => {
       this.scene.setViewport(w, h)
       this.scene.setResolution(w, h)

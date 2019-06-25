@@ -45,9 +45,9 @@ export class Chart extends BaseNode {
   [_initPlot](attrs) {
     const $ = node =>
       typeof node === 'string'
-        ? global.document
+        ? global.document && global.document.querySelector
           ? global.document.querySelector(node)
-          : node
+          : { id: node } // use reference for WeakMap
         : node
     this.domElement = $(attrs.container)
     invariant(this.domElement, `Need a domNode to render chart!`)
