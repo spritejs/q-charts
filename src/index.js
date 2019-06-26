@@ -1,5 +1,5 @@
 import * as spritejs from 'spritejs'
-import shapes from 'sprite-extend-shapes'
+import shapes from '@spritejs/shapes'
 import { getGlobal } from './util'
 import * as core from './core'
 import * as visuals from './visuals'

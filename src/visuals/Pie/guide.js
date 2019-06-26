@@ -29,7 +29,7 @@ export const withGuide = (visual, attrs) => {
   let line = Object.assign(
     {
       points: points,
-      color: attrs.fillColor // 默认采用扇形的填充色
+      strokeColor: attrs.fillColor // 默认采用扇形的填充色
     },
     isBoolean(lineStyle) ? {} : lineStyle
   )

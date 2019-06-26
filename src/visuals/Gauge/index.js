@@ -2,48 +2,38 @@ import { Group, Arc, Polyline, Label } from 'spritejs'
 import { BaseVisual } from '../../core'
 import { flattern, isFunction } from '../../util'
 
-/**
- *            vct
- *     -----------------
- *     |       |       |
- *     |   tL  |  tR   |
- *     |       |       |
- * hcl |-------|-------| hcr
- *     |       |       |
- *     |   bL  |  bR   |
- *     |       |       |
- *     -----------------
- *            vcb
- */
-function location(angle) {
-  const PI = Math.PI
-  const TAU = PI * 2
-  let n = angle < 0 ? Math.abs(Math.floor(angle / TAU)) : 0
-  let v = (angle + Math.PI * 2 * n) % (Math.PI * 2)
+function tickLine(radius, angle, tickLength, labelOffset, isInner) {
+  const cos = Math.cos(angle)
+  const sin = Math.sin(angle)
+  // 起点
+  const [x, y] = [cos * radius, sin * radius]
+  // 中点
+  const [cX0, cY0] = isInner
+    ? [x - tickLength * cos, y - tickLength * sin]
+    : [x + tickLength * cos, y + tickLength * sin]
+  const labelPos = isInner
+    ? [
+        x - (tickLength + labelOffset) * cos,
+        y - (tickLength + labelOffset) * sin
+      ]
+    : [
+        x + (tickLength + labelOffset) * cos,
+        y + (tickLength + labelOffset) * sin
+      ]
 
-  if (0 * PI === v || 1 * PI === v) {
-    if (0 * PI === v) {
-      return 'horizontalCenterRight'
-    }
-    // 水平居中
-    return 'horizontalCenterLeft'
-  } else if (0.5 * PI === v || 1.5 * PI === v) {
-    if (0.5 * PI === v) {
-      return 'verticalCenterBottom'
-    }
-    // 垂直居中
-    return 'verticalCenterTop'
-  } else if (0 * PI < v && v < 0.5 * PI) {
-    // 右下
-    return 'bottomRight'
-  } else if (0.5 * PI < v && v < 1 * PI) {
-    // 左下
-    return 'bottomLeft'
-  } else if (1 * PI < v && v < 1.5 * PI) {
-    // 左上
-    return 'topLeft'
+  let anchorX = isInner ? cos : -cos
+  let anchorY = isInner ? sin : -sin
+  let anchor = [0.5, 0.5]
+
+  if (Math.abs(anchorX) > Math.abs(anchorY)) {
+    anchor[0] = anchorX < 0 ? 0 : anchorX
   } else {
-    return 'topRight'
+    anchor[1] = anchorY > 0 ? anchorY : 0
+  }
+  return {
+    points: [[x, y], [cX0, cY0]],
+    labelPos,
+    anchor
   }
 }
 
@@ -117,43 +107,27 @@ export class Gauge extends BaseVisual {
 
     const isInner = tickLength > 0
     const perAngle = total / count
-    const center = this.center
     const ticks = []
+    let radius = isInner ? this.radius - lineWidth : this.radius
+    let angle = 0
     let i = -1
 
     while (++i <= count) {
-      const angle = i * perAngle + startAngle
-      const cos = Math.cos(angle)
-      const sin = Math.sin(angle)
+      angle = i * perAngle + startAngle
+      const ret = tickLine(
+        radius,
+        angle,
+        Math.abs(tickLength),
+        Math.abs(labelOffset),
+        isInner
+      )
 
       ticks.push({
-        angle,
-        points: isInner
-          ? [
-            [
-              cos * (center[0] - lineWidth - tickLength),
-              sin * (center[0] - lineWidth - tickLength)
-            ],
-            [cos * (center[0] - lineWidth), sin * (center[0] - lineWidth)]
-          ]
-          : [
-            [cos * (center[0] - tickLength), sin * (center[0] - tickLength)],
-            [cos * center[0], sin * center[0]]
-          ],
-
+        points: ret.points,
         label: {
-          isInner,
-          location: location(angle),
           text: tickFormatter(i * tickStep),
-          pos: isInner
-            ? [
-              cos * (center[0] - lineWidth - tickLength - labelOffset),
-              sin * (center[0] - lineWidth - tickLength - labelOffset)
-            ]
-            : [
-              cos * (center[0] - tickLength + labelOffset),
-              sin * (center[0] - tickLength + labelOffset)
-            ]
+          pos: ret.labelPos,
+          anchor: ret.anchor
         }
       })
     }
@@ -224,89 +198,6 @@ export class Gauge extends BaseVisual {
     return arcs
   }
 
-  pullLabel = (el, isInner = false, location = 'center') => {
-    const translate = () => {
-      const [w, h] = el.contentSize
-
-      let translate = [0, 0]
-
-      if (isInner) {
-        switch (location) {
-          case 'bottomLeft':
-            translate = [0, -h / 2]
-            break
-
-          case 'topLeft':
-            translate = [0, -h / 2]
-            break
-
-          case 'horizontalCenterRight':
-            translate = [-w, -h / 2]
-            break
-
-          case 'horizontalCenterLeft':
-            translate = [0, -h / 2]
-            break
-
-          case 'verticalCenterTop':
-            translate = [-w / 2, 0]
-            break
-
-          case 'verticalCenterBottom':
-            translate = [-w / 2, -h / 2]
-            break
-
-          case 'bottomRight':
-            translate = [-w, -h / 2]
-            break
-
-          case 'topRight':
-            translate = [-w, -h / 2]
-            break
-
-          default:
-            translate = [-w / 2, -h / 2]
-            break
-        }
-      } else {
-        switch (location) {
-          case 'bottomLeft':
-          case 'topLeft':
-            translate = [-w, -h / 2]
-            break
-
-          case 'horizontalCenterRight':
-            translate = [w / 2, -h / 2]
-            break
-
-          case 'horizontalCenterLeft':
-            translate = [-w, -h / 2]
-            break
-
-          case 'verticalCenterTop':
-            translate = [-w / 2, -h / 2]
-            break
-
-          case 'verticalCenterBottom':
-            translate = [-w / 2, 0]
-            break
-
-          case 'bottomRight':
-          case 'topRight':
-            translate = [0, -h / 2]
-            break
-
-          default:
-            translate = [-w / 2, -h / 2]
-            break
-        }
-      }
-
-      el.attr('translate', translate)
-    }
-    this.chart.layer.prepareRender().then(() => translate())
-  }
-
   render(data = []) {
     const {
       title,
@@ -371,9 +262,8 @@ export class Gauge extends BaseVisual {
                 pos={center}
                 textAlign="center"
                 zIndex={10}
-                anchor={subTitle ? [0, 0.5] : [0, 0]}
+                anchor={[0.5, 1]}
                 {...this.style('title')(d, d.dataOrigin, i)}
-                ref={el => this.pullLabel(el, true)}
               />
             ) : null}
             {subTitle ? (
@@ -383,44 +273,35 @@ export class Gauge extends BaseVisual {
                 textAlign="center"
                 zIndex={10}
                 color={strokeBgcolor}
+                anchor={[0.5, 0.5]}
                 {...this.style('subTitle')(d, d.dataOrigin, i)}
-                ref={el => this.pullLabel(el, false, 'verticalCenterBottom')}
               />
             ) : null}
 
             {tickLine !== false || tickText !== false
               ? ticks.map((tick, j) => (
-                <Group
-                  pos={center}
-                  zIndex={1010}
-                  size={[1, 1]}
-                  clipOverflow={false}
-                >
-                  {tickLine !== false ? (
-                    <Polyline
-                      points={tick.points}
-                      color={strokeBgcolor}
-                      {...this.style('tickLine')(d, d.dataOrigin, j)}
-                    />
-                  ) : (
-                    false
-                  )}
-
-                  {tickText !== false ? (
-                    <Label
-                      {...tick.label}
-                      ref={el =>
-                        this.pullLabel(
-                          el,
-                          tick.label.isInner,
-                          tick.label.location
-                        )
-                      }
-                      {...this.style('tickText')(d, d.dataOrigin, j)}
-                    />
-                  ) : null}
-                </Group>
-              ))
+                  <Group
+                    pos={center.map(v => v - lineWidth / 2)}
+                    anchor={[0, 0]}
+                    zIndex={1010}
+                    size={[1, 1]}
+                    clipOverflow={false}
+                  >
+                    {tickLine !== false ? (
+                      <Polyline
+                        points={tick.points}
+                        strokeColor={strokeBgcolor}
+                        {...this.style('tickLine')(d, d.dataOrigin, j)}
+                      />
+                    ) : null}
+                    {tickText !== false ? (
+                      <Label
+                        {...tick.label}
+                        {...this.style('tickText')(d, d.dataOrigin, j)}
+                      />
+                    ) : null}
+                  </Group>
+                ))
               : null}
           </Group>
         ))}

@@ -98,7 +98,7 @@ chart.source(data, {
 })
 
 const pie = new Pie({ radius: 0.7, pos: [0, 0], size: ['80%', '100%'] })
-pie.style('sector', { lineWidth: 1, color: '#fff' })
+pie.style('sector', { lineWidth: 1, strokeColor: '#fff' })
 pie.style('guideLine', true)
 pie.style('guideText', true)
 
