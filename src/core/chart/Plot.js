@@ -19,7 +19,7 @@ export class Plot {
   initScene(container, opts) {
     if (!isWeixinApp() && opts.forceFit) {
       opts.viewport = 'auto'
-    } else if(!isWeixinApp()) {
+    } else if (!isWeixinApp()) {
       opts.viewport = opts.size ? opts.size : [opts.width, opts.height]
     }
 
