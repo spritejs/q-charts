@@ -37,13 +37,13 @@ chart.source(data, {
 const area = new Area()
 .style('area',  function(attrs,data,i){
   if(i===0){
-    return {fillColor:'transparent'}
+    return {fillColor:'transparent',strokeColor:'transparent'}
   }else if(i===1){
     return {fillColor:'rgba(0,0,0,0.05)'}
   }
 })
-.style('point',{fillColor:'transparent'})
-.style('point:hover',{color:'#fff'})
+.style('point',{fillColor:'transparent',strokeColor:'transparent'})
+.style('point:hover',{strokeColor:'#fff'})
 
 const axisBottom = new Axis()
 

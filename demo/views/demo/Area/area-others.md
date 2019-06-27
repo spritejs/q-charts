@@ -49,8 +49,8 @@ chart.source(data, {
 })
 
 const area = new Area()
-.style('point',{fillColor:'transparent'})
-.style('point:hover',{color:'#fff'})
+.style('point',{fillColor:'transparent',strokeColor:'transparent'})
+.style('point:hover',{strokeColor:'#fff'})
 
 const axisBottom = new Axis()
 const axisLeft = new Axis({ orient: 'left' })
@@ -107,8 +107,8 @@ chart.source(data, {
 })
 
 const area = new Area({stack:false})
-.style('point',{fillColor:'transparent'})
-.style('point:hover',{color:'#fff'})
+.style('point',{fillColor:'transparent',strokeColor:'transparent'})
+.style('point:hover',{strokeColor:'#fff'})
 
 const tooltip = new Tooltip({
   formatter: function(data) {

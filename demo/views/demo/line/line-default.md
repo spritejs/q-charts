@@ -27,7 +27,7 @@ chart.source(data, {
 })
 
 const line = new Line()
-line.style('point',{color:'#fff'})
+line.style('point',{strokeColor:'#fff'})
 
 const tooltip = new Tooltip({
   formatter: function(data) {

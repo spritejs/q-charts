@@ -45,7 +45,7 @@ const axisBottom = new Axis()
 const axisLeft = new Axis({ orient: 'left' })
 .style('axis',false).style('scale',false)
 
-line.style('point',{pointType: 'star',size:8})
+line.style('point',{pointType: 'star',strokeColor:'transparent',size:8})
 line.style('point:hover',  function(attrs,data,i,j){ //设置symbol样式
   if(data.sales > 60){
     return {scale:1.4}
@@ -133,7 +133,7 @@ const axisBottom = new Axis()
 const axisLeft = new Axis({ orient: 'left' })
 .style('axis',false).style('scale',false)
 
-line.style('symbol:hover', { fillColor: '#f00' }).style('point',{color:'#fff'})
+line.style('symbol:hover', { fillColor: '#f00' }).style('point',{strokeColor:'#fff'})
 
 const legend = new Legend({ align: ['center', 'bottom'] })
 
@@ -197,7 +197,7 @@ const axisBottom = new Axis()
 const axisLeft = new Axis({ orient: 'left' })
 .style('axis',false).style('scale',false)
 
-line.style('symbol:hover',  {fillColor:'#f00'}).style('point',{color:'#fff'})
+line.style('symbol:hover',  {fillColor:'#f00'}).style('point',{strokeColor:'#fff'})
 
 const legend = new Legend({ align: ['center', 'bottom'] })
 

@@ -706,6 +706,14 @@
   dependencies:
     arrify "^1.0.1"
 
+"@spritejs/shapes@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.npmjs.org/@spritejs/shapes/-/shapes-1.1.2.tgz#1d1ccffbcff0da79d932d11a7ff82158b977e583"
+  dependencies:
+    "@babel/runtime" "^7.2.0"
+    sprite-draggable "0.1.15"
+    svg-path-to-canvas "^1.11.3"
+
 "@types/estree@0.0.39":
   version "0.0.39"
   resolved "https://registry.npmjs.org/@types/estree/-/estree-0.0.39.tgz#e177e699ee1b8c22d23174caaa7422644389509f"
@@ -6595,13 +6603,13 @@ sprite-draggable@0.1.15:
   dependencies:
     sprite-math "^1.0.5"
 
-sprite-extend-shapes@1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/sprite-extend-shapes/-/sprite-extend-shapes-1.0.6.tgz#c9e5b53547c806760c2817e887e586b012f074e3"
+sprite-extend-shapes@^1.0.6:
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/sprite-extend-shapes/-/sprite-extend-shapes-1.1.0.tgz#816afb3508f2993e1f84f53a8cd6726d5f086261"
   dependencies:
     "@babel/runtime" "^7.2.0"
     sprite-draggable "0.1.15"
-    svg-path-to-canvas "^1.11.1"
+    svg-path-to-canvas "^1.11.3"
 
 sprite-flex-layout@^1.0.7:
   version "1.0.7"
@@ -6822,7 +6830,7 @@ supports-color@^6.1.0:
   dependencies:
     has-flag "^3.0.0"
 
-svg-path-to-canvas@^1.11.1, svg-path-to-canvas@^1.11.3:
+svg-path-to-canvas@^1.11.3:
   version "1.11.3"
   resolved "https://registry.npmjs.org/svg-path-to-canvas/-/svg-path-to-canvas-1.11.3.tgz#5180bd177f8d1f66861f12747351fd28c7ffcc03"
   dependencies:

@@ -175,7 +175,7 @@ export class Line extends BaseVisual {
     )
   }
   render(lines = []) {
-    let guideLineAttrs = { size: [1, this.attr('size')[1]], fillColor: '#ccc', opacity: 0 }
+    let guideLineAttrs = { size: [1, this.attr('size')[1]], fillColor: '#ccc', strokeColor: 'transparent', opacity: 0 }
     let guideStyle = mergeStyle(this.style('guideline'), [guideLineAttrs]);
     return (
       <Group zIndex={100} enableCache={false}>
@@ -186,7 +186,7 @@ export class Line extends BaseVisual {
           {lines.map((line, i) => {
             let { size, type, smooth, stack } = this.attr();
             let color = line.data[0].color || this.color(i)
-            let areaAttrs = { fillColor: hexToRgba(color, 0.5) }
+            let areaAttrs = { fillColor: hexToRgba(color, 0.5), strokeColor: 'transparent' }
             let cusAttrs = this.style('area')(areaAttrs, line.data.map(item => item.dataOrigin), i)
             Object.assign(areaAttrs, cusAttrs)
             if (type === 'area') {
@@ -221,7 +221,7 @@ export class Line extends BaseVisual {
         <Group clipOverflow={false} enableCache={false}>
           {lines.map((line, i) => {
             let color = line.data[0].color || this.color(i)
-            let lineAttrs = { color, lineWidth: 2 }
+            let lineAttrs = { strokeColor: color, lineWidth: 2 }
             let cusAttrs = this.style('line')(lineAttrs, line.data.map(item => item.dataOrigin), i)
             let smybolAttrs = { anchor: [0.5], fillColor: color }
             let { smooth } = this.attr();
