@@ -177,6 +177,7 @@ export class Line extends BaseVisual {
   render(lines = []) {
     let guideLineAttrs = { size: [1, this.attr('size')[1]], fillColor: '#ccc', strokeColor: 'transparent', opacity: 0 }
     let guideStyle = mergeStyle(this.style('guideline'), [guideLineAttrs]);
+    lines = lines.filter(line => line.points && line.points.length);
     return (
       <Group zIndex={100} enableCache={false}>
         {guideStyle === false ? (null) : (
