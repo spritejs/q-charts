@@ -30,8 +30,8 @@ module.exports = merge(common, {
   },
   devtool: 'source-map',
   output: {
-    path: path.join(__dirname, '../lib'),
-    filename: '[name].wxapp.js',
+    path: path.join(__dirname, '../miniprogram'),
+    filename: '[name].js',
     library: 'qcharts',
     libraryExport: 'default',
     libraryTarget: 'umd'

@@ -3,6 +3,7 @@
   "version": "0.1.10",
   "description": "A visulization library based on spritejs and sprite-extend-shapes",
   "main": "lib/index.js",
+  "miniprogram": "miniprogram",
   "scripts": {
     "start": "npm run dev:doc",
     "dev:doc": "cross-env DEV_MODE=doc webpack-dev-server --config ./build/webpack.conf.dev.js",

@@ -19,7 +19,7 @@ export class Plot {
   initScene(container, opts) {
     if (!isWeixinApp() && opts.forceFit) {
       opts.viewport = 'auto'
-    } else if (!isWeixinApp()) {
+    } else {
       opts.viewport = opts.size ? opts.size : [opts.width, opts.height]
     }
 
@@ -30,7 +30,8 @@ export class Plot {
       }
      */
     if (isWeixinApp()) {
-      this.scene = new Scene(opts)
+      let [width, height] = opts.viewport;
+      this.scene = new Scene(Number(width) || null, Number(height) || null);
     } else {
       this.scene = new Scene(container, {
         displayRatio: 'auto',
