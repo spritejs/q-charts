@@ -708,7 +708,11 @@
 
 "@spritejs/shapes@^1.1.2":
   version "1.1.2"
+<<<<<<< HEAD
   resolved "https://registry.npmjs.org/@spritejs/shapes/-/shapes-1.1.2.tgz#1d1ccffbcff0da79d932d11a7ff82158b977e583"
+=======
+  resolved "https://registry.yarnpkg.com/@spritejs/shapes/-/shapes-1.1.2.tgz#1d1ccffbcff0da79d932d11a7ff82158b977e583"
+>>>>>>> e292c4013aec1aab9c5697d8607640af7a1e85db
   dependencies:
     "@babel/runtime" "^7.2.0"
     sprite-draggable "0.1.15"
@@ -6605,7 +6609,11 @@ sprite-draggable@0.1.15:
 
 sprite-extend-shapes@^1.0.6:
   version "1.1.0"
+<<<<<<< HEAD
   resolved "https://registry.npmjs.org/sprite-extend-shapes/-/sprite-extend-shapes-1.1.0.tgz#816afb3508f2993e1f84f53a8cd6726d5f086261"
+=======
+  resolved "https://registry.yarnpkg.com/sprite-extend-shapes/-/sprite-extend-shapes-1.1.0.tgz#816afb3508f2993e1f84f53a8cd6726d5f086261"
+>>>>>>> e292c4013aec1aab9c5697d8607640af7a1e85db
   dependencies:
     "@babel/runtime" "^7.2.0"
     sprite-draggable "0.1.15"

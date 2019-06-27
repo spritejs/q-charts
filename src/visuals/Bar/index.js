@@ -49,7 +49,7 @@ export class Bar extends BaseVisual {
       bar.index = i
       const normalState = this.style('pillar')(bar, bar.dataOrigin, bar.index)
       Object.assign(bar, normalState)
-      bar.color = bar.fillColor
+      bar.strokeColor = bar.fillColor
     })
     result.groupData.forEach((bar, i) => {
       bar.index = i
@@ -131,79 +131,85 @@ export class Bar extends BaseVisual {
   render(data) {
     return (
       <Group zIndex={100} enableCache={false}>
-        {data.groupData.map((pillar, i) => {
-          const normalState = this.style('backgroundPillar')(
-            pillar,
-            pillar.dataOrigin,
-            pillar.index
-          )
-          if (normalState === false) {
-            return
-          }
-          return (
-
-            <Sprite
-              {...pillar}
-              {...normalState}
-              hoverState={Object.assign(
-                { opacity: 0.05 },
-                this.style('backgroundpillar:hover')(
-                  pillar,
-                  pillar.dataOrigin,
-                  pillar.index
-                )
-              )}
-              onMouseenter={(_, el) =>
-                !this.attr('mouseDisabled') && el.attr('state', 'hover')
-              }
-              onMousemove={(evt, el) => {
-                !this.attr('mouseDisabled') &&
-                    this.showTooltip(evt, pillar.rects)
-              }}
-              onMouseleave={(evt, el) => {
-                if (!this.attr('mouseDisabled')) {
-                  this.hideTooltip()
-                  el.attr('state', 'normal')
-                }
-              }}
-            />
-          )
-        })}
-        {data.barData.map((pillar, i) => {
-          const { from, to } = this.fromTos[i]
-          return (
-            <Group enableCache={false}>
-              <Rect
+        <Group>
+          {data.groupData.map((pillar, i) => {
+            const normalState = this.style('backgroundPillar')(
+              pillar,
+              pillar.dataOrigin,
+              pillar.index
+            )
+            if (normalState === false) {
+              return
+            }
+            return (
+              <Sprite
                 {...pillar}
-                {...from}
-                animation={this.resolveAnimation({
-                  from,
-                  to,
-                  duration: 300,
-                  delay: 0,
-                  attrFormatter: attr => {
-                    return Object.assign(attr, {
-                      size: [Math.round(attr.size[0]), Math.round(attr.size[1])]
-                    })
-                  },
-                  useTween: true
-                })}
-                hoverState={this.style('pillar:hover')(
-                  pillar,
-                  pillar.dataOrigin,
-                  pillar.index
+                {...normalState}
+                hoverState={Object.assign(
+                  { opacity: 0.05 },
+                  this.style('backgroundpillar:hover')(
+                    pillar,
+                    pillar.dataOrigin,
+                    pillar.index
+                  )
                 )}
                 onMouseenter={(_, el) =>
                   !this.attr('mouseDisabled') && el.attr('state', 'hover')
                 }
+                onMousemove={(evt, el) => {
+                  !this.attr('mouseDisabled') &&
+                    this.showTooltip(evt, pillar.rects)
+                }}
                 onMouseleave={(evt, el) => {
-                  !this.attr('mouseDisabled') && el.attr('state', 'normal')
+                  if (!this.attr('mouseDisabled')) {
+                    this.hideTooltip()
+                    el.attr('state', 'normal')
+                  }
                 }}
               />
-              {withText(this, pillar)}
-            </Group>
-          )
-        })}
+            )
+          })}
+        </Group>
+        <Group>
+          {data.barData.map((pillar, i) => {
+            const { from, to } = this.fromTos[i]
+            return (
+              <Group enableCache={false}>
+                <Rect
+                  {...pillar}
+                  {...from}
+                  animation={this.resolveAnimation({
+                    from,
+                    to,
+                    duration: 300,
+                    delay: 0,
+                    attrFormatter: attr => {
+                      return Object.assign(attr, {
+                        size: [
+                          Math.round(attr.size[0]),
+                          Math.round(attr.size[1])
+                        ]
+                      })
+                    },
+                    useTween: true
+                  })}
+                  hoverState={this.style('pillar:hover')(
+                    pillar,
+                    pillar.dataOrigin,
+                    pillar.index
+                  )}
+                  onMouseenter={(_, el) =>
+                    !this.attr('mouseDisabled') && el.attr('state', 'hover')
+                  }
+                  onMouseleave={(evt, el) => {
+                    !this.attr('mouseDisabled') && el.attr('state', 'normal')
+                  }}
+                />
+                {withText(this, pillar)}
+              </Group>
+            )
+          })}
+        </Group>
       </Group>
     )
   }

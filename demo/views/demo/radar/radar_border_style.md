@@ -36,14 +36,14 @@ const radar = new Radar()
 radar
   .style('section', (attr, data, i) => {
     if (i === 0) {
-      return { lineWidth: 2, color: '#f77' }
+      return { lineWidth: 2, strokeColor: '#f77' }
     } else {
       return { lineDash: [2, 10] }
     }
   })
   .style('section:hover', (attr, data, i) => ({
-    lineWidth: attr.lineWidth + 2,
-    color: 'red'
+    lineWidth: 4,
+    strokeColor: 'red'
   }))
 
 chart.add(radar)

@@ -224,7 +224,7 @@ export class Line extends BaseVisual {
             let color = line.data[0].color || this.color(i)
             let lineAttrs = { strokeColor: color, lineWidth: 2 }
             let cusAttrs = this.style('line')(lineAttrs, line.data.map(item => item.dataOrigin), i)
-            let smybolAttrs = { anchor: [0.5], fillColor: color }
+            let smybolAttrs = { fillColor: color }
             let { smooth } = this.attr();
             Object.assign(lineAttrs, cusAttrs)
             return (

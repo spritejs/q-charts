@@ -55,7 +55,7 @@ export class Scatter extends BaseVisual {
       const color = this.color(i)
       const fillColor = hexToRgba(color, 0.3)
       d.forEach(di => {
-        di.color = color
+        di.strokeColor = color
         di.fillColor = fillColor
       })
     })
@@ -138,8 +138,7 @@ export class Scatter extends BaseVisual {
       return
     }
     if ((labelField && dataOrigin.hasOwnProperty(labelField)) || style) {
-      // eslint-disable-next-line
-      const { fillColor, ...other } = attr
+      const { strokeColor, ...other } = attr
       const { size, lineWidth = 0 } = normalStyle
       const text = dataOrigin[labelField]
       const renderText = (style && style.text) || text
@@ -150,7 +149,7 @@ export class Scatter extends BaseVisual {
         translate[1] = size + lineWidth + 10
       }
       return <Label
-        {...{ ...other, text, translate, anchor: [0.5, 0.5], fontSize: '12px' }}
+        {...{ ...other, fillColor: strokeColor, text, translate, anchor: [0.5, 0.5], fontSize: '12px' }}
         animation={this.resolveAnimation(animation)}
         {...style}
         hoverState={this.style('label:hover')(attr, attr.dataOrigin, i)}
@@ -167,7 +166,7 @@ export class Scatter extends BaseVisual {
     const guildLine = []
     const attr = {
       points: [[0, 0], [0, 0]],
-      color: '#ddd',
+      strokeColor: '#ddd',
       lineWidth: 1
     }
     for (let i = 0; i < 2; i++) {
@@ -250,7 +249,6 @@ export class Scatter extends BaseVisual {
               this.chart.setCanvasCursor('default')
             }} />
           {this.renderLabel(attr, normalStyle, animation, index)}
-          {this.renderGuideLine()}
         </Group>
       })
     })
@@ -266,6 +264,9 @@ export class Scatter extends BaseVisual {
       <Group size={size} padding={padding} zIndex={100} clipOverflow={false}>
         {
           this.renderScatter(data)
+        }
+        {
+          this.renderGuideLine()
         }
       </Group>
     )
