@@ -39,7 +39,11 @@ export class Plot {
       })
     }
     const layerID = opts.layer || 'default'
-    this.layer = this.scene.layer(layerID)
+    if (isWeixinApp()) {
+      this.layer = this.scene.layer(layerID, opts.component)
+    } else {
+      this.layer = this.scene.layer(layerID)
+    }
 
     if (isDev) {
       this.layer.on('update', debounce(() => {

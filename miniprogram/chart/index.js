@@ -1,6 +1,8 @@
 const spritejs = require('@spritejs/wxapp'); // eslint-disable-line no-unused-vars
 const { Chart } = require('../index');
 
+const info = wx.getSystemInfoSync();
+
 /* globals Component: true */
 Component({
   properties: {
@@ -14,7 +16,7 @@ Component({
     },
     height: {
       type: Number,
-      value: wx.getSystemInfoSync().windowHeight,
+      value: 750 * info.windowHeight / info.windowWidth,
     },
     eventOffset: {
       type: Array,
@@ -33,29 +35,32 @@ Component({
       });
     },
     onTouchStart(event) {
-      this.chart.scene.delegateEvent(event, this.data.eventOffset);
+      this.scene.delegateEvent(event, this.data.eventOffset);
     },
     onTouchMove(event) {
-      this.chart.scene.delegateEvent(event, this.data.eventOffset);
+      this.scene.delegateEvent(event, this.data.eventOffset);
     },
     onTouchEnd(event) {
-      this.chart.scene.delegateEvent(event, this.data.eventOffset);
+      this.scene.delegateEvent(event, this.data.eventOffset);
     },
     onTap(event) {
-      this.chart.scene.delegateEvent(event, this.data.eventOffset);
+      this.scene.delegateEvent(event, this.data.eventOffset);
     },
     onLongPress(event) {
-      this.chart.scene.delegateEvent(event, this.data.eventOffset);
+      this.scene.delegateEvent(event, this.data.eventOffset);
     },
   },
   ready() {
     if (!this.data.eventOffset) this.updateEventOffset();
+
     const chart = new Chart({
       container: '#app',
+      component: this,
       layer: this.data.chartId,
       size: [this.data.width, this.data.height],
     });
     this.triggerEvent('ChartCreated', { chart });
     this.chart = chart;
+    this.scene = chart.layer.parent;
   },
 });

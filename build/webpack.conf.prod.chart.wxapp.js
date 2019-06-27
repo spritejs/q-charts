@@ -24,6 +24,8 @@ common.plugins[1] = new Happypack({
   verbose: false
 });
 
+common.resolve.alias['@spritejs/shapes'] = '@spritejs/shapes/dist/sprite-extend-shapes.nobrowser.js';
+
 module.exports = merge(common, {
   entry: {
     index: path.resolve(__dirname, '../src/')
