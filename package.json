@@ -10,7 +10,7 @@
     "dev:demo": "webpack-dev-server --config ./build/webpack.conf.dev.js",
     "build": "npm run build:docs && npm run build:chart && echo 'Build successfully!'",
     "build:chart": "rimraf lib && cross-env NODE_ENV=production webpack --config ./build/webpack.conf.prod.chart.js",
-    "build:wxapp": "rimraf lib && cross-env NODE_ENV=production webpack --config ./build/webpack.conf.prod.chart.wxapp.js",
+    "build:wxapp": "cross-env NODE_ENV=production webpack --config ./build/webpack.conf.prod.chart.wxapp.js",
     "build:chart:rollup": "rollup -c rollup.config.js",
     "build:docs": "rimraf docs && cross-env NODE_ENV=production webpack --config ./build/webpack.conf.prod.docs.js",
     "prepublishOnly": "npm run build:chart",
