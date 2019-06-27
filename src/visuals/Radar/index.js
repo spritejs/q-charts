@@ -79,7 +79,7 @@ export class Radar extends BaseVisual {
     sectionAttrs.forEach((s, i) => {
       const color = this.color(i)
       const fillColor = hexToRgba(color, 0.3)
-      s.color = color
+      s.strokeColor = color
       s.fillColor = fillColor
     })
 
@@ -177,7 +177,7 @@ export class Radar extends BaseVisual {
   createBgGridEl(attr, GridShape) {
     return <GridShape
       {...attr}
-      color={'transparent'}
+      strokeColor={'transparent'}
       onMousemove={(evt, el) => {
         Promise.resolve().then(_ => {
           const targetSprites = evt.targetSprites
@@ -422,14 +422,15 @@ export class Radar extends BaseVisual {
       if (attrs.disabled) {
         return
       }
-      const { points, dataOrigin, color } = attrs
+      const { points, dataOrigin, strokeColor } = attrs
       let prePoints
       if (this.$areaEl[index]) {
         prePoints = this.$areaEl[index].attr().points
       }
       return points.map((point, i) => {
         let attr = {
-          fillColor: color,
+          fillColor: strokeColor,
+          strokeColor,
           radius: 3,
           dataOrigin: dataOrigin[i],
           anchor: [0.5, 0.5]

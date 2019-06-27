@@ -76,7 +76,7 @@ export default function layout(
       points: [[0, 0], point],
       lineWidth: 1,
       lineDash: [3, 2],
-      color: '#DDE0E5',
+      strokeColor: '#DDE0E5',
       label,
       labelPos,
       radian: currentRadian,
@@ -118,7 +118,7 @@ export default function layout(
       index: i,
       opacity: 1,
       lineWidth: 1,
-      color: '#DDE0E5',
+      strokeColor: '#DDE0E5',
       close: true,
       $elType: 'grid'
     })
