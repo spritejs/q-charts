@@ -58,11 +58,11 @@ line.style('point:hover',  function(attrs,data,i,j){ //设置symbol样式
 .style('guideline',{fillColor:'#ff0'})
 .style('line',function(attrs,data,i){
   if(i===1){
-    return {color:'#00fafc'}
+    return {strokeColor:'#00fafc'}
   }
 })
 .style('line:hover',function(attrs,data,i){
-  return {color:'#fa3300'}
+  return {strokeColor:'#fa3300'}
 })
 
 const legend = new Legend({ align: ['center', 'bottom'] })
