@@ -88,7 +88,7 @@ export class Chart extends BaseNode {
   }
 
   setCanvasCursor(type = 'default') {
-    this.canvas.style.cursor = type
+    if (this.canvas) this.canvas.style.cursor = type
   }
 
   getSize() {
