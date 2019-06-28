@@ -20,6 +20,7 @@ export const qcharts = {
   ...plugins
 }
 
-getGlobal().qcharts = qcharts
+const global = getGlobal();
+global.qcharts = qcharts
 
 export default qcharts

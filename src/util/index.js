@@ -53,3 +53,23 @@ export const convertPercent2Number = (percent, base) => {
 }
 
 export { scaleLinear } from './q-scale'
+
+function now() {
+  return typeof performance !== 'undefined' ? performance.now() : Date.now()
+}
+
+let requestAnimationFrame = global.requestAnimationFrame;
+let cancelAnimationFrame = global.cancelAnimationFrame;
+if (!requestAnimationFrame) {
+  const startTime = now();
+  requestAnimationFrame = (fn) => {
+    return setTimeout(() => {
+      fn(now() - startTime)
+    }, 16)
+  }
+  cancelAnimationFrame = (id) => {
+    return clearTimeout(id)
+  }
+}
+
+export { now, requestAnimationFrame, cancelAnimationFrame }

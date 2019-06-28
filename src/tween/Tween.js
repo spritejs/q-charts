@@ -1,8 +1,4 @@
-import { interpolate, delay } from '../util'
-
-function now() {
-  return typeof performance !== 'undefined' ? performance.now() : Date.now();
-}
+import { interpolate, delay, now, requestAnimationFrame, cancelAnimationFrame } from '../util'
 
 function Tween(val) {
   this._start = val
