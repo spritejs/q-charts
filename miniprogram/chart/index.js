@@ -8,7 +8,7 @@ Component({
   properties: {
     chartId: {
       type: String,
-      value: 'q-chart',
+      value: `q-chart:${Math.random().toString(16).slice(2, 10)}`,
     },
     width: {
       type: Number,
