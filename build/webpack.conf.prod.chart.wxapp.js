@@ -51,11 +51,11 @@ module.exports = merge(common, {
   },
   externals: {
     spritejs: {
-      root: './sprite-wxapp.js',
-      commonjs2: './sprite-wxapp.js',
-      commonjs: './sprite-wxapp.js',
-      amd: './sprite-wxapp.js',
-      umd: './sprite-wxapp.js'
+      root: '@spritejs/wxapp',
+      commonjs2: '@spritejs/wxapp',
+      commonjs: '@spritejs/wxapp',
+      amd: '@spritejs/wxapp',
+      umd: '@spritejs/wxapp'
     }
   }
   // plugins: [new BundleAnalyzer()]
