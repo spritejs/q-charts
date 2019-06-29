@@ -1,22 +1,12 @@
 const spritejs = require('@spritejs/wxapp'); // eslint-disable-line no-unused-vars
 const { Chart } = require('../index');
 
-const info = wx.getSystemInfoSync();
-
 /* globals Component: true */
 Component({
   properties: {
     chartId: {
       type: String,
-      value: `q-chart:${Math.random().toString(16).slice(2, 10)}`,
-    },
-    width: {
-      type: Number,
-      value: 750,
-    },
-    height: {
-      type: Number,
-      value: 750 * info.windowHeight / info.windowWidth,
+      value: 'q-chart',
     },
   },
   methods: {
@@ -56,14 +46,18 @@ Component({
   ready() {
     this.getBoundingClientRect = wx.createSelectorQuery().in(this)
       .select('.chart-layout').boundingClientRect();
-    const chart = new Chart({
-      container: '#app',
-      component: this,
-      layer: this.data.chartId,
-      size: [this.data.width, this.data.height],
+
+    this.getBoundingClientRect.exec(([rect]) => {
+      const chart = new Chart({
+        container: '#app',
+        component: this,
+        layer: this.data.chartId,
+        size: [rect.width, rect.height],
+      });
+      this.chart = chart;
+      this.scene = chart.layer.parent;
+
+      this.triggerEvent('ChartCreated', { chart });
     });
-    this.triggerEvent('ChartCreated', { chart });
-    this.chart = chart;
-    this.scene = chart.layer.parent;
   },
 });

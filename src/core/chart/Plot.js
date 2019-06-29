@@ -31,7 +31,8 @@ export class Plot {
      */
     if (isWeixinApp()) {
       let [width, height] = opts.viewport;
-      this.scene = new Scene(Number(width) || null, Number(height) || null);
+      let pixelRatio = opts.pixelRatio || 'px';
+      this.scene = new Scene(Number(width) || null, Number(height) || null, pixelRatio);
     } else {
       this.scene = new Scene(container, {
         displayRatio: 'auto',
