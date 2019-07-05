@@ -19,4 +19,9 @@ export default [
     path: 'stack',
     component: () => import('./stack-bar.md')
   }
+  // {
+  //   title: '数据更新',
+  //   path: 'update',
+  //   component: () => import('./update-bar.md')
+  // }
 ]

@@ -1,0 +1,9 @@
+<view class="chart-layout"
+  bindtouchstart="onTouchStart"
+  bindtouchmove="onTouchMove"
+  bindtouchend="onTouchEnd"
+  bindtap="onTap"
+  bindlongpress="onLongPress"
+>
+  <canvas canvas-id="{{chartId}}" disable-scroll="true"></canvas>
+</view>

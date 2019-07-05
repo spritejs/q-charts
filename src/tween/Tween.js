@@ -1,4 +1,4 @@
-import { interpolate, delay } from '../util'
+import { interpolate, delay, now, requestAnimationFrame, cancelAnimationFrame } from '../util'
 
 function Tween(val) {
   this._start = val
@@ -94,7 +94,7 @@ Tween.prototype = {
     return new Promise(resolve => {
       const step = () => {
         // 每次加一帧，保证帧数是对的，不在乎到底消耗多长时间
-        elapseTime = performance.now() - startTime
+        elapseTime = now() - startTime
         const t = e(Math.min(1.0, elapseTime / animateTime))
 
         if (elapseTime >= animateTime) {
@@ -108,7 +108,7 @@ Tween.prototype = {
       }
 
       const start = () => {
-        startTime = performance.now()
+        startTime = now()
         this._onStart(this._start, this._end)
         timer = requestAnimationFrame(step)
       }

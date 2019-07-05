@@ -106,7 +106,12 @@ export function resolveStyle(el, attrs) {
     const originAttrs = Object.assign({}, el.attr(), attrs)
 
     Object.keys(inputState).forEach(key => {
-      normal[key] = originAttrs[key]
+      if (!(key in originAttrs)) {
+        console.warn(`Set invalid attribute '${key}' to ${el.nodeName}.`);
+        normal[key] = inputState[key];
+      } else {
+        normal[key] = originAttrs[key]
+      }
     })
 
     a[stateName] = inputState

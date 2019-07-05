@@ -81,4 +81,76 @@ chart.render()
 
 <img src="https://p0.ssl.qhimg.com/d/inn/717a6a22789a/base-line.png" width="400">
 
+## 微信小程序
 
+从v0.1.11开始支持微信小程序，使用方法是：
+
+通过NPM安装@spritejs/wxapp和@qcharts/core
+
+```bash
+npm install @spritejs/wxapp @qcharts/core --save
+```
+
+然后在微信小程序中[构建 NPM 包](https://developers.weixin.qq.com/miniprogram/dev/devtools/npm.html)。
+
+安装并构建之后，在app.json中配置chart组件：
+
+```json
+  "usingComponents": {
+    "q-chart": "@qcharts/core/chart"
+  }
+```
+
+然后在要使用的页面引入组件：
+
+```xml
+<view>
+  <q-chart id="container" chartId="my-chart"
+    bindChartCreated="onChartCreated"
+  ></q-chart>
+</view>
+```
+
+chartId在当前page中必须唯一。
+
+bindChartCreated事件处理中通过参数可以获得创建好的chart对象：
+
+```js
+const qcharts = require('@qcharts/core');
+
+Page({
+  onChartCreated({detail: {chart}}) {
+    const data = [
+      {label: '分类一', category: '类别一', value: 19},
+      {label: '分类二', category: '类别一', value: 74},
+      {label: '分类三', category: '类别一', value: 40},
+      {label: '分类四', category: '类别一', value: 46},
+      {label: '分类五', category: '类别一', value: 30},
+      {label: '分类六', category: '类别一', value: 62},
+
+      {label: '分类一', category: '类别二', value: 69},
+      {label: '分类二', category: '类别二', value: 14},
+      {label: '分类三', category: '类别二', value: 70},
+      {label: '分类四', category: '类别二', value: 26},
+      {label: '分类五', category: '类别二', value: 50},
+      {label: '分类六', category: '类别二', value: 52},
+    ];
+
+    const {Radar, Legend} = qcharts;
+
+    chart.source(data, {
+      row: 'category',
+      value: 'value',
+      text: 'label',
+    });
+
+    const radar = new Radar();
+
+    radar.style('point', false);
+
+    const legend = new Legend({align: ['center', 'bottom']});
+    chart.add([radar, legend]);
+    chart.render();
+  },
+});
+```

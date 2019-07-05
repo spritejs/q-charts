@@ -19,7 +19,7 @@ export class Plot {
   initScene(container, opts) {
     if (!isWeixinApp() && opts.forceFit) {
       opts.viewport = 'auto'
-    } else if (!isWeixinApp()) {
+    } else {
       opts.viewport = opts.size ? opts.size : [opts.width, opts.height]
     }
 
@@ -30,7 +30,9 @@ export class Plot {
       }
      */
     if (isWeixinApp()) {
-      this.scene = new Scene(opts)
+      let [width, height] = opts.viewport;
+      let pixelRatio = opts.pixelRatio || 'px';
+      this.scene = new Scene(Number(width) || null, Number(height) || null, pixelRatio);
     } else {
       this.scene = new Scene(container, {
         displayRatio: 'auto',
@@ -38,7 +40,11 @@ export class Plot {
       })
     }
     const layerID = opts.layer || 'default'
-    this.layer = this.scene.layer(layerID)
+    if (isWeixinApp()) {
+      this.layer = this.scene.layer(layerID, opts.component)
+    } else {
+      this.layer = this.scene.layer(layerID)
+    }
 
     if (isDev) {
       this.layer.on('update', debounce(() => {

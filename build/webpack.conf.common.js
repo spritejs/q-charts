@@ -67,7 +67,6 @@ module.exports = {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       '@': path.resolve(__dirname, '../src/'),
-      'sprite-extend-shapes': '@spritejs/shapes',
     }
   },
   plugins: [

@@ -13,7 +13,7 @@ export default function funnelLayout() {
     const POLYGON_NUM = computerLegend(data) // 图例显示个数
     let flag = 0 // 计算当前polygon前面有几个被隐藏
     for (let i = 0, len = data.length; i < len; i++) {
-      let polygon = { points: [] }
+      let polygon = { strokeColor: 'transparent', points: [] }
       const value = data[i][0].__valueGetter__()
       let offset = 0
       let textAnchor = [0, 0.5]

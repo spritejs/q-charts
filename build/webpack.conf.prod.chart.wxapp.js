@@ -24,14 +24,16 @@ common.plugins[1] = new Happypack({
   verbose: false
 });
 
+common.resolve.alias['@spritejs/shapes'] = '@spritejs/shapes/dist/sprite-extend-shapes.nobrowser.js';
+
 module.exports = merge(common, {
   entry: {
     index: path.resolve(__dirname, '../src/')
   },
   devtool: 'source-map',
   output: {
-    path: path.join(__dirname, '../lib'),
-    filename: '[name].wxapp.js',
+    path: path.join(__dirname, '../miniprogram'),
+    filename: '[name].js',
     library: 'qcharts',
     libraryExport: 'default',
     libraryTarget: 'umd'
@@ -49,11 +51,11 @@ module.exports = merge(common, {
   },
   externals: {
     spritejs: {
-      root: './sprite-wxapp.js',
-      commonjs2: './sprite-wxapp.js',
-      commonjs: './sprite-wxapp.js',
-      amd: './sprite-wxapp.js',
-      umd: './sprite-wxapp.js'
+      root: '@spritejs/wxapp',
+      commonjs2: '@spritejs/wxapp',
+      commonjs: '@spritejs/wxapp',
+      amd: '@spritejs/wxapp',
+      umd: '@spritejs/wxapp'
     }
   }
   // plugins: [new BundleAnalyzer()]
