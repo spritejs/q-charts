@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="desr">QCharts 是一个基于 <a href="https://www.spritejs.com/">spritejs</a> 封装的图表库，可以让用户以组件的形式组合出各种图表。如果你使用Vue或者React，可以使用 <a href="https://www.spritejs.com/cat-charts-vue/">CatChart-Vue</a> 或 <a href="https://www.spritejs.com/cat-charts-react/">CatChart-React</a> </div>
+    <div class="desr">QCharts 是一个基于 <a href="https://www.spritejs.com/">spritejs</a> 封装的图表库，可以让用户以组件的形式组合出各种图表。如果你使用Vue或者React，可以使用 <a href="https://www.spritejs.com/cat-charts-vue/">CatCharts-Vue</a> 或 <a href="https://www.spritejs.com/cat-charts-react/">CatCharts-React</a> </div>
     <section class="intro">
       <h5>折线图</h5>
       <ul>
