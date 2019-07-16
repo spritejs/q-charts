@@ -16,20 +16,11 @@ const version = require('../package.json').version
 export const qcharts = {
   version,
   ...core,
-  use(target) {
-    if (!target) {
-      return
-    }
-
-    if (target.install && typeof install === 'function') {
-      target.install(qcharts)
-    }
-  },
   ...visuals,
   ...plugins
 }
 
-const global = getGlobal();
+const global = getGlobal()
 global.qcharts = qcharts
 
 export default qcharts
