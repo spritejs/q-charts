@@ -11,7 +11,7 @@ const data = [
   { date: '05-05',catgory:'图例一', sales: 55.2 },
   { date: '05-06',catgory:'图例一', sales: 75.2 },
   { date: '05-07',catgory:'图例一', sales: 95.2 },
-  { date: '05-08',catgory:'图例一'},
+  { date: '05-08',catgory:'图例一',sales:100},
 ]
 
 const { Chart, Line, Legend, Tooltip, Axis } = qcharts
@@ -26,7 +26,7 @@ chart.source(data, {
   text: 'date'
 })
 
-const line = new Line({smooth:true})
+const line = new Line()
 line.style('point',{strokeColor:'#fff'})
 
 const tooltip = new Tooltip({
