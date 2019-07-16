@@ -1,4 +1,4 @@
-import { Group, Polyline, Rect, Polygon } from 'spritejs'
+import { Group, Polyline, Rect, Polygon, Label } from 'spritejs'
 import { BaseVisual } from '../../core'
 import { layout } from './layout'
 import { mergeStyle } from '../../util/merge-style'
@@ -265,6 +265,15 @@ export class Line extends BaseVisual {
                   return (
                     this._getSymbol(smybolAttrs, item, line.data[j].dataOrigin, i, j)
                   )
+                })}
+                {line.points.map((item, j) => {
+                  let labelAttrs = { color }
+                  let cusAttrs = this.style('label')(labelAttrs, line.data.map(item => item.dataOrigin), j)
+                  if (cusAttrs) {
+                    return (
+                      <Label pos={item.point} {...cusAttrs}/>
+                    )
+                  }
                 })}
               </Group>
             )
