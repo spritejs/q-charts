@@ -117,7 +117,7 @@ export class RadialBar extends BaseVisual {
 
   beforeUpdate() {
     super.beforeUpdate()
-    const { startAngle, endAngle } = this.attr('')
+    const { startAngle } = this.attr('')
     let data = flattern(this.getData())
     data = this.transform(data)
     this.animators = data.map((d, i) => {

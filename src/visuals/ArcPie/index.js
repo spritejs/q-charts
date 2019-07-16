@@ -3,10 +3,6 @@ import { Pie } from '../Pie'
 import { isFunction } from '../../util'
 
 export class ArcPie extends Pie {
-  constructor(attrs) {
-    super(attrs)
-  }
-
   getDefaultAttrs() {
     return Object.assign({}, super.getDefaultAttrs(), {
       lineWidth: 10,
