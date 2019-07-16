@@ -44,5 +44,11 @@ export default [
     title: '仪表盘',
     path: 'gauge',
     component: () => import('./Gauge.md')
+  },
+
+  {
+    title: '玉玦图',
+    path: 'radialBar',
+    component: () => import('./RadialBar.md')
   }
 ]

@@ -1,221 +1,87 @@
-## 极坐标系下堆叠柱状图
+## 玉玦图
 
 :::demo
 
 ```javascript
 const data = [
   {
-    year: '2014',
-    type: '生活用品',
-    value: 1088
+    type: '政法干部',
+    count: 6654
   },
+
   {
-    year: '2014',
-    type: '医疗保健',
-    value: 1685
+    type: '平安志愿者',
+    count: 5341
   },
+
   {
-    year: '2014',
-    type: '教育文化',
-    value: 1853
+    type: '人民调解员',
+    count: 3546
   },
+
   {
-    year: '2014',
-    type: '交通通信',
-    value: 2267
+    type: '心理咨询师',
+    count: 4321
   },
+
   {
-    year: '2014',
-    type: '其他',
-    value: 900
+    type: '法律工作者',
+    count: 3923
   },
+
   {
-    year: '2015',
-    type: '生活用品',
-    value: 1288
-  },
-  {
-    year: '2015',
-    type: '医疗保健',
-    value: 1885
-  },
-  {
-    year: '2015',
-    type: '教育文化',
-    value: 2053
-  },
-  {
-    year: '2015',
-    type: '交通通信',
-    value: 2140
-  },
-  {
-    year: '2015',
-    type: '其他',
-    value: 1036
-  },
-  {
-    year: '2016',
-    type: '生活用品',
-    value: 1188
-  },
-  {
-    year: '2016',
-    type: '医疗保健',
-    value: 1485
-  },
-  {
-    year: '2016',
-    type: '教育文化',
-    value: 2353
-  },
-  {
-    year: '2016',
-    type: '交通通信',
-    value: 2018
-  },
-  {
-    year: '2016',
-    type: '其他',
-    value: 975
+    type: '网格员',
+    count: 5345
   }
-]
+].sort((a, b) => b.count - a.count)
 
-const { Plot, Chart, Tooltip } = qcharts
+const { Chart, RadialBar, Legend, Tooltip } = qcharts
 
-const plot = new Plot('.block-demo .demo', {})
+const chart = new Chart({
+  container: '#app'
+})
 
-const chart = new Chart()
+chart.source(data, {
+  row: 'type',
+  value: 'count'
+})
 
-chart.setTitle('各年度生活各类开销一览', { color: 'red' })
+const radialBar = new RadialBar({
+  pos: ['-10%', '10%'],
+  min: 0,
+  max: 10000,
+  radius: 0.6,
+  innerRadius: 0.1,
+  lineWidth: 10
+})
 
-const radial = chart
-  .radialBar({
-    radius: 0.6,
-    innerRadius: 0.2,
-    padAngle: 0
-  })
-  .source(data)
-  .setDataFields({ x: 'year', y: 'value' })
-  .useStyle('hover', { opacity: 0.5 })
-chart.addPlugin(
-  new Tooltip({ lineHight: 22 }).formatter(data => {
-    return `\n${data.year}: ${data.type} 支出 ${data.value}`
-  })
-)
+// radialBar.color(['rgba(195,51,51,1)', 'rgba(147,8,207,1)', 'rgba(79,24,217,1)', 'rgba(0,95,239,1)', 'rgba(26,216,210,1)', 'rgba(0,38,202,1)',])
 
-plot.addChart(chart)
-plot.render()
-```
+radialBar.style('arc', { lineCap: 'round', anticlockwise: true })
 
-:::
-
-:::demo
-
-```javascript
-const data = [
-  {
-    year: '2014',
-    type: '生活用品',
-    value: 1088
-  },
-  {
-    year: '2014',
-    type: '医疗保健',
-    value: 1685
-  },
-  {
-    year: '2014',
-    type: '教育文化',
-    value: 1853
-  },
-  {
-    year: '2014',
-    type: '交通通信',
-    value: 2267
-  },
-  {
-    year: '2014',
-    type: '其他',
-    value: 900
-  },
-  {
-    year: '2015',
-    type: '生活用品',
-    value: 1288
-  },
-  {
-    year: '2015',
-    type: '医疗保健',
-    value: 1885
-  },
-  {
-    year: '2015',
-    type: '教育文化',
-    value: 2053
-  },
-  {
-    year: '2015',
-    type: '交通通信',
-    value: 2140
-  },
-  {
-    year: '2015',
-    type: '其他',
-    value: 1036
-  },
-  {
-    year: '2016',
-    type: '生活用品',
-    value: 1188
-  },
-  {
-    year: '2016',
-    type: '医疗保健',
-    value: 1485
-  },
-  {
-    year: '2016',
-    type: '教育文化',
-    value: 2353
-  },
-  {
-    year: '2016',
-    type: '交通通信',
-    value: 2018
-  },
-  {
-    year: '2016',
-    type: '其他',
-    value: 975
+const legend = new Legend({
+  orient: 'vertical',
+  align: ['right', 'center'],
+  formatter: (_, i) => {
+    let d = data[i]
+    return (
+      `${d.type}` +
+      Array(8 - d.type.length)
+        .fill(`   `)
+        .join('') +
+      `${d.count}`
+    )
   }
-]
+})
+legend.style('icon', (attrs, d, i) => ({
+  marginTop: i > 0 ? 10 : 0
+}))
+legend.style('text', (attrs, d, i) => ({
+  marginTop: i > 0 ? 10 : 0
+}))
 
-const { Plot, Chart, Tooltip } = qcharts
-
-const plot = new Plot('.block-demo:nth-of-type(2) .demo', {})
-
-const chart = new Chart()
-
-chart.setTitle('生活各类开销各年度一览', { color: 'red' })
-
-const radial = chart
-  .radialBar({
-    radius: 0.6,
-    innerRadius: 0.2,
-    padAngle: 0
-  })
-  .source(data)
-  .setDataFields({ x: 'type', y: 'value' })
-  .useStyle('hover', { opacity: 0.5 })
-chart.addPlugin(
-  new Tooltip({ lineHight: 22 }).formatter(data => {
-    return `\n${data.year}: ${data.type} 支出 ${data.value}`
-  })
-)
-
-plot.addChart(chart)
-plot.render()
+chart.add([radialBar, legend])
+chart.render()
 ```
 
 :::
