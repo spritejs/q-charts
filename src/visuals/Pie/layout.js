@@ -10,16 +10,18 @@ const attachPadAngleOfArr = (arr, padAngle = 0) => {
   // 设置 padAngle
   const maxPadAngle = Math.min.apply(
     null,
-    arr.map(a => a.endAngle - a.startAngle)
+    arr.filter(d => !d.disabled).map(a => a.endAngle - a.startAngle)
   )
 
-  if (padAngle > 0) {
+  if (padAngle >= 0) {
     padAngle = padAngle > maxPadAngle ? maxPadAngle / 2 : padAngle
 
-    arr.forEach(a => {
-      a.startAngle += padAngle / 2
-      a.endAngle -= padAngle / 2
-    })
+    arr
+      .filter(d => !d.disabled)
+      .forEach(a => {
+        a.startAngle += padAngle / 2
+        a.endAngle -= padAngle / 2
+      })
   }
 }
 

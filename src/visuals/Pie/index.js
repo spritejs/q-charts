@@ -45,6 +45,13 @@ export class Pie extends BaseVisual {
     return innerRadius <= 0 ? 0 : (this.maxOuterRadius / radius) * innerRadius
   }
 
+  get center() {
+    const { size } = this.attr()
+    const [width, height] = size
+    let [x, y] = [width / 2, height / 2]
+    return [x, y]
+  }
+
   get pos() {
     const { startAngle, endAngle, radius, size } = this.attr()
     const angle = (endAngle + startAngle) / 2

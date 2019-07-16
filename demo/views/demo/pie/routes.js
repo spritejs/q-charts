@@ -27,6 +27,12 @@ export default [
     title: '南丁格尔玫瑰图',
     path: 'rose',
     component: () => import('./rose.md')
+  },
+
+  {
+    title: '弧饼图',
+    path: 'arcPie',
+    component: () => import('./arcPie.md')
   }
 
   // {

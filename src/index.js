@@ -16,6 +16,15 @@ const version = require('../package.json').version
 export const qcharts = {
   version,
   ...core,
+  use(target) {
+    if (!target) {
+      return
+    }
+
+    if (target.install && typeof install === 'function') {
+      target.install(qcharts)
+    }
+  },
   ...visuals,
   ...plugins
 }
