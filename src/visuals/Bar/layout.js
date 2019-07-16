@@ -6,6 +6,7 @@ export default function barLayout() {
     const barSize = dataInfo.barSize
     const transpose = dataInfo.transpose
     const stack = dataInfo.stack
+    const groupGap = dataInfo.groupGap
     let barWidth = dataInfo.barWidth
     // 输出
     const barData = []
@@ -38,7 +39,10 @@ export default function barLayout() {
     } else {
       gap = stack
         ? (tableSize.label - barWidth * GROUP_NUM) / GROUP_NUM
-        : (tableSize.label - barWidth * GROUP_BAR_NUM * GROUP_NUM) / GROUP_NUM
+        : (tableSize.label -
+            barWidth * GROUP_BAR_NUM * GROUP_NUM -
+            groupGap * (GROUP_BAR_NUM - 1) * GROUP_NUM) /
+          GROUP_NUM
     }
 
     const BAR_HEIGHT_FACTOR = tableSize.value / (axisValueMax - axisValueMin)
@@ -68,13 +72,19 @@ export default function barLayout() {
               ? [
                 tableSize.value * (1 - POSITIVE_RATIO),
                 gap / 2 +
-                    barWidth * (j - flag) +
-                    (barWidth * GROUP_BAR_NUM + gap) * i
+                    (barWidth + groupGap) * (j - flag) +
+                    (barWidth * GROUP_BAR_NUM +
+                      groupGap * (GROUP_BAR_NUM - 1) +
+                      gap) *
+                      i
               ]
               : [
                 gap / 2 +
-                    barWidth * (j - flag) +
-                    (barWidth * GROUP_BAR_NUM + gap) * i,
+                    (barWidth + groupGap) * (j - flag) +
+                    (barWidth * GROUP_BAR_NUM +
+                      groupGap * (GROUP_BAR_NUM - 1) +
+                      gap) *
+                      i,
                 tableSize.value * POSITIVE_RATIO
               ],
 
@@ -86,14 +96,20 @@ export default function barLayout() {
                 ? [
                   tableSize.value * (1 - POSITIVE_RATIO),
                   gap / 2 +
-                      barWidth * (j - flag) +
-                      (barWidth * GROUP_BAR_NUM + gap) * i +
+                      (barWidth + groupGap) * (j - flag) +
+                      (barWidth * GROUP_BAR_NUM +
+                        groupGap * (GROUP_BAR_NUM - 1) +
+                        gap) *
+                        i +
                       barWidth * 0.5
                 ]
                 : [
                   gap / 2 +
-                      barWidth * (j - flag) +
-                      (barWidth * GROUP_BAR_NUM + gap) * i +
+                      (barWidth + groupGap) * (j - flag) +
+                      (barWidth * GROUP_BAR_NUM +
+                        groupGap * (GROUP_BAR_NUM - 1) +
+                        gap) *
+                        i +
                       barWidth * 0.5,
                   tableSize.value * POSITIVE_RATIO
                 ],
@@ -113,11 +129,29 @@ export default function barLayout() {
         gpData = Object.assign(gpData, {
           // title: data[0][i]['_x'],
           pos: transpose
-            ? [0, (gap + barWidth * GROUP_BAR_NUM) * i]
-            : [(gap + barWidth * GROUP_BAR_NUM) * i, 0],
+            ? [
+              0,
+              (gap +
+                  barWidth * GROUP_BAR_NUM +
+                  groupGap * (GROUP_BAR_NUM - 1)) *
+                  i
+            ]
+            : [
+              (gap +
+                  barWidth * GROUP_BAR_NUM +
+                  groupGap * (GROUP_BAR_NUM - 1)) *
+                  i,
+              0
+            ],
           size: transpose
-            ? [tableSize.value, barWidth * GROUP_BAR_NUM + gap]
-            : [barWidth * GROUP_BAR_NUM + gap, tableSize.value],
+            ? [
+              tableSize.value,
+              barWidth * GROUP_BAR_NUM + groupGap * (GROUP_BAR_NUM - 1) + gap
+            ]
+            : [
+              barWidth * GROUP_BAR_NUM + groupGap * (GROUP_BAR_NUM - 1) + gap,
+              tableSize.value
+            ],
           ...bgPillarAttr
         })
         groupData.push(gpData)

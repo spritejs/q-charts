@@ -11,6 +11,12 @@ export const withText = (visual, attrs) => {
     return
   }
   let { textFrom, textTo } = visual.fromTos[attrs.index]
+  if (textStyle.pos) {
+    visual.pillars[attrs.index].labelAttrs.pos = textStyle.pos
+    if (textTo && textTo.pos) {
+      textTo.pos = textStyle.pos
+    }
+  }
   return (
     <Label
       {...labelAttrs}
