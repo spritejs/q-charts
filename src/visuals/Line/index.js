@@ -26,10 +26,8 @@ export class Line extends BaseVisual {
   }
 
   beforeRender() {
-    // this.chart.style('colors', ['red', 'blue', 'yellow'])
-
     super.beforeRender()
-    const lines = getLines(this.getData(), this.attr())
+    const lines = getLines(this.getData(), this.attr(), this.chart.dataset.attr())
     lines.forEach((line, i) => {
       let points = getPointXY(line.points)
       updateLineAttr(line, { points, opacity: 1 }, { points, opacity: 0 })
@@ -40,7 +38,7 @@ export class Line extends BaseVisual {
 
   beforeUpdate() {
     super.beforeUpdate()
-    const lines = getLines(this.getData(), this.attr())
+    const lines = getLines(this.getData(), this.attr(), this.chart.dataset.attr())
     let oldLines = this.renderData
     lines.forEach((line, i) => {
       let newPoints = getPointXY(line.points)
@@ -276,9 +274,9 @@ export class Line extends BaseVisual {
     )
   }
 }
-function getLines(data, attrs) {
+function getLines(data, attrs, fields) {
   const { pos, size, stack, axisGap } = attrs;
-  return layout({ pos, size, stack, axisGap, data })
+  return layout({ pos, size, stack, axisGap, data, fields })
 }
 function updateLineAttr(line, newObj, oldObj) {
   line.from = oldObj

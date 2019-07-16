@@ -6,7 +6,7 @@ import { axis } from '../../util/axis'
 
 let layoutKeys = ['_x', '_y'] // 表示x,y轴数据
 export function layout(obj) {
-  const { size, stack, data, axisGap } = obj
+  const { size, stack, data, axisGap, fields } = obj;
   data.forEach(lines => {
     lines.forEach(point => {
       point._x = point.__textGetter__()
@@ -64,6 +64,7 @@ export function layout(obj) {
         type = 'value'
       }
       if (type === 'value') {
+        arrObject = arrObject.map(item => item.filter(item => item[fields[type]] !== undefined))
         scales = axis({ dataSet: arrObject, stack })
         if (stack === true) {
           // 如果为堆叠，处理对应key叠加
@@ -111,9 +112,12 @@ export function layout(obj) {
     const { _x: objX, _y: ObjY } = res
     res.points = []
     objX.data.forEach((item, index) => {
-      res.points.push({
-        point: [objX.data[index].offset, ObjY.data[index].offset]
-      })
+      let tarY = ObjY.data[index].offset;
+      if (!isNaN(tarY)) {
+        res.points.push({
+          point: [objX.data[index].offset, tarY]
+        })
+      }
     })
     delete res['_x']
     delete res['_y']
