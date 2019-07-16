@@ -20,6 +20,7 @@ function layout(obj) {
       scales = Object.keys(category)
     } else {
       // 包含type为value 等
+      data = data.map(item => item.filter(item => item[field] !== undefined))
       scales = axis({ dataSet: data, stack, field, section: range });
     }
   }
