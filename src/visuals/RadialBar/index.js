@@ -121,23 +121,29 @@ export class RadialBar extends BaseVisual {
     let data = flattern(this.getData())
     data = this.transform(data)
     this.animators = data.map((d, i) => {
-      let prev = this.animators[i] ? this.animators[i].to : data[i - 1]
+      if (d.anticlockwise) {
+        return d.disabled
+          ? { from: { opacity: 1 }, to: { opacity: 0 } }
+          : { from: { opacity: 1 }, to: { opacity: 1 } }
+      } else {
+        let prev = this.animators[i] ? this.animators[i].to : data[i - 1]
 
-      if (!prev) {
-        prev = {
-          startAngle: startAngle,
-          endAngle: startAngle
+        if (!prev) {
+          prev = {
+            startAngle: startAngle,
+            endAngle: startAngle
+          }
         }
-      }
 
-      return {
-        from: {
-          startAngle: prev.startAngle,
-          endAngle: prev.endAngle
-        },
-        to: {
-          startAngle: d.startAngle,
-          endAngle: d.endAngle
+        return {
+          from: {
+            startAngle: prev.startAngle,
+            endAngle: prev.endAngle
+          },
+          to: {
+            startAngle: d.startAngle,
+            endAngle: d.endAngle
+          }
         }
       }
     })
