@@ -93,7 +93,6 @@ Tween.prototype = {
 
     return new Promise(resolve => {
       const step = () => {
-        // 每次加一帧，保证帧数是对的，不在乎到底消耗多长时间
         elapseTime = now() - startTime
         const t = e(Math.min(1.0, elapseTime / animateTime))
 

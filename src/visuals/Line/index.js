@@ -48,7 +48,7 @@ export class Line extends BaseVisual {
           updateLineAttr(line, { points: newPoints, opacity: 1 }, { points: oldPoints, opacity: 0 })
         } else if (oldLines[i].disabled !== true && line.disabled === true) {
           updateLineAttr(line, { points: newPoints, opacity: 0 }, { points: oldPoints, opacity: 1 })
-        } else if (oldLines[i].disabled !== true && line.disabled !== true) {
+        } else if (oldLines[i].disabled !== true && line.disabled !== true) { // 默认更新
           updateLineAttr(
             line,
             { points: newPoints, opacity: 1 },
