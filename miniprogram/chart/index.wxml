@@ -1,4 +1,4 @@
-<view class="chart-layout"
+<view class="chart-layout chart-class"
   bindtouchstart="onTouchStart"
   bindtouchmove="onTouchMove"
   bindtouchend="onTouchEnd"

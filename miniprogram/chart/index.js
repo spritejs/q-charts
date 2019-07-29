@@ -3,6 +3,7 @@ const { Chart } = require('../index');
 
 /* globals Component: true */
 Component({
+  externalClasses: ['chart-class'],
   properties: {
     chartId: {
       type: String,
