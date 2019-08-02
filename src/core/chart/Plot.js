@@ -79,8 +79,8 @@ export class Plot {
     const dom = this.domElement
     const observer = ResizeObserver(
       debounce(element => {
-        const { width, height } = element.getBoundingClientRect()
-        onResize(width, height)
+        let { width, height } = getComputedStyle(element)
+        onResize(parseInt(width), parseInt(height))
       }, 300)
     )
     observer.observe(dom)
