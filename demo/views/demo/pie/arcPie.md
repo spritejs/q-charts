@@ -23,7 +23,7 @@ const data = [
 
   {
     type: '治安场所',
-    count: 4353
+    count: 4300
   }
 ]
 
@@ -43,7 +43,7 @@ const arcPie = new ArcPie({
   radius: 0.6,
   innerRadius: 0.1,
   lineWidth: 15,
-  padAngle: 0.2,
+  padAngle: 0.02,
   title: d => `${d[0].dataOrigin.type}`,
   subTitle: d => `${d[0].dataOrigin.count}`
 })

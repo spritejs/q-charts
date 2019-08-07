@@ -19,8 +19,11 @@ const attachPadAngleOfArr = (arr, padAngle = 0) => {
     arr
       .filter(d => !d.disabled)
       .forEach(a => {
-        a.startAngle += padAngle / 2
-        a.endAngle -= padAngle / 2
+        if (a.endAngle - a.startAngle > padAngle * 2) {
+          a.padAngle = padAngle
+          a.startAngle += padAngle
+          a.endAngle -= padAngle
+        }
       })
   }
 }
@@ -68,7 +71,6 @@ export default function pieLayout() {
         index: i,
         startAngle: sa,
         endAngle: ea,
-        padAngle: padAngle,
         proportion
       })
 

@@ -13,7 +13,7 @@ export class ArcPie extends Pie {
 
   transform(data) {
     let ret = super.transform(data)
-    const { lineWidth } = this.attr()
+    const { lineWidth, startAngle, endAngle } = this.attr()
 
     ret = ret.map((d, i) => ({
       pos: d.pos,
@@ -31,6 +31,27 @@ export class ArcPie extends Pie {
 
     ret.forEach(d => {
       d.lineCap = !d.disabled ? d.lineCap : 'butt' // round 会导致禁用后显示成一个原点
+
+      if (d.lineCap && (d.lineCap === 'round' || d.lineCap === 'square')) {
+        let r =
+          (lineWidth / 2 / (2 * Math.PI * d.radius)) * (endAngle - startAngle)
+        let se = d.endAngle - d.startAngle
+
+        if (se > r * 2) {
+          d.oriStartAngle = d.startAngle
+          d.oriEndAngle = d.endAngle
+
+          d.startAngle += r
+          d.endAngle -= r
+        } else {
+          if (se <= r) {
+            d.lineCap = 'butt' // 无法绘制 round | square 线帽
+          } else {
+            d.startAngle += r / 2
+            d.endAngle -= r / 2
+          }
+        }
+      }
     })
 
     return ret
@@ -38,6 +59,8 @@ export class ArcPie extends Pie {
 
   render(data = []) {
     const { title, subTitle } = this.attr()
+
+    console.log(data)
 
     return (
       <Group clipOverflow={false}>
