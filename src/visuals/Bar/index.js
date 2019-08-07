@@ -133,7 +133,7 @@ export class Bar extends BaseVisual {
 
   render(data) {
     return (
-      <Group zIndex={100} enableCache={false}>
+      <Group zIndex={100} enableCache={false} clipOverflow={false}>
         <Group>
           {data.groupData.map((pillar, i) => {
             const normalState = this.style('backgroundPillar')(
@@ -173,11 +173,11 @@ export class Bar extends BaseVisual {
             )
           })}
         </Group>
-        <Group>
+        <Group clipOverflow={false}>
           {data.barData.map((pillar, i) => {
             const { from, to } = this.fromTos[i]
             return (
-              <Group enableCache={false}>
+              <Group enableCache={false} clipOverflow={false}>
                 <Rect
                   {...pillar}
                   {...from}
