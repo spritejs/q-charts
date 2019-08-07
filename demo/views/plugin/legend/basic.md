@@ -24,11 +24,10 @@ chart.render()
 
 :::
 
-### 方法
+### 属性
 
-| 名称     | 说明                             | 参数                                             |
-| -------- | -------------------------------- | ------------------------------------------------ |
-| position | `Legend` 位置控制                | `(type: 'left' | 'top', value: String | Number)` |
-| top      | 相当于 `position('top')`         | `(val: String | Number)`                         |
-| left     | 相当于 `position('left')`        | `(val: String | Number)`                         |
-| vertical | 控制 `Legend` 水平布局或垂直布局 | `(flag: Boolean)`                                |
+| 属性名      | 类型     | 默认值              | 描述                                                              |
+| ----------- | -------- | ------------------- | ----------------------------------------------------------------- |
+| `orient`    | String   | 'horizontal'        | legend 排列方式，默认水平排列，可取值：`horizontal` 、 `vertical` |
+| `align`     | Array    | `['left', 'top']`   | legend 绘制位置，默认靠左靠顶                                     |
+| `formatter` | Function | `d => d.value || d` | legend 文本格式化函数                                             |

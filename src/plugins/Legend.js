@@ -63,19 +63,51 @@ export class Legend extends BasePlugin {
       // 水平定位
       left: 0,
       center: (parentSize[0] - width) / 2,
-      right: parentSize[0] - width
+      right: parentSize[0] - width,
+      numberOrPercent(num) {
+        // 输入 数字或百分比
+        if (typeof num === 'number') {
+          return num
+        } else {
+          let val = 0
+
+          try {
+            val = parseFloat(num) / 100
+          } catch (e) {}
+
+          return (parentSize[0] - width) * val
+        }
+      }
     }
 
     const vLocation = {
       // 垂直定位
       top: 0,
       center: parentSize[1] / 2 - height / 2,
-      bottom: parentSize[1] - height
+      bottom: parentSize[1] - height,
+      numberOrPercent(num) {
+        // 输入 数字或百分比
+        if (typeof num === 'number') {
+          return num
+        } else {
+          let val = 0
+
+          try {
+            val = parseFloat(num) / 100
+          } catch (e) {}
+
+          return (parentSize[1] - height) * val
+        }
+      }
     }
 
     return {
-      x: hLocation[isValidLayout(align[0], 'horizontal') ? align[0] : 'left'], // 默认靠左
-      y: vLocation[isValidLayout(align[1], 'vertical') ? align[1] : 'top'] // 默认吸顶
+      x: isValidLayout(align[0], 'horizontal')
+        ? hLocation[align[0]]
+        : hLocation.numberOrPercent(align[0]),
+      y: isValidLayout(align[1], 'vertical')
+        ? vLocation[align[1]]
+        : vLocation.numberOrPercent(align[1])
     }
   }
 
@@ -270,20 +302,20 @@ export class Legend extends BasePlugin {
         boxSizing={'border-box'}
         {...(totalPage > 1
           ? {
-            display: 'flex',
-            flexDirection: isVertical ? 'column' : 'row',
-            ...(isVertical ? { height: size[1] } : {})
-          }
+              display: 'flex',
+              flexDirection: isVertical ? 'column' : 'row',
+              ...(isVertical ? { height: size[1] } : {})
+            }
           : {})}
         border={[1, 'transparent']}
         zIndex={1000}
         bgcolor={'transparent'}
         {...(isVertical
           ? {
-            x,
-            alignItems: 'center',
-            clipOverflow: false
-          }
+              x,
+              alignItems: 'center',
+              clipOverflow: false
+            }
           : { x })}
         {...(isNumber(y) ? { y } : { justifyContent: y })}
         {...rootStyle}
@@ -295,13 +327,13 @@ export class Legend extends BasePlugin {
           clipOverflow={totalPage > 1}
           {...(totalPage > 1
             ? {
-              flex: 1,
-              [isVertical ? 'height' : 'width']: perPageWidthOrHeight
-            }
+                flex: 1,
+                [isVertical ? 'height' : 'width']: perPageWidthOrHeight
+              }
             : {
-              bgcolor: 'transparent'
-              // display: 'inline-flex' // spritejs@2.27.3 存在问题，这样会不断重绘
-            })}
+                bgcolor: 'transparent'
+                // display: 'inline-flex' // spritejs@2.27.3 存在问题，这样会不断重绘
+              })}
           enableCache={false}
         >
           <Group
@@ -356,42 +388,42 @@ export class Legend extends BasePlugin {
         {totalPage <= 1
           ? null
           : [
-            <Path
-              {...(isVertical ? { marginLeft: 5 } : {})}
-              ref={this.resolveRef('paginationPrev')}
-              padding={[isVertical ? 2 : 1, 0, 0, 0]}
-              d={
-                isVertical
-                  ? 'M 0 15 L 15 15 L7.5 0 Z'
-                  : 'M 0 7.5 L 13 0 L13 15 Z'
-              }
-              fillColor={page <= 1 ? '#ccc' : '#324556'}
-              onClick={this.changePage('prev')}
-              onMouseenter={() => this.chart.setCanvasCursor('pointer')}
-              onMouseleave={() => this.chart.setCanvasCursor('default')}
-            />,
-            <Label
-              ref={this.resolveRef('paginationText')}
-              font="14px '宋体'"
-              text={page + '/' + totalPage + ''}
-              lineBreak="normal"
-              padding={isVertical ? [0, 2] : [0, 2]}
-            />,
-            <Path
-              {...(isVertical ? { marginLeft: 5 } : {})}
-              ref={this.resolveRef('paginationNext')}
-              padding={[isVertical ? 2 : 1, 0, 0, 0]}
-              d={
-                isVertical
-                  ? 'M 0 0 L 15 0 L7.5 13 Z'
-                  : 'M 13 7.5 L 0 0 L0 15 Z'
-              }
-              fillColor={page >= totalPage ? '#ccc' : '#324556'}
-              onClick={this.changePage('next')}
-              onMouseenter={() => this.chart.setCanvasCursor('pointer')}
-              onMouseleave={() => this.chart.setCanvasCursor('default')}
-            />
-          ]}
+              <Path
+                {...(isVertical ? { marginLeft: 5 } : {})}
+                ref={this.resolveRef('paginationPrev')}
+                padding={[isVertical ? 2 : 1, 0, 0, 0]}
+                d={
+                  isVertical
+                    ? 'M 0 15 L 15 15 L7.5 0 Z'
+                    : 'M 0 7.5 L 13 0 L13 15 Z'
+                }
+                fillColor={page <= 1 ? '#ccc' : '#324556'}
+                onClick={this.changePage('prev')}
+                onMouseenter={() => this.chart.setCanvasCursor('pointer')}
+                onMouseleave={() => this.chart.setCanvasCursor('default')}
+              />,
+              <Label
+                ref={this.resolveRef('paginationText')}
+                font="14px '宋体'"
+                text={page + '/' + totalPage + ''}
+                lineBreak="normal"
+                padding={isVertical ? [0, 2] : [0, 2]}
+              />,
+              <Path
+                {...(isVertical ? { marginLeft: 5 } : {})}
+                ref={this.resolveRef('paginationNext')}
+                padding={[isVertical ? 2 : 1, 0, 0, 0]}
+                d={
+                  isVertical
+                    ? 'M 0 0 L 15 0 L7.5 13 Z'
+                    : 'M 13 7.5 L 0 0 L0 15 Z'
+                }
+                fillColor={page >= totalPage ? '#ccc' : '#324556'}
+                onClick={this.changePage('next')}
+                onMouseenter={() => this.chart.setCanvasCursor('pointer')}
+                onMouseleave={() => this.chart.setCanvasCursor('default')}
+              />
+            ]}
       </Group>
     )
   }

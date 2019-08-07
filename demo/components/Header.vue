@@ -2,23 +2,26 @@
   <header>
     <nav class="navbar">
       <router-link class="navbar-brand" to="/">
-        <img src="https://p2.ssl.qhimg.com/t01aec2b6fbfbb68e03.png" height="40" alt="qchart">
+        <img src="https://p2.ssl.qhimg.com/t01aec2b6fbfbb68e03.png" height="40" alt="qchart" />
       </router-link>
 
-      <button @click="toggleShowMenu"
-              class="navbar-toggler">
+      <button @click="toggleShowMenu" class="navbar-toggler">
         <span>
-          <svg xmlns="http://www.w3.org/2000/svg"
-               viewBox="0 0 30 30"
-               width="30"
-               height="30"
-               focusable="false">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 30 30"
+            width="30"
+            height="30"
+            focusable="false"
+          >
             <title>Menu</title>
-            <path stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-miterlimit="10"
-                  d="M4 7h22M4 15h22M4 23h22"></path>
+            <path
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-miterlimit="10"
+              d="M4 7h22M4 15h22M4 23h22"
+            />
           </svg>
         </span>
       </button>
@@ -76,12 +79,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 header {
   position: relative;
   z-index: 100;
   padding: 0 40px 0 20px;
-  height: 4rem;
+  // height: 4rem;
   box-shadow: 0 2px 8px rgba(229, 229, 229, 0.5);
   nav {
     position: relative;
@@ -153,8 +155,8 @@ header {
 
       button {
         display: block;
-        left:15px;
-        right:auto;
+        left: 15px;
+        right: auto;
       }
 
       > div {
