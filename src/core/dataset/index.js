@@ -27,7 +27,15 @@ class Dataset {
       if (!dep.update) {
         return
       }
-      dep.update()
+
+      if (dep.shouldUpdate) {
+        if (dep.shouldUpdate()) {
+          dep.update()
+        }
+      } else {
+        // 未实现 dep.shouldUpdate 接口，默认更新，可能会导致抖动问题
+        dep.update()
+      }
     })
   }
 
