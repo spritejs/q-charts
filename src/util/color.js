@@ -1,5 +1,8 @@
 export function hexToRgba(hex, opacity) {
   // 16进制颜色转rgba
+  if(/^rgba\(.+\)$/.text(hex)){
+    return hex;
+  }
   var c
   if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
     c = hex.substring(1).split('')
