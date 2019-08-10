@@ -164,15 +164,28 @@ class BaseNode {
   _recalculateLayout() {
     const chartSize = this.chart.getSize()
     const calc = prop => {
-      let __prop__ = this.attr(`___${prop}___`)
-      if (!__prop__) {
-        __prop__ = this.attr(prop)
+      let oldVal = this.attr(`__${prop}__`)
+      let newVal = this.attr(prop)
+
+      if (!oldVal) {
+        oldVal = newVal
       }
+
+      if (
+        newVal.some(
+          (v, i) => typeof v === typeof oldVal[i] && typeof v !== 'number'
+        )
+      ) {
+        oldVal = newVal
+      }
+
       let ret = null
-      if (__prop__) {
-        this.attr(`___${prop}___`, __prop__)
-        ret = chartSize.map((v, i) => convertPercent2Number(__prop__[i], v))
+
+      if (oldVal) {
+        this.attr(`__${prop}__`, oldVal)
+        ret = chartSize.map((v, i) => convertPercent2Number(oldVal[i], v))
       }
+
       if (ret) {
         this.attr(prop, ret)
         this.$group.attr(prop, ret)
