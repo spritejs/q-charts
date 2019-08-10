@@ -1,6 +1,6 @@
 export function hexToRgba(hex, opacity) {
   // 16进制颜色转rgba
-  if(/^rgba\(.+\)$/.text(hex)){
+  if (/^rgba\(.+\)$/.test(hex)) {
     return hex;
   }
   var c
