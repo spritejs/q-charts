@@ -6,11 +6,11 @@ const getRealPath = (str, start) => {
   return urls[urls.length - 1]
 }
 
-const convert2Array = (num) => {
+const convert2Array = num => {
   return isArray(num) ? num : [num, num]
 }
 
-const getTriangleStyle = (size) => {
+const getTriangleStyle = size => {
   return {
     angle: 60,
     sides: size.map(s => s * 2),
@@ -20,14 +20,14 @@ const getTriangleStyle = (size) => {
   }
 }
 
-const getRectStyle = (size) => {
+const getRectStyle = size => {
   return {
     angle: 90,
     sides: size.map(s => s * 2)
   }
 }
 
-const getStarStyle = (size) => {
+const getStarStyle = size => {
   const [sizeX, sizeY] = size
   let style = {
     radius: sizeX * 1.1,
@@ -40,7 +40,7 @@ const getStarStyle = (size) => {
   return style
 }
 
-const getEllipseStyle = (size) => {
+const getEllipseStyle = size => {
   const [radiusX, radiusY] = size
   return {
     radiusX,
@@ -50,12 +50,14 @@ const getEllipseStyle = (size) => {
 }
 
 const getSpriteStyle = (pointType, size) => {
-  return size ? {
-    textures: getRealPath(pointType, 'image://'),
-    size
-  } : {
-    textures: getRealPath(pointType, 'image://'),
-  }
+  return size
+    ? {
+      textures: getRealPath(pointType, 'image://'),
+      size
+    }
+    : {
+      textures: getRealPath(pointType, 'image://')
+    }
 }
 
 const getPathStyle = (pointType, scale) => {
@@ -66,7 +68,6 @@ const getPathStyle = (pointType, scale) => {
   }
   return scaleArray ? { ...style, scale: scaleArray } : { ...style }
 }
-
 
 /**
  * 根据用户给的style，计算出各个图形真实的样式
@@ -128,18 +129,20 @@ export function getSymbolAndStyle(style, hStyle) {
     }
   }
 
+  const mergeNormalStyle = { ...style, ...normalStyle }
+  const mergeHoverStyle = { ...hStyle, ...hoverStyle }
   // 非图片样式的删除 size属性，避免bug
   if (!pointType.startsWith('image://')) {
-    if (style) {
-      delete style.size
+    if (mergeNormalStyle) {
+      delete mergeNormalStyle.size
     }
-    if (hStyle) {
-      delete style.size
+    if (mergeHoverStyle) {
+      delete mergeHoverStyle.size
     }
   }
   return {
     PointSymbol,
-    normalStyle: { ...style, ...normalStyle },
-    hoverStyle: { ...hStyle, ...hoverStyle }
+    normalStyle: mergeNormalStyle,
+    hoverStyle: mergeHoverStyle
   }
 }
