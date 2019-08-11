@@ -13,13 +13,13 @@ function tickLine(radius, angle, tickLength, labelOffset, isInner) {
     : [x + tickLength * cos, y + tickLength * sin]
   const labelPos = isInner
     ? [
-        x - (tickLength + labelOffset) * cos,
-        y - (tickLength + labelOffset) * sin
-      ]
+      x - (tickLength + labelOffset) * cos,
+      y - (tickLength + labelOffset) * sin
+    ]
     : [
-        x + (tickLength + labelOffset) * cos,
-        y + (tickLength + labelOffset) * sin
-      ]
+      x + (tickLength + labelOffset) * cos,
+      y + (tickLength + labelOffset) * sin
+    ]
 
   let anchorX = isInner ? cos : -cos
   let anchorY = isInner ? sin : -sin
@@ -320,28 +320,28 @@ export class Gauge extends BaseVisual {
 
             {tickLine !== false || tickText !== false
               ? ticks.map((tick, j) => (
-                  <Group
-                    pos={center.map(v => v - lineWidth / 2)}
-                    anchor={[0, 0]}
-                    zIndex={1010}
-                    size={[1, 1]}
-                    clipOverflow={false}
-                  >
-                    {tickLine !== false ? (
-                      <Polyline
-                        points={tick.points}
-                        strokeColor={strokeBgcolor}
-                        {...this.style('tickLine')(d, d.dataOrigin, j)}
-                      />
-                    ) : null}
-                    {tickText !== false ? (
-                      <Label
-                        {...tick.label}
-                        {...this.style('tickText')(d, d.dataOrigin, j)}
-                      />
-                    ) : null}
-                  </Group>
-                ))
+                <Group
+                  pos={center.map(v => v - lineWidth / 2)}
+                  anchor={[0, 0]}
+                  zIndex={1010}
+                  size={[1, 1]}
+                  clipOverflow={false}
+                >
+                  {tickLine !== false ? (
+                    <Polyline
+                      points={tick.points}
+                      strokeColor={strokeBgcolor}
+                      {...this.style('tickLine')(d, d.dataOrigin, j)}
+                    />
+                  ) : null}
+                  {tickText !== false ? (
+                    <Label
+                      {...tick.label}
+                      {...this.style('tickText')(d, d.dataOrigin, j)}
+                    />
+                  ) : null}
+                </Group>
+              ))
               : null}
           </Group>
         ))}
