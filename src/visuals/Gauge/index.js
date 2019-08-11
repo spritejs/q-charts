@@ -13,13 +13,13 @@ function tickLine(radius, angle, tickLength, labelOffset, isInner) {
     : [x + tickLength * cos, y + tickLength * sin]
   const labelPos = isInner
     ? [
-      x - (tickLength + labelOffset) * cos,
-      y - (tickLength + labelOffset) * sin
-    ]
+        x - (tickLength + labelOffset) * cos,
+        y - (tickLength + labelOffset) * sin
+      ]
     : [
-      x + (tickLength + labelOffset) * cos,
-      y + (tickLength + labelOffset) * sin
-    ]
+        x + (tickLength + labelOffset) * cos,
+        y + (tickLength + labelOffset) * sin
+      ]
 
   let anchorX = isInner ? cos : -cos
   let anchorY = isInner ? sin : -sin
@@ -35,6 +35,22 @@ function tickLine(radius, angle, tickLength, labelOffset, isInner) {
     labelPos,
     anchor
   }
+}
+
+function centerLabel(el) {
+  const handle = () => {
+    const x = el.attr('x')
+    const [width] = el.contentSize || [0, 0]
+    el.attr('x', x - width / 2)
+  }
+
+  Promise.resolve().then(() => {
+    if (el.parent) {
+      handle()
+    } else {
+      el.on('append', handle)
+    }
+  })
 }
 
 export class Gauge extends BaseVisual {
@@ -198,6 +214,14 @@ export class Gauge extends BaseVisual {
     return arcs
   }
 
+  color(i) {
+    if (i && typeof i !== 'number') {
+      this._useBuiltInColors = false
+    }
+
+    return super.color(i)
+  }
+
   render(data = []) {
     const {
       title,
@@ -210,10 +234,25 @@ export class Gauge extends BaseVisual {
       hoverBg
     } = this.attr()
     const center = this.center
+    const labelCenter = [center[0] - lineWidth / 2, center[1]]
     const ticks = this.ticks
-    const colors = this.color().reverse()
     const tickLine = this.isStyleExist('tickLine')
     const tickText = this.isStyleExist('tickText')
+
+    let gradientColor = null // 默认使用内置的渐变配色方案
+
+    if (this._useBuiltInColors !== false) {
+      const colors = this.color().reverse()
+
+      gradientColor = {
+        vector: [0, 0, center[0] * 2, center[1] * 2],
+        colors: [
+          { color: colors[0], offset: 0 },
+          { color: colors[1], offset: 0.3 },
+          { color: colors[2], offset: 1 }
+        ]
+      }
+    }
 
     return (
       <Group
@@ -246,62 +285,63 @@ export class Gauge extends BaseVisual {
                 ...this.animations[i],
                 duration: 300
               })}
-              color={{
-                vector: [0, 0, center[0] * 2, center[1] * 2],
-                colors: [
-                  { color: colors[0], offset: 0 },
-                  { color: colors[1], offset: 0.3 },
-                  { color: colors[2], offset: 1 }
-                ]
-              }}
+              {...(gradientColor
+                ? { color: gradientColor }
+                : { strokeColor: this.color[i] })}
               {...this.style('arc')(d, d.dataOrigin, i)}
             />
             {title ? (
               <Label
                 text={isFunction(title) ? title(d.dataOrigin) : title}
-                pos={center}
+                pos={labelCenter}
                 textAlign="center"
                 zIndex={10}
-                anchor={[0.5, 1]}
+                anchor={[0, 1]}
+                ref={el => {
+                  centerLabel(el)
+                }}
                 {...this.style('title')(d, d.dataOrigin, i)}
               />
             ) : null}
             {subTitle ? (
               <Label
                 text={isFunction(subTitle) ? subTitle(d.dataOrigin) : subTitle}
-                pos={center}
+                pos={labelCenter}
                 textAlign="center"
                 zIndex={10}
                 color={strokeBgcolor}
-                anchor={[0.5, 0.5]}
+                anchor={[0, 0.5]}
+                ref={el => {
+                  centerLabel(el)
+                }}
                 {...this.style('subTitle')(d, d.dataOrigin, i)}
               />
             ) : null}
 
             {tickLine !== false || tickText !== false
               ? ticks.map((tick, j) => (
-                <Group
-                  pos={center.map(v => v - lineWidth / 2)}
-                  anchor={[0, 0]}
-                  zIndex={1010}
-                  size={[1, 1]}
-                  clipOverflow={false}
-                >
-                  {tickLine !== false ? (
-                    <Polyline
-                      points={tick.points}
-                      strokeColor={strokeBgcolor}
-                      {...this.style('tickLine')(d, d.dataOrigin, j)}
-                    />
-                  ) : null}
-                  {tickText !== false ? (
-                    <Label
-                      {...tick.label}
-                      {...this.style('tickText')(d, d.dataOrigin, j)}
-                    />
-                  ) : null}
-                </Group>
-              ))
+                  <Group
+                    pos={center.map(v => v - lineWidth / 2)}
+                    anchor={[0, 0]}
+                    zIndex={1010}
+                    size={[1, 1]}
+                    clipOverflow={false}
+                  >
+                    {tickLine !== false ? (
+                      <Polyline
+                        points={tick.points}
+                        strokeColor={strokeBgcolor}
+                        {...this.style('tickLine')(d, d.dataOrigin, j)}
+                      />
+                    ) : null}
+                    {tickText !== false ? (
+                      <Label
+                        {...tick.label}
+                        {...this.style('tickText')(d, d.dataOrigin, j)}
+                      />
+                    ) : null}
+                  </Group>
+                ))
               : null}
           </Group>
         ))}
