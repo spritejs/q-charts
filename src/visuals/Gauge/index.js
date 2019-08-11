@@ -37,22 +37,6 @@ function tickLine(radius, angle, tickLength, labelOffset, isInner) {
   }
 }
 
-function centerLabel(el) {
-  const handle = () => {
-    const x = el.attr('x')
-    const [width] = el.contentSize || [0, 0]
-    el.attr('x', x - width / 2)
-  }
-
-  Promise.resolve().then(() => {
-    if (el.parent) {
-      handle()
-    } else {
-      el.on('append', handle)
-    }
-  })
-}
-
 export class Gauge extends BaseVisual {
   constructor(attrs = {}) {
     super(attrs)
@@ -296,10 +280,7 @@ export class Gauge extends BaseVisual {
                 pos={labelCenter}
                 textAlign="center"
                 zIndex={10}
-                anchor={[0, 1]}
-                ref={el => {
-                  centerLabel(el)
-                }}
+                anchor={[0.5, 1]}
                 {...this.style('title')(d, d.dataOrigin, i)}
               />
             ) : null}
@@ -310,10 +291,7 @@ export class Gauge extends BaseVisual {
                 textAlign="center"
                 zIndex={10}
                 color={strokeBgcolor}
-                anchor={[0, 0.5]}
-                ref={el => {
-                  centerLabel(el)
-                }}
+                anchor={[0.5, 0.5]}
                 {...this.style('subTitle')(d, d.dataOrigin, i)}
               />
             ) : null}
