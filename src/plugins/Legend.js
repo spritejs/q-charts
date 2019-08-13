@@ -129,21 +129,21 @@ export class Legend extends BasePlugin {
     if (isArray(i) || isString(i)) {
       return super.color(i)
     } else {
-      if (!this._colors.length) {
-        // 当前 legend 没有配色
-        let colors
+      // if (!this._colors.length) {
+      // 当前 legend 没有配色
+      let colors
 
-        if (this.chart) {
-          colors =
+      if (this.chart) {
+        colors =
             this.chart.visuals[0] &&
             this.chart.visuals[0].color &&
             this.chart.visuals[0].color()
-        }
-
-        if (colors && colors.length) {
-          this._colors = colors
-        }
       }
+
+      if (colors && colors.length) {
+        this._colors = colors
+      }
+      // }
 
       return super.color(i)
     }

@@ -184,7 +184,7 @@ export class Line extends BaseVisual {
         <Group enableCache={false}>
           {lines.map((line, i) => {
             let { size, type, smooth, stack } = this.attr();
-            let color = line.data[0].color || this.color(i)
+            let color = this.color(i)
             let areaAttrs = { fillColor: hexToRgba(color, 0.5), strokeColor: 'transparent' }
             let cusAttrs = this.style('area')(areaAttrs, line.data.map(item => item.dataOrigin), i)
             Object.assign(areaAttrs, cusAttrs)
@@ -219,7 +219,7 @@ export class Line extends BaseVisual {
         </Group>
         <Group clipOverflow={false} enableCache={false}>
           {lines.map((line, i) => {
-            let color = line.data[0].color || this.color(i)
+            let color = this.color(i)
             let lineAttrs = { strokeColor: color, lineWidth: 2 }
             let cusAttrs = this.style('line')(lineAttrs, line.data.map(item => item.dataOrigin), i)
             let smybolAttrs = { fillColor: color }
