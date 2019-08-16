@@ -166,7 +166,9 @@ export class Tooltip extends BasePlugin {
     return (
       <Group
         {...{
+          display: 'flex',
           clipOverflow: false,
+          flexDirection: 'column',
           zIndex: 9999,
           ...(this.chart.style('Tooltip')() || {}),
           opacity: 1,
@@ -185,6 +187,8 @@ export class Tooltip extends BasePlugin {
         {data.map((d, i) => {
           return (
             <Group
+              display={'flex'}
+              justifyContent={'space-between'}
               alignItems={'center'}
               enableCache={false}
               {...group}
@@ -192,7 +196,7 @@ export class Tooltip extends BasePlugin {
             >
               <Rect
                 {...icon}
-                {...this.style('icon')() || { translate: [0, 5] }}
+                {...this.style('icon')() || {}}
                 bgcolor={d.color}
               />
               <Label
@@ -200,7 +204,6 @@ export class Tooltip extends BasePlugin {
                 {...text}
                 text={this.attr('formatter')(d)}
                 {...this.style('text')() || {}}
-                padding={[0, 0, 0, 14]}
               />
             </Group>
           )
@@ -212,7 +215,12 @@ export class Tooltip extends BasePlugin {
   updated() {
     const pos = this.state.pos
     if (pos && pos.length) {
-      this.$group.transition(0.2).attr('pos', this.state.pos)
+      let width = this.$group['boundingRect'][2];
+      this.$group.attr({ width: width + 0.1 });
+      this.$group.transition(0.2).attr('pos', this.state.pos);
+      setTimeout(_ => { // 触发reflow
+        this.$group.attr({ width: '' });
+      })
     }
   }
 }
