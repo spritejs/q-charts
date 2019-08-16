@@ -163,27 +163,6 @@ export class Tooltip extends BasePlugin {
         ? root.padding[0]
         : root.padding
       : root.paddingBottom || 0
-    // return (
-    //   <Group bgcolor={'#f00'}>
-    //     {data.map((d, i) => {
-    //       return (
-    //         <Group>
-    //           <Rect
-    //             {...icon}
-    //             {...this.style('icon')() || {}}
-    //             bgcolor={d.color}
-    //           />
-    //           <Label
-    //             enableCache={false}
-    //             {...text}
-    //             text={this.attr('formatter')(d)}
-    //             {...this.style('text')() || {}}
-    //           />
-    //         </Group>
-    //       )
-    //     })}
-    //   </Group>
-    // )
     return (
       <Group
         {...{
