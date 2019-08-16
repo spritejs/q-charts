@@ -163,13 +163,31 @@ export class Tooltip extends BasePlugin {
         ? root.padding[0]
         : root.padding
       : root.paddingBottom || 0
-
+    // return (
+    //   <Group bgcolor={'#f00'}>
+    //     {data.map((d, i) => {
+    //       return (
+    //         <Group>
+    //           <Rect
+    //             {...icon}
+    //             {...this.style('icon')() || {}}
+    //             bgcolor={d.color}
+    //           />
+    //           <Label
+    //             enableCache={false}
+    //             {...text}
+    //             text={this.attr('formatter')(d)}
+    //             {...this.style('text')() || {}}
+    //           />
+    //         </Group>
+    //       )
+    //     })}
+    //   </Group>
+    // )
     return (
       <Group
         {...{
-          display: 'flex',
           clipOverflow: false,
-          flexDirection: 'column',
           zIndex: 9999,
           ...(this.chart.style('Tooltip')() || {}),
           opacity: 1,
@@ -188,8 +206,6 @@ export class Tooltip extends BasePlugin {
         {data.map((d, i) => {
           return (
             <Group
-              display={'flex'}
-              justifyContent={'space-between'}
               alignItems={'center'}
               enableCache={false}
               {...group}
@@ -197,7 +213,7 @@ export class Tooltip extends BasePlugin {
             >
               <Rect
                 {...icon}
-                {...this.style('icon')() || {}}
+                {...this.style('icon')() || { translate: [0, 5] }}
                 bgcolor={d.color}
               />
               <Label
@@ -205,6 +221,7 @@ export class Tooltip extends BasePlugin {
                 {...text}
                 text={this.attr('formatter')(d)}
                 {...this.style('text')() || {}}
+                padding={[0, 0, 0, 14]}
               />
             </Group>
           )
@@ -215,7 +232,6 @@ export class Tooltip extends BasePlugin {
 
   updated() {
     const pos = this.state.pos
-
     if (pos && pos.length) {
       this.$group.transition(0.2).attr('pos', this.state.pos)
     }
