@@ -130,7 +130,6 @@ export class Bar extends BaseVisual {
   hideTooltip() {
     this.dataset.hoverData(null)
   }
-
   render(data) {
     return (
       <Group zIndex={100} enableCache={false} clipOverflow={false}>

@@ -1,9 +1,9 @@
-import { Group, Polyline, Rect, Polygon, Label } from 'spritejs'
+import { Group, Polyline, Rect, Polygon, Label, Sprite } from 'spritejs'
 import { BaseVisual } from '../../core'
 import { layout } from './layout'
 import { mergeStyle } from '../../util/merge-style'
 import { getSymbolAndStyle } from '../../util/pointSymbol'
-import { hexToRgba } from '../../util/index'
+import { Tween } from '../../tween';
 export class Line extends BaseVisual {
   constructor(attrs = {}) {
     super(attrs)
@@ -26,6 +26,8 @@ export class Line extends BaseVisual {
   }
 
   beforeRender() {
+    this.areaLayer = this.chart.scene.layer('area');
+    this.chart.layer.canvas.style.zIndex = 1
     super.beforeRender()
     const lines = getLines(this.getData(), this.attr(), this.chart.dataset.attr())
     lines.forEach((line, i) => {
@@ -176,46 +178,13 @@ export class Line extends BaseVisual {
     let guideLineAttrs = { size: [1, this.attr('size')[1]], fillColor: '#ccc', strokeColor: 'transparent', opacity: 0 }
     let guideStyle = mergeStyle(this.style('guideline'), [guideLineAttrs]);
     lines = lines.filter(line => line.points && line.points.length);
+    this.renderLines = lines;
     return (
       <Group zIndex={100} enableCache={false}>
         {guideStyle === false ? (null) : (
           <Rect ref={el => this.ref('guideline', el)} {...guideStyle} />
         )}
         <Group enableCache={false}>
-          {lines.map((line, i) => {
-            let { size, type, smooth, stack } = this.attr();
-            let color = this.color(i)
-            let areaAttrs = { fillColor: hexToRgba(color, 0.5), strokeColor: 'transparent' }
-            let cusAttrs = this.style('area')(areaAttrs, line.data.map(item => item.dataOrigin), i)
-            Object.assign(areaAttrs, cusAttrs)
-            if (type === 'area') {
-              return (
-                <Polygon animation={this.resolveAnimation({
-                  from: getAreaPoints(lines, i, { size, smooth, stack }, 'from'),
-                  to: getAreaPoints(lines, i, { size, smooth, stack }, 'to'),
-                  duration: 200,
-                  useTween: true
-                })} {...areaAttrs}
-                onMouseleave={(evt, el) => {
-                  el.attr('state', 'normal')
-                }}
-                actions={[
-                  {
-                    both: ['normal', 'hover'],
-                    action: { duration: 100 },
-                    reversable: false
-                  }
-                ]}
-                onMouseenter={(_, el) => el.attr('state', 'hover')}
-                hoverState={this.style('area:hover')(
-                  areaAttrs,
-                  line.data.map(item => item.dataOrigin),
-                  i
-                )}
-                />
-              )
-            }
-          })}
         </Group>
         <Group clipOverflow={false} enableCache={false}>
           {lines.map((line, i) => {
@@ -282,6 +251,87 @@ export class Line extends BaseVisual {
       </Group>
     )
   }
+  update() {
+    super.update()
+    let { type } = this.attr();
+    if (type === 'area') {
+      this.renderArea();
+    }
+  }
+  rendered() {
+    let { type } = this.attr();
+    if (type === 'area') {
+      this.renderArea();
+    }
+  }
+  renderArea() {
+    let { size, smooth, compositeOperation, stack } = this.attr();
+    let lines = this.renderLines;
+    let patchPoints = [];
+    let areaAttrs = { lineWidth: 0, opacity: 0.5 }
+    let cusAttrs = this.style('area')(areaAttrs, null, 0)
+    Object.assign(areaAttrs, cusAttrs)
+    let layer = this.areaLayer
+    layer.canvas.style.opacity = areaAttrs.opacity;
+    layer.clear()
+    if (compositeOperation) {
+      layer.context.globalCompositeOperation = compositeOperation
+    }
+    let group = new Group();
+    group.attr(this.attr())
+    layer.append(group);
+    this.renderLines.forEach((line, i) => {
+      let color = this.color(i)
+      let areaAttrs = { fillColor: color, lineWidth: 0, strokeColor: 'transparent' }
+      let cusAttrs = this.style('area')(areaAttrs, line.data.map(item => item.dataOrigin), i)
+      Object.assign(areaAttrs, cusAttrs)
+      delete areaAttrs.opacity;
+      let polygon = new Polygon();
+      polygon.attr(areaAttrs);
+      let attrs = getAreaPoints(lines, i, { size, smooth, stack }, 'to');
+      patchPoints.push(...attrs.points)
+      polygon.attr(attrs)
+      group.append(polygon);
+      new Tween()
+        .from(getAreaPoints(lines, i, { size, smooth, stack }, 'from'))
+        .to(getAreaPoints(lines, i, { size, smooth, stack }, 'to'))
+        .duration(200)
+        .onUpdate((e, i) => {
+          e.points = e.points.map(pos => {
+            return [Math.round(pos[0]), Math.round(pos[1])]
+          })
+          polygon.attr(e)
+          removeLine(patchPoints, layer, this.attr())
+        })
+        .start().then(_ => {
+          removeLine(patchPoints, layer, this.attr(), 20)
+        })
+    })
+  }
+}
+function removeLine(patchPoints, layer, attrs) {
+  let arrX = patchPoints.map(arr => arr[0]);
+  let minX = Math.min.apply(this, arrX);
+  let maxX = Math.max.apply(this, arrX);
+  let startY = [];
+  let pos = attrs.pos
+  let endY = [];
+  patchPoints.forEach(arr => {
+    if (arr[0] === minX) {
+      startY.push(arr[1])
+    } else if (arr[0] === maxX) {
+      endY.push(arr[1])
+    }
+  })
+  startY.sort()
+  endY.sort()
+  let leftRect = [minX + pos[0], startY[0] + pos[1], 1, startY[startY.length - 1] - startY[0]];
+  let rightRect = [pos[0] + maxX, pos[1] + endY[0], 1, endY[endY.length - 1] - endY[0]];
+  const sprite = new Sprite();
+  sprite.attr({ pos: [leftRect[0], leftRect[1]], size: [leftRect[2], leftRect[3]] });
+  let d = global.devicePixelRatio || 1;
+  layer.context.clearRect(leftRect[0] * d - 0.5, leftRect[1] * d, 1 * d + 0.5, leftRect[3] * d)
+  layer.context.clearRect(rightRect[0] * d - 1, rightRect[1] * d, 1 * d + 0.5, rightRect[3] * d)
 }
 function getLines(data, attrs, fields) {
   const { pos, size, stack, axisGap } = attrs;

@@ -34,12 +34,12 @@ chart.source(data, {
   text: 'date'
 })
 
-const area = new Area()
+const area = new Area({stack:false,smooth:true,compositeOperation:'xor'})
 .style('area',  function(attrs,data,i){
   if(i===0){
-    return {fillColor:'transparent',strokeColor:'transparent'}
+    return {fillColor:'#f00',strokeColor:'transparent'}
   }else if(i===1){
-    return {fillColor:'rgba(0,0,0,0.05)'}
+    return {fillColor:'#0f0'}
   }
 })
 .style('point',{fillColor:'transparent',strokeColor:'transparent'})
