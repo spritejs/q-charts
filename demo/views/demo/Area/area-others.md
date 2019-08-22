@@ -166,13 +166,7 @@ chart.source(data, {
 })
 
 const area = new Area({stack:false,smooth:true,compositeOperation:'xor'})
-.style('area',  function(attrs,data,i){
-  if(i===0){
-    return {fillColor:'#f00',strokeColor:'transparent'}
-  }else if(i===1){
-    return {fillColor:'#0f0'}
-  }
-})
+.style('guideline',false)
 .style('point',{fillColor:'transparent',strokeColor:'transparent'})
 .style('point:hover',{strokeColor:'#fff'})
 
