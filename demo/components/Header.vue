@@ -83,7 +83,8 @@ header {
   position: relative;
   z-index: 100;
   padding: 0 40px 0 20px;
-  // height: 4rem;
+  height: 4rem;
+  flex-shrink: 0;
   box-shadow: 0 2px 8px rgba(229, 229, 229, 0.5);
   nav {
     position: relative;
