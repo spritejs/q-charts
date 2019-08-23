@@ -1,4 +1,4 @@
-import { Group, Polyline, Rect, Polygon, Label, Sprite } from 'spritejs'
+import { Group, Polyline, Rect, Polygon, Label } from 'spritejs'
 import { BaseVisual } from '../../core'
 import { layout } from './layout'
 import { mergeStyle } from '../../util/merge-style'
@@ -292,6 +292,11 @@ export class Line extends BaseVisual {
       patchPoints.push(...attrs.points)
       polygon.attr(attrs)
       group.append(polygon);
+      polygon.on('afterdraw', e => {
+        setTimeout(_ => {
+          removeLine(patchPoints, layer, this.attr(), 30)
+        })
+      })
       new Tween()
         .from(getAreaPoints(lines, i, { size, smooth, stack }, 'from'))
         .to(getAreaPoints(lines, i, { size, smooth, stack }, 'to'))
@@ -303,8 +308,9 @@ export class Line extends BaseVisual {
           polygon.attr(e)
           removeLine(patchPoints, layer, this.attr())
         })
-        .start().then(_ => {
-          removeLine(patchPoints, layer, this.attr(), 20)
+        .start()
+        .then(_ => {
+          removeLine(patchPoints, layer, this.attr())
         })
     })
   }
@@ -313,25 +319,31 @@ function removeLine(patchPoints, layer, attrs) {
   let arrX = patchPoints.map(arr => arr[0]);
   let minX = Math.min.apply(this, arrX);
   let maxX = Math.max.apply(this, arrX);
-  let startY = [];
+  let startY = {};
   let pos = attrs.pos
-  let endY = [];
+  let endY = {};
   patchPoints.forEach(arr => {
     if (arr[0] === minX) {
-      startY.push(arr[1])
+      startY[arr[1]] = arr[1]
     } else if (arr[0] === maxX) {
-      endY.push(arr[1])
+      endY[arr[1]] = arr[1];
     }
   })
-  startY.sort()
-  endY.sort()
-  let leftRect = [minX + pos[0], startY[0] + pos[1], 1, startY[startY.length - 1] - startY[0]];
-  let rightRect = [pos[0] + maxX, pos[1] + endY[0], 1, endY[endY.length - 1] - endY[0]];
-  const sprite = new Sprite();
-  sprite.attr({ pos: [leftRect[0], leftRect[1]], size: [leftRect[2], leftRect[3]] });
+  let arrEndy = []
+  let arrStarty = []
+  for (let key in endY) {
+    arrEndy.push(endY[key]);
+  }
+  for (let key in startY) {
+    arrStarty.push(startY[key]);
+  }
+  let maxStartY = arrStarty.sort().pop()
+  let maxEndY = arrEndy.sort().pop()
+  let leftRect = [minX + pos[0], arrStarty[arrStarty.length - 1] + pos[1], 1, maxStartY];
+  let rightRect = [pos[0] + maxX, pos[1] + arrEndy[arrEndy.length - 1], 1, maxEndY];
   let d = global.devicePixelRatio || 1;
-  layer.context.clearRect(leftRect[0] * d - 0.5, leftRect[1] * d, 1 * d + 0.5, leftRect[3] * d)
-  layer.context.clearRect(rightRect[0] * d - 1, rightRect[1] * d, 1 * d + 0.5, rightRect[3] * d)
+  layer.context.clearRect(leftRect[0] * d - 1, leftRect[1] * d, 1 * d + 2, leftRect[3])
+  layer.context.clearRect(rightRect[0] * d - 1, rightRect[1] * d, 1 * d + 2, rightRect[3])
 }
 function getLines(data, attrs, fields) {
   const { pos, size, stack, axisGap } = attrs;
