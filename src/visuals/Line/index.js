@@ -266,8 +266,12 @@ export class Line extends BaseVisual {
   }
   renderArea() {
     let { size, smooth, compositeOperation, stack } = this.attr();
+
     let lines = this.renderLines;
-    let patchPoints = [];
+    let patchPoints = {
+      start: [],
+      end: []
+    };
     let areaAttrs = { lineWidth: 0, opacity: 0.5 }
     let cusAttrs = this.style('area')(areaAttrs, null, 0)
     Object.assign(areaAttrs, cusAttrs)
@@ -289,12 +293,13 @@ export class Line extends BaseVisual {
       let polygon = new Polygon();
       polygon.attr(areaAttrs);
       let attrs = getAreaPoints(lines, i, { size, smooth, stack }, 'to');
-      patchPoints.push(...attrs.points)
+      patchPoints.start.push(line.points[0].point)
+      patchPoints.end.push(line.points[line.points.length - 1].point)
       polygon.attr(attrs)
       group.append(polygon);
       polygon.on('afterdraw', e => {
         setTimeout(_ => {
-          removeLine(patchPoints, layer, this.attr(), 30)
+          removeLine(patchPoints, layer, this.attr(), 0)
         })
       })
       new Tween()
@@ -316,34 +321,14 @@ export class Line extends BaseVisual {
   }
 }
 function removeLine(patchPoints, layer, attrs) {
-  let arrX = patchPoints.map(arr => arr[0]);
-  let minX = Math.min.apply(this, arrX);
-  let maxX = Math.max.apply(this, arrX);
-  let startY = {};
-  let pos = attrs.pos
-  let endY = {};
-  patchPoints.forEach(arr => {
-    if (arr[0] === minX) {
-      startY[arr[1]] = arr[1]
-    } else if (arr[0] === maxX) {
-      endY[arr[1]] = arr[1];
-    }
-  })
-  let arrEndy = []
-  let arrStarty = []
-  for (let key in endY) {
-    arrEndy.push(endY[key]);
-  }
-  for (let key in startY) {
-    arrStarty.push(startY[key]);
-  }
-  let maxStartY = arrStarty.sort().pop()
-  let maxEndY = arrEndy.sort().pop()
-  let leftRect = [minX + pos[0], arrStarty[arrStarty.length - 1] + pos[1], 1, maxStartY];
-  let rightRect = [pos[0] + maxX, pos[1] + arrEndy[arrEndy.length - 1], 1, maxEndY];
+  let { pos, size } = attrs;
+  let startX = patchPoints.start.map(_ => _[0]).sort()[0] + pos[0]
+  let startY = patchPoints.start.map(_ => _[1]).sort()[1] + pos[1]
+  let endX = patchPoints.end.map(_ => _[0]).sort()[0] + pos[0]
+  let endY = patchPoints.end.map(_ => _[1]).sort()[1] + pos[1]
   let d = global.devicePixelRatio || 1;
-  layer.context.clearRect(leftRect[0] * d - 1, leftRect[1] * d, 1 * d + 2, leftRect[3])
-  layer.context.clearRect(rightRect[0] * d - 1, rightRect[1] * d, 1 * d + 2, rightRect[3])
+  layer.context.clearRect(startX * d - 1, startY * d, d + 1, size[1] * d)
+  layer.context.clearRect(endX * d - 1, endY * d, d + 1, size[1] * d)
 }
 function getLines(data, attrs, fields) {
   const { pos, size, stack, axisGap } = attrs;
