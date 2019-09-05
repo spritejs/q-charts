@@ -14,16 +14,17 @@ function layout(obj) {
             category[item[field]].push(item)
           } else {
             category[item[field]] = [item]
+            scales.push(item[field])
           }
         })
       })
-      scales = Object.keys(category)
     } else {
       // 包含type为value 等
       data = data.map(item => item.filter(item => item[field] !== undefined))
       scales = axis({ dataSet: data, stack, field, section: range });
     }
   }
+  console.log(scales, field)
   let lengthPx = size[0]
   if (orient === 'left' || orient === 'right') {
     lengthPx = size[1]

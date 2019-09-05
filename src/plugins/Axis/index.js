@@ -38,8 +38,9 @@ export class Axis extends BasePlugin {
     this.renderData = layout({ ...this.attr(), data });
     this.renderData.scales.forEach(scale => {
       scale.from = scale.to = { pos: scale.pos }
-      scale.labelFrom = scale.labelTo = { text: getNumberText(scale.text) }
+      scale.labelFrom = scale.labelTo = { text: getNumberText(scale.text, this.attr()) }
     })
+    console.log(this.renderData)
     return this.renderData;
   }
 
@@ -51,15 +52,15 @@ export class Axis extends BasePlugin {
     this.renderData = layout({ ...this.attr(), data })
     this.renderData.scales.forEach((scale, i) => {
       let from = { pos: scale.pos };
-      let labelFrom = { text: getNumberText(scale.text) }
+      let labelFrom = { text: getNumberText(scale.text, this.attr()) }
       if (oldRenderData.scales[i]) {
         from = { pos: oldRenderData.scales[i].pos }
-        labelFrom = { text: getNumberText(oldRenderData.scales[i].text) }
+        labelFrom = { text: getNumberText(oldRenderData.scales[i].text, this.attr()) }
       }
       scale.from = from
       scale.to = { pos: scale.pos }
       scale.labelFrom = labelFrom;
-      scale.labelTo = { text: getNumberText(scale.text) }
+      scale.labelTo = { text: getNumberText(scale.text, this.attr()) }
     })
     return this.renderData;
   }
@@ -88,7 +89,6 @@ export class Axis extends BasePlugin {
     if (type === 'value') { // 如果为value类型，axisGap强制为false
       this.attr({ axisGap: false, field: fields.value })
     }
-
     if ($target instanceof Scatter) {
       this.attr({ type: 'value' })
       if (orient === 'bottom' || orient === 'top') {
@@ -266,8 +266,8 @@ function getDigit(num) {
   }
   return 0;
 }
-function getNumberText(str) {
-  if (!isNaN(str)) {
+function getNumberText(str, attrs) {
+  if (!isNaN(str) && attrs.type === 'value') {
     return Number(str)
   }
   return str;
