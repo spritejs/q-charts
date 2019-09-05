@@ -24,7 +24,6 @@ function layout(obj) {
       scales = axis({ dataSet: data, stack, field, section: range });
     }
   }
-  console.log(scales, field)
   let lengthPx = size[0]
   if (orient === 'left' || orient === 'right') {
     lengthPx = size[1]

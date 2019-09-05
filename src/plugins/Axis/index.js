@@ -40,7 +40,6 @@ export class Axis extends BasePlugin {
       scale.from = scale.to = { pos: scale.pos }
       scale.labelFrom = scale.labelTo = { text: getNumberText(scale.text, this.attr()) }
     })
-    console.log(this.renderData)
     return this.renderData;
   }
 
