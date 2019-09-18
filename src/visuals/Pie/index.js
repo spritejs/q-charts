@@ -73,14 +73,12 @@ export class Pie extends BaseVisual {
   }
 
   transform(data, nestData) {
-    const { startAngle, endAngle, padAngle } = this.attr()
-
+    const { startAngle, endAngle, padAngle, rose } = this.attr()
     const rings = (this.sectors = layout()
       .startAngle(startAngle)
       .endAngle(endAngle)
       .padAngle(padAngle)
-      .value(d => +d.__valueGetter__())(data))
-
+      .value(d => (rose ? 1 : +d.__valueGetter__()))(data)) // 如果是rose等分圆形
     const pos = this.pos
     const maxOuterRadius = this.maxOuterRadius
     const innerRadius = this.innerRadius
@@ -102,7 +100,6 @@ export class Pie extends BaseVisual {
     } else {
       outerRadiuses = rings.map(() => maxOuterRadius)
     }
-
     rings.forEach((ring, i) => {
       ring.index = i
       ring.maxRadius = maxOuterRadius
