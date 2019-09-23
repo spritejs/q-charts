@@ -1,7 +1,7 @@
 const path = require('path')
 const merge = require('webpack-merge')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const BundleAnalyzer = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// const BundleAnalyzer = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const common = require('./webpack.conf.common')
 
 module.exports = merge(common, {

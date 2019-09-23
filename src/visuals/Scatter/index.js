@@ -49,7 +49,12 @@ export class Scatter extends BaseVisual {
     const dataAttr = this.dataset._attrs
     const { size } = this.attr()
     const layoutWay = this._attr.layoutWay
-    const { data, layoutWay: newLayoutWay } = layout(dataSet, dataAttr, size, layoutWay)
+    const { data, layoutWay: newLayoutWay } = layout(
+      dataSet,
+      dataAttr,
+      size,
+      layoutWay
+    )
     this.attr('layoutWay', { ...layoutWay, ...newLayoutWay })
     data.forEach((d, i) => {
       const color = this.color(i)
@@ -86,7 +91,10 @@ export class Scatter extends BaseVisual {
           return
         }
         el.attr(style)
-        const points = index === 0 ? [[0, offsetY], [size[0], offsetY]] : [[offsetX, 0], [offsetX, size[1]]]
+        const points =
+          index === 0
+            ? [[0, offsetY], [size[0], offsetY]]
+            : [[offsetX, 0], [offsetX, size[1]]]
         el.attr('points', points)
       })
     }
@@ -124,8 +132,12 @@ export class Scatter extends BaseVisual {
     if (!areaRange) {
       return dataOrigin[areaField]
     }
-    const allData = this.dataset.dataOrigin.map(d => d[areaField]).sort((a, b) => a - b)
-    const linear = scaleLinear().domain([allData[0], allData[allData.length - 1]]).range(areaRange)
+    const allData = this.dataset.dataOrigin
+      .map(d => d[areaField])
+      .sort((a, b) => a - b)
+    const linear = scaleLinear()
+      .domain([allData[0], allData[allData.length - 1]])
+      .range(areaRange)
     const realArea = linear(dataOrigin[areaField])
     return realArea
   }
@@ -148,17 +160,27 @@ export class Scatter extends BaseVisual {
       if (size * 2 - lineWidth < textWidth * 1.3) {
         translate[1] = size + lineWidth + 10
       }
-      return <Label
-        {...{ ...other, fillColor: strokeColor, text, translate, anchor: [0.5, 0.5], fontSize: '12px' }}
-        animation={this.resolveAnimation(animation)}
-        {...style}
-        hoverState={this.style('label:hover')(attr, attr.dataOrigin, i)}
-        onMouseenter={(_, el) => {
-          el.attr('state', 'hover')
-        }}
-        onMouseleave={(evt, el) => {
-          el.attr('state', 'normal')
-        }} />
+      return (
+        <Label
+          {...{
+            ...other,
+            fillColor: strokeColor,
+            text,
+            translate,
+            anchor: [0.5, 0.5],
+            fontSize: '12px'
+          }}
+          animation={this.resolveAnimation(animation)}
+          {...style}
+          hoverState={this.style('label:hover')(attr, attr.dataOrigin, i)}
+          onMouseenter={(_, el) => {
+            el.attr('state', 'hover')
+          }}
+          onMouseleave={(evt, el) => {
+            el.attr('state', 'normal')
+          }}
+        />
+      )
     }
   }
 
@@ -213,7 +235,10 @@ export class Scatter extends BaseVisual {
             }
           }
         }
-        const { PointSymbol, normalStyle, hoverStyle } = getSymbolAndStyle(style, hStyle)
+        const { PointSymbol, normalStyle, hoverStyle } = getSymbolAndStyle(
+          style,
+          hStyle
+        )
         const preEl = this.$scatterEl[elIndex]
         let animation = {
           from: { scale: 0 },
@@ -230,26 +255,29 @@ export class Scatter extends BaseVisual {
             animation = {}
           }
         }
-        return <Group clipOverflow={false}>
-          <PointSymbol
-            ref={el => this.getEl(elIndex, el, 'scatter')}
-            animation={this.resolveAnimation(animation)}
-            {...attr}
-            {...normalStyle}
-            hoverState={hoverStyle}
-            onMouseenter={(_, el) => {
-              el.attr('state', 'hover')
-            }}
-            onMousemove={(evt, el) => {
-              this.showTooltip(evt, { ...attr }, el)
-            }}
-            onMouseleave={(evt, el) => {
-              el.attr('state', 'normal')
-              this.hideTooltip()
-              this.chart.setCanvasCursor('default')
-            }} />
-          {this.renderLabel(attr, normalStyle, animation, index)}
-        </Group>
+        return (
+          <Group clipOverflow={false}>
+            <PointSymbol
+              ref={el => this.getEl(elIndex, el, 'scatter')}
+              animation={this.resolveAnimation(animation)}
+              {...attr}
+              {...normalStyle}
+              hoverState={hoverStyle}
+              onMouseenter={(_, el) => {
+                el.attr('state', 'hover')
+              }}
+              onMousemove={(evt, el) => {
+                this.showTooltip(evt, { ...attr }, el)
+              }}
+              onMouseleave={(evt, el) => {
+                el.attr('state', 'normal')
+                this.hideTooltip()
+                this.chart.setCanvasCursor('default')
+              }}
+            />
+            {this.renderLabel(attr, normalStyle, animation, index)}
+          </Group>
+        )
       })
     })
     return scatters.reduce((pre, cur) => {
@@ -262,13 +290,11 @@ export class Scatter extends BaseVisual {
     const padding = this.padding
     return (
       <Group size={size} padding={padding} zIndex={100} clipOverflow={false}>
-        {
-          this.renderScatter(data)
-        }
-        {
-          this.renderGuideLine()
-        }
+        {this.renderScatter(data)}
+        {this.renderGuideLine()}
       </Group>
     )
   }
 }
+
+export default Scatter
