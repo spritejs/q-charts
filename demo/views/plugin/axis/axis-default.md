@@ -12,7 +12,7 @@ const data = [
   { month: 'Jun', city: 'London', value: 15.2 }
 ]
 
-const { Chart, Axis ,Line } = qcharts
+const { Chart, Axis, Line } = qcharts
 
 const chart = new Chart({
   container: '#app',
@@ -23,12 +23,16 @@ const chart = new Chart({
   text: 'month'
 })
 
-const line = new Line().style('point',{color:'#fff'})
+const line = new Line().style('point', { color: '#fff' })
 
-let xAxis = new Axis({ })
+let xAxis = new Axis({
+  formatter: str => {
+    return str + '-' + 1
+  }
+})
 let yAxis = new Axis({ orient: 'left' })
 
-chart.add([line,xAxis,yAxis])
+chart.add([line, xAxis, yAxis])
 chart.render()
 ```
 
@@ -36,14 +40,14 @@ chart.render()
 
 #### 方法：
 
-| 名称         | 说明                     | 类型  | 可选值                                                                                      | 默认值                  |
-| ------------ | --------------------- | ----- | ---------- | ----------------------- |
-| orient       | 坐标轴的方向    |       | ['top','right','bottom','left']     | 'bottom'                |
+| 名称   | 说明         | 类型 | 可选值                          | 默认值   |
+| ------ | ------------ | ---- | ------------------------------- | -------- |
+| orient | 坐标轴的方向 |      | ['top','right','bottom','left'] | 'bottom' |
 
 #### style 属性：
 
 | 名称  | 说明         | 类型                  |
-| ----- | ------------ | ------------------- |
+| ----- | ------------ | --------------------- |
 | axis  | 轴体的样式   | 轴体对应 Rect 类      |
 | scale | 刻度的样式   | scale 对应 Rect 类    |
 | label | 轴上文本样式 | label 对应的 label 类 |
