@@ -1,3 +1,4 @@
+import { Global } from '../../core/Global'
 /**
  * 根据给定角度和长度获取圆坐标值
  * @param {Number} radian 角度
@@ -18,7 +19,11 @@ const getPointCoordinate = (radian, length) => {
  */
 const getMax = (data, splitNumber) => {
   const indicatorMax = Math.max(...data)
-  return Math.ceil(indicatorMax / 10 / splitNumber) * 10 * splitNumber
+  if (indicatorMax < splitNumber * 10) {
+    return Math.ceil(indicatorMax / splitNumber) * splitNumber
+  } else {
+    return Math.ceil(indicatorMax / 10 / splitNumber) * 10 * splitNumber
+  }
 }
 
 /**
@@ -44,11 +49,20 @@ export default function layout(
   if (data.some(d => d.length === 0)) {
     return { sectionAttrs, axisAttrs, gridAttrs }
   }
-  const max = getMax(
-    data.filter(d => !d[0].disabled).reduce((t, c) => {
+
+  const allData = data
+    .filter(d => !d[0].disabled)
+    .reduce((t, c) => {
       const cv = c.map(d => d.__valueGetter__())
       return t.concat(cv)
-    }, []),
+    }, [])
+
+  const max = getMax(allData, splitNumber)
+
+  const realMax = getMax(
+    allData.map(val =>
+      Global.datasetReverse ? Global.datasetReverse(val) : val
+    ),
     splitNumber
   )
 
@@ -80,7 +94,7 @@ export default function layout(
       label,
       labelPos,
       radian: currentRadian,
-      maxScale: max,
+      maxScale: realMax,
       splitNumber: splitNumber,
       $elType: 'axis',
       disabled: labelDisabled
