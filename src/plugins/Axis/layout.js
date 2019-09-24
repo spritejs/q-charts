@@ -21,7 +21,13 @@ function layout(obj) {
     } else {
       // 包含type为value 等
       data = data.map(item => item.filter(item => item[field] !== undefined))
-      scales = axis({ dataSet: data, stack, field, section: range });
+      scales = axis({
+        dataSet: data,
+        stack,
+        field,
+        section: range,
+        needReverse: true
+      })
     }
   }
   let lengthPx = size[0]
@@ -30,15 +36,28 @@ function layout(obj) {
   }
 
   let originalPoint = [0, 0]
-  let axisAttrs = { size: [size[0], 1], fillColor: '#bfbfbf', strokeColor: 'transparent' }
+  let axisAttrs = {
+    size: [size[0], 1],
+    fillColor: '#bfbfbf',
+    strokeColor: 'transparent'
+  }
   let labelAttrs = {
     padding: [10, 10],
     color: '#67728C',
     fontSize: 12,
     clipOverflow: false
   }
-  let scaleAttrs = { fillColor: '#bfbfbf', strokeColor: 'transparent', size: [1, 1] }
-  let gridAttrs = { strokeColor: 'rgba(0,0,0,0.2)', points: [], lineDash: [3, 4], translate: [0.5, 0.5] }
+  let scaleAttrs = {
+    fillColor: '#bfbfbf',
+    strokeColor: 'transparent',
+    size: [1, 1]
+  }
+  let gridAttrs = {
+    strokeColor: 'rgba(0,0,0,0.2)',
+    points: [],
+    lineDash: [3, 4],
+    translate: [0.5, 0.5]
+  }
 
   let sLength = scales.length - 1
 

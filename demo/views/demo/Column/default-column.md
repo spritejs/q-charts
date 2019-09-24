@@ -21,9 +21,7 @@ chart.source(data, {
   row: '*',
   value: 'abc',
   text: 'label',
-  layoutScale: function(value) {
-    return Math.sqrt(value)
-  }
+  layoutScale: 'sqrt'
 })
 const bar = new Bar({}).style('pillar', { fillColor: '#47A1FF' })
 const tooltip = new Tooltip({
