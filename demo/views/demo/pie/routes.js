@@ -33,6 +33,11 @@ export default [
     title: '弧饼图',
     path: 'arcPie',
     component: () => import('./arcPie.md')
+  },
+  {
+    title: '其他',
+    path: 'other',
+    component: () => import('./rose_layoutScale.md')
   }
 
   // {
