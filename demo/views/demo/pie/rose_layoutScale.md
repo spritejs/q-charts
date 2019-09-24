@@ -17,7 +17,7 @@ const chart = new Chart({ container: '#app' })
 chart.source(data, {
   row: 'name',
   value: 'value',
-  layoutScale: 'log'
+  layoutScale: 'log' //['sqrt','sqrt3','log']
 })
 
 const pie = new Pie({
