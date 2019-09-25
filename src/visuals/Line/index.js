@@ -352,6 +352,9 @@ export class Line extends BaseVisual {
           setTimeout(_ => {
             removeLine(patchPoints, layer, this.attr(), 0)
           })
+          if (compositeOperation) {
+            layer.context.globalCompositeOperation = 'source-over'
+          }
         })
         new Tween()
           .from(getAreaPoints(lines, i, { size, smooth, stack }, 'from'))
