@@ -3,7 +3,7 @@ import { BaseVisual } from '../../core'
 import { layout } from './layout'
 import { mergeStyle } from '../../util/merge-style'
 import { getSymbolAndStyle } from '../../util/pointSymbol'
-import { Tween } from '../../tween';
+import { Tween } from '../../tween'
 export class Line extends BaseVisual {
   constructor(attrs = {}) {
     super(attrs)
@@ -11,7 +11,7 @@ export class Line extends BaseVisual {
     this.$refs = Object.create(null) // 独立的一些元素
     this.$symbols = [] // symbols
     this.$lines = [] // lines
-    this.__guideLineIndex = -1;
+    this.__guideLineIndex = -1
   }
   get name() {
     return 'Line'
@@ -26,10 +26,14 @@ export class Line extends BaseVisual {
   }
 
   beforeRender() {
-    this.areaLayer = this.chart.scene.layer('area');
+    this.areaLayer = this.chart.scene.layer('area')
     this.chart.layer.canvas.style.zIndex = 1
     super.beforeRender()
-    const lines = getLines(this.getData(), this.attr(), this.chart.dataset.attr())
+    const lines = getLines(
+      this.getData(),
+      this.attr(),
+      this.chart.dataset.attr()
+    )
     lines.forEach((line, i) => {
       let points = getPointXY(line.points)
       updateLineAttr(line, { points, opacity: 1 }, { points, opacity: 0 })
@@ -40,25 +44,44 @@ export class Line extends BaseVisual {
 
   beforeUpdate() {
     super.beforeUpdate()
-    const lines = getLines(this.getData(), this.attr(), this.chart.dataset.attr())
+    const lines = getLines(
+      this.getData(),
+      this.attr(),
+      this.chart.dataset.attr()
+    )
     let oldLines = this.renderData
     lines.forEach((line, i) => {
       let newPoints = getPointXY(line.points)
       if (oldLines[i]) {
         let oldPoints = getPointXY(oldLines[i].points)
-        if (oldLines[i].disabled === true && line.disabled !== true) { // 点击legend
-          updateLineAttr(line, { points: newPoints, opacity: 1 }, { points: oldPoints, opacity: 0 })
+        if (oldLines[i].disabled === true && line.disabled !== true) {
+          // 点击legend
+          updateLineAttr(
+            line,
+            { points: newPoints, opacity: 1 },
+            { points: oldPoints, opacity: 0 }
+          )
         } else if (oldLines[i].disabled !== true && line.disabled === true) {
-          updateLineAttr(line, { points: newPoints, opacity: 0 }, { points: oldPoints, opacity: 1 })
-        } else if (oldLines[i].disabled !== true && line.disabled !== true) { // 默认更新
+          updateLineAttr(
+            line,
+            { points: newPoints, opacity: 0 },
+            { points: oldPoints, opacity: 1 }
+          )
+        } else if (oldLines[i].disabled !== true && line.disabled !== true) {
+          // 默认更新
           updateLineAttr(
             line,
             { points: newPoints, opacity: 1 },
             { points: oldPoints, opacity: 1 }
           )
         }
-      } else { // 新增
-        updateLineAttr(line, { points: newPoints, opacity: 1 }, { points: newPoints, opacity: 0 })
+      } else {
+        // 新增
+        updateLineAttr(
+          line,
+          { points: newPoints, opacity: 1 },
+          { points: newPoints, opacity: 0 }
+        )
       }
     })
     this.renderData = lines
@@ -71,13 +94,13 @@ export class Line extends BaseVisual {
     this.$refs[name] = el
   }
   bgMove(evt, el) {
-    if (evt === undefined) return;
+    if (evt === undefined) return
     const { offsetX: x } = evt
-    const pointsX = getPointX(this.renderData);
+    const pointsX = getPointX(this.renderData)
     let tarX = pointsX[0]
     let tarIndex = 0
     let dis = Math.abs(tarX - x)
-    let $guideline = this.$refs['guideline'];
+    let $guideline = this.$refs['guideline']
     for (let i = 1; i < pointsX.length; i++) {
       if (Math.abs(pointsX[i] - x) < dis) {
         dis = Math.abs(pointsX[i] - x)
@@ -116,20 +139,20 @@ export class Line extends BaseVisual {
         })
       }
       this.dataset.hoverData({ ...evt, data: hoverData })
-      this.__guideLineIndex = tarIndex;
+      this.__guideLineIndex = tarIndex
     }
   }
   bgLeave(evt, el) {
-    let $guideline = this.$refs['guideline'];
+    let $guideline = this.$refs['guideline']
     if ($guideline) {
       $guideline.attr({ opacity: 0 })
       this.$symbols.forEach(line => {
         line.forEach((symbol, j) => {
           symbol.attr('state', 'normal')
         })
-      });
+      })
       this.dataset.hoverData()
-      this.__guideLineIndex = -1;
+      this.__guideLineIndex = -1
     }
   }
   setSymbol(i, j, el) {
@@ -139,9 +162,14 @@ export class Line extends BaseVisual {
     this.$symbols[i][j] = el
   }
   _getSymbol(attr, item, data, i, j) {
-    const style = mergeStyle(this.style('point'), [attr, data, i, j], attr);
-    const hStyle = mergeStyle(this.style('point:hover'), [attr, data, i, j], { scale: [1.4] });
-    const { PointSymbol, normalStyle, hoverStyle } = getSymbolAndStyle(style, hStyle)
+    const style = mergeStyle(this.style('point'), [attr, data, i, j], attr)
+    const hStyle = mergeStyle(this.style('point:hover'), [attr, data, i, j], {
+      scale: [1.4]
+    })
+    const { PointSymbol, normalStyle, hoverStyle } = getSymbolAndStyle(
+      style,
+      hStyle
+    )
     return style === false ? null : (
       <PointSymbol
         animation={this.resolveAnimation({
@@ -175,26 +203,34 @@ export class Line extends BaseVisual {
     )
   }
   render(lines = []) {
-    let guideLineAttrs = { size: [1, this.attr('size')[1]], fillColor: '#ccc', strokeColor: 'transparent', opacity: 0 }
-    let guideStyle = mergeStyle(this.style('guideline'), [guideLineAttrs]);
-    lines = lines.filter(line => line.points && line.points.length);
-    this.renderLines = lines;
+    let guideLineAttrs = {
+      size: [1, this.attr('size')[1]],
+      fillColor: '#ccc',
+      strokeColor: 'transparent',
+      opacity: 0
+    }
+    let guideStyle = mergeStyle(this.style('guideline'), [guideLineAttrs])
+    lines = lines.filter(line => line.points && line.points.length)
+    this.renderLines = lines
     return (
       <Group zIndex={100} enableCache={false}>
-        {guideStyle === false ? (null) : (
+        {guideStyle === false ? null : (
           <Rect ref={el => this.ref('guideline', el)} {...guideStyle} />
         )}
-        <Group enableCache={false}>
-        </Group>
+        <Group enableCache={false}></Group>
         <Group clipOverflow={false} enableCache={false}>
           {lines.map((line, i) => {
             let color = this.color(i)
             let lineAttrs = { strokeColor: color, lineWidth: 2 }
-            let cusAttrs = this.style('line')(lineAttrs, line.data.map(item => item.dataOrigin), i)
+            let cusAttrs = this.style('line')(
+              lineAttrs,
+              line.data.map(item => item.dataOrigin),
+              i
+            )
             let smybolAttrs = { fillColor: color }
-            let { smooth } = this.attr();
+            let { smooth } = this.attr()
             Object.assign(lineAttrs, cusAttrs)
-            return (
+            return cusAttrs === false ? null : (
               <Group
                 size={this.attr('size')}
                 clipOverflow={false}
@@ -231,17 +267,23 @@ export class Line extends BaseVisual {
                 />
                 {line.points.map((item, j) => {
                   line.data[j].color = color
-                  return (
-                    this._getSymbol(smybolAttrs, item, line.data[j].dataOrigin, i, j)
+                  return this._getSymbol(
+                    smybolAttrs,
+                    item,
+                    line.data[j].dataOrigin,
+                    i,
+                    j
                   )
                 })}
                 {line.points.map((item, j) => {
                   let labelAttrs = { color }
-                  let cusAttrs = this.style('label')(labelAttrs, line.data.map(item => item.dataOrigin), j)
+                  let cusAttrs = this.style('label')(
+                    labelAttrs,
+                    line.data.map(item => item.dataOrigin),
+                    j
+                  )
                   if (cusAttrs) {
-                    return (
-                      <Label pos={item.point} {...cusAttrs}/>
-                    )
+                    return <Label pos={item.point} {...cusAttrs} />
                   }
                 })}
               </Group>
@@ -253,85 +295,95 @@ export class Line extends BaseVisual {
   }
   update() {
     super.update()
-    let { type } = this.attr();
+    let { type } = this.attr()
     if (type === 'area') {
-      this.renderArea();
+      this.renderArea()
     }
   }
   rendered() {
-    let { type } = this.attr();
+    let { type } = this.attr()
     if (type === 'area') {
-      this.renderArea();
+      this.renderArea()
     }
   }
   renderArea() {
-    let { size, smooth, compositeOperation, stack } = this.attr();
+    let { size, smooth, compositeOperation, stack } = this.attr()
 
-    let lines = this.renderLines;
+    let lines = this.renderLines
     let patchPoints = {
       start: [],
       end: []
-    };
+    }
     let areaAttrs = { lineWidth: 0, opacity: 0.5 }
     let cusAttrs = this.style('area')(areaAttrs, null, 0)
     Object.assign(areaAttrs, cusAttrs)
     let layer = this.areaLayer
-    layer.canvas.style.opacity = areaAttrs.opacity;
+    layer.canvas.style.opacity = areaAttrs.opacity
     layer.clear()
     if (compositeOperation) {
       layer.context.globalCompositeOperation = compositeOperation
     }
-    let group = new Group();
+    let group = new Group()
     group.attr(this.attr())
-    layer.append(group);
+    layer.append(group)
     this.renderLines.forEach((line, i) => {
       let color = this.color(i)
-      let areaAttrs = { fillColor: color, lineWidth: 0, strokeColor: 'transparent' }
-      let cusAttrs = this.style('area')(areaAttrs, line.data.map(item => item.dataOrigin), i)
+      let areaAttrs = {
+        fillColor: color,
+        lineWidth: 0,
+        strokeColor: 'transparent'
+      }
+      let cusAttrs = this.style('area')(
+        areaAttrs,
+        line.data.map(item => item.dataOrigin),
+        i
+      )
       Object.assign(areaAttrs, cusAttrs)
-      delete areaAttrs.opacity;
-      let polygon = new Polygon();
-      polygon.attr(areaAttrs);
-      let attrs = getAreaPoints(lines, i, { size, smooth, stack }, 'to');
-      patchPoints.start.push(line.points[0].point)
-      patchPoints.end.push(line.points[line.points.length - 1].point)
-      polygon.attr(attrs)
-      group.append(polygon);
-      polygon.on('afterdraw', e => {
-        setTimeout(_ => {
-          removeLine(patchPoints, layer, this.attr(), 0)
-        })
-      })
-      new Tween()
-        .from(getAreaPoints(lines, i, { size, smooth, stack }, 'from'))
-        .to(getAreaPoints(lines, i, { size, smooth, stack }, 'to'))
-        .duration(200)
-        .onUpdate((e, i) => {
-          e.points = e.points.map(pos => {
-            return [Math.round(pos[0]), Math.round(pos[1])]
+      if (cusAttrs !== false) {
+        delete areaAttrs.opacity
+        let polygon = new Polygon()
+        polygon.attr(areaAttrs)
+        let attrs = getAreaPoints(lines, i, { size, smooth, stack }, 'to')
+        patchPoints.start.push(line.points[0].point)
+        patchPoints.end.push(line.points[line.points.length - 1].point)
+        polygon.attr(attrs)
+        group.append(polygon)
+        polygon.on('afterdraw', e => {
+          setTimeout(_ => {
+            removeLine(patchPoints, layer, this.attr(), 0)
           })
-          polygon.attr(e)
-          removeLine(patchPoints, layer, this.attr())
         })
-        .start()
-        .then(_ => {
-          removeLine(patchPoints, layer, this.attr())
-        })
+        new Tween()
+          .from(getAreaPoints(lines, i, { size, smooth, stack }, 'from'))
+          .to(getAreaPoints(lines, i, { size, smooth, stack }, 'to'))
+          .duration(200)
+          .onUpdate((e, i) => {
+            e.points = e.points.map(pos => {
+              return [Math.round(pos[0]), Math.round(pos[1])]
+            })
+            polygon.attr(e)
+            removeLine(patchPoints, layer, this.attr())
+          })
+          .start()
+          .then(_ => {
+            removeLine(patchPoints, layer, this.attr())
+          })
+      }
     })
   }
 }
 function removeLine(patchPoints, layer, attrs) {
-  let { pos, size } = attrs;
+  let { pos, size } = attrs
   let startX = patchPoints.start.map(_ => _[0]).sort()[0] + pos[0]
   let startY = patchPoints.start.map(_ => _[1]).sort()[1] + pos[1]
   let endX = patchPoints.end.map(_ => _[0]).sort()[0] + pos[0]
   let endY = patchPoints.end.map(_ => _[1]).sort()[1] + pos[1]
-  let d = global.devicePixelRatio || 1;
+  let d = global.devicePixelRatio || 1
   layer.context.clearRect(startX * d - 1, startY * d, d + 1, size[1] * d)
   layer.context.clearRect(endX * d - 1, endY * d, d + 1, size[1] * d)
 }
 function getLines(data, attrs, fields) {
-  const { pos, size, stack, axisGap } = attrs;
+  const { pos, size, stack, axisGap } = attrs
   return layout({ pos, size, stack, axisGap, data, fields })
 }
 function updateLineAttr(line, newObj, oldObj) {
@@ -366,42 +418,46 @@ function getPointX(items) {
   for (let i = 0; i < items.length; i++) {
     if (items[i].disabled !== true) {
       points = items[i].points
-      break;
+      break
     }
   }
   return points.map(point => point.point && point.point[0])
 }
 function getAreaPoints(lines, i, attrs, name) {
-  let startIndex = 0;
+  let startIndex = 0
   for (let i = 0; i < lines.length; i++) {
     if (lines[i].disabled !== true) {
-      startIndex = i;
-      break;
+      startIndex = i
+      break
     }
   }
-  const { size, smooth, stack } = attrs;
-  let res = Object.create(null);
-  let points = getLinePoints(lines, i, name);
+  const { size, smooth, stack } = attrs
+  let res = Object.create(null)
+  let points = getLinePoints(lines, i, name)
   res.points = [].concat(points)
   if (points.length === 0) return res
-  if (i === startIndex || stack === false) { // 不堆叠添加面积坐标都是到坐标轴
+  if (i === startIndex || stack === false) {
+    // 不堆叠添加面积坐标都是到坐标轴
     if (smooth === true) {
-      res.smooth = [1, points.length];
+      res.smooth = [1, points.length]
     }
     let y0 = size[1]
-    res.points.unshift([points[0][ 0 ], y0]);
-    res.points.push([points[ points.length - 1 ][ 0 ], y0]);
+    res.points.unshift([points[0][0], y0])
+    res.points.push([points[points.length - 1][0], y0])
   } else {
-    let nextPoints = getLinePoints(lines, i - 1, name);
+    let nextPoints = getLinePoints(lines, i - 1, name)
     if (smooth === true) {
-      res.smooth = [[0, points.length - 1], [points.length, points.length + nextPoints.length - 1]];
+      res.smooth = [
+        [0, points.length - 1],
+        [points.length, points.length + nextPoints.length - 1]
+      ]
     }
     res.points = points.concat(nextPoints.reverse())
   }
-  return res;
+  return res
 }
 function getLinePoints(lines, i, name) {
-  let line = lines[i];
+  let line = lines[i]
   if (line === undefined) {
     return []
   }
