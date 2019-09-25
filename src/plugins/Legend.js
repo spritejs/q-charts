@@ -297,6 +297,15 @@ export class Legend extends BasePlugin {
     const { x, y } = this.pos
     const size = this.size
 
+    let renderData = this.getData()
+    let colData = []
+    renderData.forEach((arr, i) => {
+      let curArr = []
+      arr.forEach(item => {
+        curArr.push(item.dataOrigin)
+      })
+      colData.push(curArr)
+    })
     this.ensurePaginationSize()
 
     return (
@@ -376,7 +385,7 @@ export class Legend extends BasePlugin {
                 <Label
                   clipOverflow={false}
                   bgcolor={'transparent'}
-                  text={formatter(name, i)}
+                  text={formatter(name, colData[i], i)}
                   {...text}
                   {...this.style('text')({}, name, i)}
                   hoverState={this.style('text:hover')({}, name, i)}

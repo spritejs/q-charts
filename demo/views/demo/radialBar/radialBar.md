@@ -62,8 +62,8 @@ radialBar.style('arc', { lineCap: 'round' })
 const legend = new Legend({
   orient: 'vertical',
   align: ['right', 'center'],
-  formatter: (name, i) => {
-    let d = data[i] // 也可以根据 name 查找 legend 与哪些源数据对应
+  formatter: (name, da, i) => {
+    let d = da[0] // 也可以根据 name 查找 legend 与哪些源数据对应
     return (
       `${d.type}` +
       Array(8 - d.type.length)

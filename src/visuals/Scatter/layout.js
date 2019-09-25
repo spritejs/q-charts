@@ -43,9 +43,9 @@ export default function layout(data, dataAttr, size, layoutWay) {
   const maxLen = getDataRange(data.map(d => d.length))[1]
   let xDomain = [0, maxLen - 1]
   let xSection = [0, maxLen - 1]
-  const xIsTextData = allData.some(d => isString(d[textField]))
+  const xIsTextData = allData.some(d => isString(d.__textGetter__()))
   if (!xIsTextData) {
-    xSection = getBigRange(allData.map(d => d[textField]))
+    xSection = getBigRange(allData.map(d => d.__textGetter__()))
     const xScales = axis({
       dataSet: data,
       stack: false,
@@ -55,11 +55,11 @@ export default function layout(data, dataAttr, size, layoutWay) {
     xDomain = getDataRange(xScales)
   }
 
-  const yIsTextData = allData.some(d => isString(d[valueField]))
+  const yIsTextData = allData.some(d => isString(d.__valueGetter__()))
   if (yIsTextData) {
     throw new Error("Scatter's value category data should be Number!")
   }
-  let ySection = getBigRange(allData.map(d => d[valueField]))
+  let ySection = getBigRange(allData.map(d => d.__valueGetter__()))
   const yScales = axis({
     dataSet: data,
     stack: false,
