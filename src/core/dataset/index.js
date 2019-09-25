@@ -210,30 +210,58 @@ class Dataset {
 
   _handleLayoutScale(layoutScale) {
     if (typeof layoutScale === 'string') {
-      switch (layoutScale) {
+      let method = layoutScale.replace(/\d+$/, '')
+      let NUM = 2
+      if (method !== 'sqrt' && method !== 'pow' && method !== 'log') {
+        console.warn('layoutScale type error')
+        return function(value) {
+          return value
+        }
+      }
+
+      let number = layoutScale.replace(/^[a-z]+/, '')
+      if (number) {
+        let isNumber = /^[-+]?\d*$/.test(number)
+        if (!isNumber) {
+          console.warn('layoutScale type error')
+          return function(value) {
+            return value
+          }
+        } else {
+          NUM = Number(number)
+        }
+      }
+
+      switch (method) {
         case 'sqrt':
           Global.datasetReverse = function(value) {
-            return Math.pow(value, 2)
+            return Math.pow(value, NUM)
           }
           return function(value) {
-            return Math.pow(value, 1 / 2)
+            return Math.pow(value, 1 / NUM)
           }
-        case 'sqrt3':
+        case 'pow':
           Global.datasetReverse = function(value) {
-            return Math.pow(value, 3)
+            return Math.pow(value, 1 / NUM)
           }
           return function(value) {
-            return Math.pow(value, 1 / 3)
+            return Math.pow(value, NUM)
           }
         case 'log':
-        case 'log10':
+          if (NUM !== 2 && NUM !== 10) {
+            console.warn('layoutScale type error')
+            return function(value) {
+              return value
+            }
+          }
           Global.datasetReverse = function(value) {
-            return Math.pow(10, value)
+            return Math.pow(NUM, value)
           }
           return function(value) {
-            return Math.log10(value)
+            return Math['log' + NUM](value)
           }
         default:
+          console.warn('layoutScale type error')
           return function(value) {
             return value
           }

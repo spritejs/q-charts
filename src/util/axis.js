@@ -107,7 +107,9 @@ export function axis(attr) {
   }
   if (attr.needReverse) {
     axisArray = axisArray.map(value => {
-      return Global.datasetReverse ? Global.datasetReverse(value) : value
+      return Global.datasetReverse
+        ? Math.round(Global.datasetReverse(value))
+        : value
     })
   }
   return axisArray
