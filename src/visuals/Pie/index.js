@@ -94,9 +94,9 @@ export class Pie extends BaseVisual {
         .domain([0, ticks[ticks.length - 1]])
         .range([innerRadius, maxOuterRadius])
 
-      outerRadiuses = data.map(d =>
-        scale(d.disabled ? 0 : +d.__valueGetter__())
-      )
+      outerRadiuses = data.map(d => {
+        return scale(d.disabled ? 0 : +d.__valueGetter__())
+      })
     } else {
       outerRadiuses = rings.map(() => maxOuterRadius)
     }
@@ -141,8 +141,9 @@ export class Pie extends BaseVisual {
     super.beforeRender()
     const nestData = this.getData()
     const data = flattern(nestData)
-
+    // console.log(data)
     const rings = (this.rings = this.transform(data, nestData))
+    // console.log(rings)
     this.fromTos = rings.map((ring, i) => {
       return {
         from: {
@@ -155,7 +156,6 @@ export class Pie extends BaseVisual {
         }
       }
     })
-
     return rings
   }
 
@@ -163,6 +163,7 @@ export class Pie extends BaseVisual {
     super.beforeUpdate()
     const nestData = this.getData()
     const data = flattern(nestData)
+
     const rings = this.rings
     const nextRings = this.transform(data, nestData)
     this.fromTos = nextRings.map((nextRing, i) => {
