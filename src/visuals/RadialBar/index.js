@@ -76,7 +76,7 @@ export class RadialBar extends BaseVisual {
     let value = null
 
     data.forEach((d, i) => {
-      value = +d.__valueGetter__()
+      value = +d.__originValueGetter__()
 
       d.pos = [outerRadius, outerRadius]
       d.anchor = [0.5, 0.5]

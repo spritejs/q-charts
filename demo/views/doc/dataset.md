@@ -69,8 +69,6 @@ chart.source(data, {
   value: 'sales'
 })
 
-console.log(chart.dataset)
-
 const bar = new Bar({})
 const legend = new Legend({ align: ['center', 'top'] })
 const xAxis = new Axis()

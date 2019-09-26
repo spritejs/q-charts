@@ -71,7 +71,6 @@ let i = 1
 let str = 'data'
 function changeData() {
   let dataStr = str + (i % 3)
-  console.log()
   chart.source(window[dataStr], {
     row: '*',
     value: 'value',

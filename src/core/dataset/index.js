@@ -47,6 +47,12 @@ class Dataset {
       this.dataOrigin = data.dataOrigin
       this.data = clone(data.dataOrigin)
     } else if (isArray(data)) {
+      let { value } = this.attr()
+      for (let i = 0, len = data.length; i < len; i++) {
+        if (isNaN(data[i][value || 'value'])) {
+          invariant(false, `Invalid source data, value must be a number!`)
+        }
+      }
       this.dataOrigin = data
       this.data = clone(data)
     } else {
@@ -63,8 +69,8 @@ class Dataset {
    * @param {*} options
    */
   source(data, options) {
-    this._prepareSource(data)
     this.attr(options)
+    this._prepareSource(data)
     this._executeTransform()
   }
 

@@ -59,9 +59,6 @@ export class ArcPie extends Pie {
 
   render(data = []) {
     const { title, subTitle } = this.attr()
-
-    console.log(data)
-
     return (
       <Group clipOverflow={false}>
         {data.map((d, i) => {

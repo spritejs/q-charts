@@ -36,7 +36,6 @@ export default function funnelLayout() {
         let counter = 1
 
         while (data[i + counter][0].disabled === true) {
-          console.log(counter)
           counter++
         }
         const nextValue = data[i + counter][0].__valueGetter__()

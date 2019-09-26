@@ -60,7 +60,7 @@ export class Chart extends BaseNode {
 
     this[_plot] = plot
     this[_plot].addChart(this)
-    this.scene = plot.scene;
+    this.scene = plot.scene
     this.canvas = plot.canvas
   }
 
