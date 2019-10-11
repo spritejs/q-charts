@@ -1,6 +1,6 @@
 export { Pie } from './Pie'
 export { ArcPie } from './ArcPie'
-// export { Progress } from './Progress'
+export { Progress } from './Progress'
 export { Line } from './Line'
 export { Radar } from './Radar'
 export { Bar } from './Bar'

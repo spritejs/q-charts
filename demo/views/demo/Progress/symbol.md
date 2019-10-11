@@ -8,7 +8,7 @@
 const data = [
   {
     sex: 'male',
-    value: [45, 35, 25]
+    value: 45
   }
 ]
 
@@ -24,12 +24,20 @@ chart.source(data, {
   text: 'sex',
   value: 'value'
 })
+setTimeout(e => {
+  chart.source([
+    {
+      sex: 'male',
+      value: 70
+    }
+  ])
+}, 2000)
 
 const progress = new Progress({
   min: 0,
   max: 100,
   type: 'wave',
-  formatter: d => `当前工作进度：${d.value[0]}%`,
+  formatter: d => `当前工作进度：${d.value}%`,
   lineWidth: 2
 }).style('normal', (attrs, d, i) => {
   return {
@@ -73,7 +81,7 @@ const shapes = [
 
 const { Chart, Progress, Tooltip } = qcharts
 
-const chart = new Chart({ container: '#app'})
+const chart = new Chart({ container: '#app' })
 
 chart.source(data, {
   row: 'sex',

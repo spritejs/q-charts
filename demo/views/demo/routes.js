@@ -34,7 +34,6 @@ export default [
     children: AreaRoutes
   },
 
-
   {
     title: '柱状图',
     path: 'column',
@@ -67,12 +66,12 @@ export default [
     children: scatterRoutes
   },
 
-  // {
-  //   title: '进度图',
-  //   path: 'progress',
-  //   component: generateCommonPage('/demo/progress/', ProgressRoutes),
-  //   children: ProgressRoutes
-  // },
+  {
+    title: '进度图',
+    path: 'progress',
+    component: generateCommonPage('/demo/progress/', ProgressRoutes),
+    children: ProgressRoutes
+  },
 
   {
     title: '漏斗图',
@@ -93,7 +92,7 @@ export default [
     path: 'radialBar',
     component: generateCommonPage('/demo/radialBar/', RadialBarRoutes),
     children: RadialBarRoutes
-  },
+  }
 
   // {
   //   title: '图表联动',

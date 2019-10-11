@@ -8,12 +8,10 @@ const data = [
     sex: 'male',
     value: 63
   },
-
   {
     sex: 'middle',
     value: 16
   },
-
   {
     sex: 'female',
     value: 21

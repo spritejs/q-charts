@@ -6,31 +6,14 @@
 const data = [
   {
     sex: 'male',
-
     value: 63
-  },
-
-  {
-    sex: 'middle',
-    value: 16
-  },
-
-  {
-    sex: 'female',
-    value: 21
   }
 ]
 
 const data2 = [
   {
     sex: 'male',
-
     value: 87
-  },
-
-  {
-    sex: 'middle',
-    value: 45
   }
 ]
 
@@ -61,16 +44,15 @@ chart
   .add(new Tooltip({ formatter: d => `${d.value}` }))
 
 chart.render()
-// ;(function step() {
-//   setTimeout(() => {
-//     chart.source(data2)
-
-//     setTimeout(() => {
-//       chart.source(data)
-//       requestAnimationFrame(step)
-//     }, 3000)
-//   }, 3000)
-// })()
+;(function step() {
+  setTimeout(() => {
+    chart.source(data2)
+    setTimeout(() => {
+      chart.source(data)
+      requestAnimationFrame(step)
+    }, 3000)
+  }, 3000)
+})()
 ```
 
 :::
@@ -85,36 +67,10 @@ chart.render()
 const data = [
   {
     sex: 'male',
-
     value: 63
-  },
-
-  {
-    sex: 'middle',
-    value: 16
-  },
-
-  {
-    sex: 'female',
-    value: 21
   }
 ]
-
-const data2 = [
-  {
-    sex: 'male',
-
-    value: 87
-  },
-
-  {
-    sex: 'middle',
-    value: 45
-  }
-]
-
 const { Chart, Progress, Tooltip } = qcharts
-
 const chart = new Chart({ container: '#app' })
 
 chart.source(data, {
@@ -129,8 +85,7 @@ const progress = new Progress({
   min: 0,
   max: 100,
   type: 'wave',
-  formatter: d => `${d.value}%`,
-  labelPosition: 'top'
+  formatter: d => `${d.value}%`
 })
 
 chart

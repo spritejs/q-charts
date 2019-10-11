@@ -20,11 +20,11 @@ export default [
     title: '自定义',
     path: 'symbol',
     component: () => import('./symbol.md')
-  },
-
-  {
-    title: '文字',
-    path: 'label',
-    component: () => import('./label.md')
   }
+
+  // {
+  //   title: '文字',
+  //   path: 'label',
+  //   component: () => import('./label.md')
+  // }
 ]

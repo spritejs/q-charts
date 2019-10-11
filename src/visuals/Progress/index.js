@@ -1,6 +1,11 @@
 import { Group, Arc, Wave, Label } from 'spritejs'
 import { BaseVisual } from '../../core'
-import { flattern, isArray, requestAnimationFrame, cancelAnimationFrame } from '../../util'
+import {
+  flattern,
+  isArray,
+  requestAnimationFrame,
+  cancelAnimationFrame
+} from '../../util'
 
 export class Progress extends BaseVisual {
   constructor(attrs = {}) {
@@ -81,8 +86,8 @@ export class Progress extends BaseVisual {
       const percent = d.disabled
         ? 0
         : isArray(value)
-          ? value.map(v => v / total)
-          : value / total
+        ? value.map(v => v / total)
+        : value / total
 
       const attrs = {
         ...d,
@@ -99,29 +104,29 @@ export class Progress extends BaseVisual {
       return type === 'pie'
         ? isArray(percent)
           ? percent.reduce((a, c, i) => {
-            let sa = i === 0 ? startAngle : a[i - 1].endAngle
-            let ea = sa + (endAngle - startAngle) * c + startAngle
-            a.push(
-              Object.assign({ startAngle: sa, endAngle: ea }, attrs, {
-                color: this.color(i),
-                fillColor: this.color(i)
-              })
-            )
-            return a
-          }, [])
+              let sa = i === 0 ? startAngle : a[i - 1].endAngle
+              let ea = sa + (endAngle - startAngle) * c + startAngle
+              a.push(
+                Object.assign({ startAngle: sa, endAngle: ea }, attrs, {
+                  color: this.color(i),
+                  fillColor: this.color(i)
+                })
+              )
+              return a
+            }, [])
           : {
-            startAngle,
-            endAngle: (endAngle - startAngle) * percent + startAngle,
-            ...attrs
-          }
+              startAngle,
+              endAngle: (endAngle - startAngle) * percent + startAngle,
+              ...attrs
+            }
         : {
-          ...attrs,
-          percent,
-          wavesColor: isArray(value)
-            ? value.map((_, j) => this.color(j))
-            : color,
-          outlineColor: color
-        }
+            ...attrs,
+            percent,
+            wavesColor: isArray(value)
+              ? value.map((_, j) => this.color(j))
+              : color,
+            outlineColor: color
+          }
     })
   }
 
@@ -135,15 +140,15 @@ export class Progress extends BaseVisual {
         (this.animations[i] && this.animations[i].to) ||
         (type !== 'pie'
           ? {
-            percent: isArray(d.percent) ? d.percent.map(_ => 0) : 0
-          }
+              percent: isArray(d.percent) ? d.percent.map(_ => 0) : 0
+            }
           : isArray(d)
-            ? d.map((t, i) =>
+          ? d.map((t, i) =>
               i === 0
                 ? { startAngle: t.startAngle, endAngle: t.startAngle }
                 : { startAngle: d[i - 1].endAngle, endAngle: t.startAngle }
             )
-            : {
+          : {
               startAngle: d.startAngle,
               endAngle: d.startAngle
             }),
@@ -151,8 +156,8 @@ export class Progress extends BaseVisual {
         type !== 'pie'
           ? { percent: d.percent }
           : isArray(d)
-            ? d.map(t => ({ startAngle: t.startAngle, endAngle: t.endAngle }))
-            : { startAngle: d.startAngle, endAngle: d.endAngle }
+          ? d.map(t => ({ startAngle: t.startAngle, endAngle: t.endAngle }))
+          : { startAngle: d.startAngle, endAngle: d.endAngle }
     }))
 
     return ret
@@ -192,11 +197,11 @@ export class Progress extends BaseVisual {
         {...this.style('normal')(d, d.dataOrigin, i)}
         {...(d.disabled
           ? {
-            wavesColor: isArray(d.percent)
-              ? d.percent.map(_ => '#ccc')
-              : '#ccc',
-            outlineColor: '#ccc'
-          }
+              wavesColor: isArray(d.percent)
+                ? d.percent.map(_ => '#ccc')
+                : '#ccc',
+              outlineColor: '#ccc'
+            }
           : {})}
         hoverState={this.style('hover')(d, d.dataOrigin, i)}
         anchor={[0.5, 0.5]}
