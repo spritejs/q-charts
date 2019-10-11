@@ -51,7 +51,7 @@ const progress = new Progress({
 
 chart
   .add(progress)
-  .add(new Tooltip({ formatter: d => `${d.sex}: ${d.value[0]}%` }))
+  .add(new Tooltip({ formatter: d => `${d.sex}: ${d.value}%` }))
 
 chart.render()
 ```
