@@ -29,7 +29,6 @@ class BaseNode {
     initAttr(this)
     initEvents(this)
     initLifecycle(this)
-
     this.emit(this.lifecycle.beforeCreate, this)
     const defaultAttrs = this.getDefaultAttrs()
     this.attr(Object.assign({}, commonAttrs, defaultAttrs, attrs))
@@ -243,6 +242,7 @@ class BaseNode {
     const vnode = this.render(data)
     const patches = diff(this.__vnode__, vnode)
     patch(this.$group, patches, 0, true)
+    this.$group.attr({ opacity: this.attr('opacity') })
     this.__vnode__ = vnode
     this.__willUpdate__ = false
     this.updated()
