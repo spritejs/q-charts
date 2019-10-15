@@ -1,5 +1,5 @@
 import { Group } from 'spritejs'
-import { isArray, getGlobal, invariant } from '../../util'
+import { isArray, getGlobal, invariant, removeFromArray } from '../../util'
 import BaseNode from '../BaseNode'
 import { BaseVisual } from '../BaseVisual'
 import { render } from '../vnode'
@@ -13,6 +13,7 @@ const _plot = Symbol('plot')
 const _initPlot = Symbol('initPlot')
 const _mountToPlot = Symbol('mountToPlot')
 const _addChild = Symbol('addChild')
+const _removeChild = Symbol('addChild')
 const _renderChild = Symbol('renderChild')
 
 export class Chart extends BaseNode {
@@ -134,7 +135,26 @@ export class Chart extends BaseNode {
 
     return this
   }
-
+  [_removeChild](instance) {
+    if (!instance) {
+      return
+    }
+    if (instance instanceof BaseVisual) {
+      removeFromArray(this.visuals, instance)
+    } else {
+      removeFromArray(this.plugins, instance)
+    }
+    removeFromArray(this.children, instance)
+    return this
+  }
+  remove(instance) {
+    if (isArray(instance)) {
+      instance.map(this[_removeChild].bind(this))
+    } else {
+      this[_removeChild](instance)
+    }
+    return this
+  }
   add(instance) {
     if (isArray(instance)) {
       instance.map(this[_addChild].bind(this))
