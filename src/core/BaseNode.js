@@ -20,6 +20,7 @@ let commonAttrs = {
   animation: true, // 默认开启，可加入配置
   size: ['80%', '80%'],
   pos: ['10%', '10%'],
+  opacity: 1,
   layoutBy: 'row' // 配合 dataset 使用的数据模式，可选值：rows | cols
 }
 
@@ -197,7 +198,8 @@ class BaseNode {
       boxSizing: 'border-box',
       padding: 0,
       zIndex: 2,
-      clipOverflow: false
+      clipOverflow: false,
+      opacity: this.attr('opacity')
     })
   }
 
