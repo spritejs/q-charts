@@ -71,11 +71,5 @@ if (!requestAnimationFrame) {
     return clearTimeout(id)
   }
 }
-function removeFromArray(arr, item) {
-  let ind = arr.indexOf(item)
-  if (ind !== -1) {
-    arr.splice(ind, 1)
-  }
-  return arr
-}
-export { now, requestAnimationFrame, cancelAnimationFrame, removeFromArray }
+
+export { now, requestAnimationFrame, cancelAnimationFrame }
