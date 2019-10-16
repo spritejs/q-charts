@@ -1,5 +1,5 @@
 import { Ellipse, Triangle, Rect, Star, Sprite, Path } from 'spritejs'
-import { isArray } from './is'
+import { isArray, isNumber } from './is'
 
 const getRealPath = (str, start) => {
   const urls = str.split(start)
@@ -86,12 +86,12 @@ export function getSymbolAndStyle(style, hStyle) {
     pointType = style.pointType
   }
   let sizeArray = null
-  if (style && style.size) {
+  if (style && isNumber(style.size)) {
     sizeArray = convert2Array(style.size)
   }
   // hover
   let hSizeArray = null
-  if (hStyle && hStyle.size) {
+  if (hStyle && isNumber(hStyle.size)) {
     hSizeArray = convert2Array(hStyle.size)
   }
 

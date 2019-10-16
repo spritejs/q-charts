@@ -110,7 +110,6 @@ export class Tooltip extends BasePlugin {
           height += t + b + 2 * borderWidth
 
           const [chartWidth, chartHieght] = this.chart.getSize()
-
           this.setState(
             {
               pos:
@@ -166,22 +165,21 @@ export class Tooltip extends BasePlugin {
     return (
       <Group
         {...{
-          display: 'flex',
           clipOverflow: false,
           flexDirection: 'column',
           zIndex: 9999,
           ...(this.chart.style('Tooltip')() || {}),
-          opacity: 1,
           ...root,
           ...(this.style('background')() || {})
         }}
+        display={hide ? 'none' : 'flex'}
         opacity={hide ? 0 : 1}
       >
         {title ? (
           <Label
             text={title}
             {...titleStyle}
-            {...this.style('title')() || {}}
+            {...(this.style('title')() || {})}
           />
         ) : null}
         {data.map((d, i) => {
@@ -196,14 +194,14 @@ export class Tooltip extends BasePlugin {
             >
               <Rect
                 {...icon}
-                {...this.style('icon')() || {}}
+                {...(this.style('icon')() || {})}
                 bgcolor={d.color}
               />
               <Label
                 enableCache={false}
                 {...text}
                 text={this.attr('formatter')(d)}
-                {...this.style('text')() || {}}
+                {...(this.style('text')() || {})}
               />
             </Group>
           )
@@ -211,15 +209,15 @@ export class Tooltip extends BasePlugin {
       </Group>
     )
   }
-
   updated() {
     const pos = this.state.pos
     if (pos && pos.length) {
-      let width = this.$group['boundingRect'][2];
-      this.$group.attr({ width: width + 0.1 });
-      this.$group.transition(0.2).attr('pos', this.state.pos);
-      setTimeout(_ => { // 触发reflow
-        this.$group.attr({ width: '' });
+      let width = this.$group['boundingRect'][2]
+      this.$group.attr({ width: width + 0.1 })
+      this.$group.transition(0.2).attr('pos', this.state.pos)
+      setTimeout(_ => {
+        // 触发reflow
+        this.$group.attr({ width: '' })
       })
     }
   }

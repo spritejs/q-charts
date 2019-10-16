@@ -22,9 +22,9 @@ export default [
   // //   component: () => import('./label.md')
   // // },
 
-  // {
-  //   title: '样式调整',
-  //   path: 'style',
-  //   component: () => import('./style.md')
-  // }
+  {
+    title: '其他',
+    path: 'other',
+    component: () => import('./pointer.md')
+  }
 ]

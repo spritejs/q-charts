@@ -1,6 +1,6 @@
-import { Group, Arc, Polyline, Label } from 'spritejs'
+import { Group, Polygon, Arc, Polyline, Label } from 'spritejs'
 import { BaseVisual } from '../../core'
-import { flattern, isFunction } from '../../util'
+import { flattern, isFunction, isString, isArray, isNumber } from '../../util'
 
 function tickLine(radius, angle, tickLength, labelOffset, isInner) {
   const cos = Math.cos(angle)
@@ -77,6 +77,10 @@ export class Gauge extends BaseVisual {
       (Math.min.apply(size, size.map(v => v / 2)) - lw * (len - 1) * 2) /
       len
     )
+  }
+
+  get pointerWidth() {
+    return this.radius / 10
   }
 
   get center() {
@@ -206,6 +210,80 @@ export class Gauge extends BaseVisual {
     return super.color(i)
   }
 
+  transformArcAngle2Rotate(angel) {
+    return (180 / Math.PI) * angel + 90
+  }
+
+  /**
+   * 渲染指针
+   * @param {Number} angle 角度
+   */
+  renderPointer(d, i, maxTickTextFontSize) {
+    const style = this.style('pointer')(d, d.dataOrigin, i)
+    if (style === false) {
+      return
+    }
+    // 动画
+    let { from, to } = this.animations[i]
+    const fromRotate = this.transformArcAngle2Rotate(from.endAngle)
+    const toRotate = this.transformArcAngle2Rotate(to.endAngle)
+    const pointerAnimation = {
+      from: { transform: { rotate: fromRotate } },
+      to: { transform: { rotate: toRotate } }
+    }
+    // 半径
+    const radius = this.radius
+    const { tickLength, labelOffset, lineWidth, pointerWidth } = this.attr()
+    // 指针顶部离仪表盘的距离
+    let pointerTopOffset =
+      tickLength + lineWidth + labelOffset + maxTickTextFontSize + 10
+    if (tickLength < 0) {
+      pointerTopOffset = pointerTopOffset - tickLength - labelOffset
+    }
+    // 指针长度
+    const pointerLen = radius - pointerTopOffset
+    // 指针宽度
+    let pWidth = radius / 10
+    if (isNumber(pointerWidth)) {
+      pWidth = pointerWidth
+    } else if (isArray(pointerWidth)) {
+      pWidth =
+        i < pointerWidth.length
+          ? pointerWidth[i]
+          : pointerWidth[pointerWidth.length - 1]
+    }
+
+    // 指针角度
+    const pointerAngle = this.transformArcAngle2Rotate(d.endAngle)
+    // 指针颜色
+    const color = this.color(i)
+    const attr = {
+      fillColor: color,
+      strokeColor: 'transparent',
+      transform: { rotate: pointerAngle },
+      zIndex: 11,
+      anchor: [0.5, 1],
+      pos: [radius, radius],
+      points: [
+        [pWidth / 2, pointerTopOffset],
+        [pWidth, pointerTopOffset + pointerLen * 0.9],
+        [pWidth / 2, radius],
+        [0, pointerTopOffset + pointerLen * 0.9],
+        [pWidth / 2, pointerTopOffset]
+      ]
+    }
+    return (
+      <Polygon
+        {...attr}
+        {...style}
+        animation={this.resolveAnimation({
+          ...pointerAnimation,
+          duration: 300
+        })}
+      />
+    )
+  }
+
   render(data = []) {
     const {
       title,
@@ -218,7 +296,8 @@ export class Gauge extends BaseVisual {
       hoverBg
     } = this.attr()
     const center = this.center
-    const labelCenter = [center[0] - lineWidth / 2, center[1]]
+    const radius = this.radius
+    const labelCenter = [radius, radius * 1.4]
     const ticks = this.ticks
     const tickLine = this.isStyleExist('tickLine')
     const tickText = this.isStyleExist('tickText')
@@ -227,7 +306,6 @@ export class Gauge extends BaseVisual {
 
     if (this._useBuiltInColors !== false) {
       const colors = this.color().reverse()
-
       gradientColor = {
         vector: [0, 0, center[0] * 2, center[1] * 2],
         colors: [
@@ -238,6 +316,29 @@ export class Gauge extends BaseVisual {
       }
     }
 
+    let maxTickTextFontSize = 16
+    if (tickText !== false) {
+      data.map((d, i) => {
+        ticks.map((tick, j) => {
+          const style = this.style('tickText')(d, d.dataOrigin, j)
+          if (style && style.fontSize) {
+            if (
+              isNumber(style.fontSize) &&
+              maxTickTextFontSize < style.fontSize
+            ) {
+              maxTickTextFontSize = style.fontSize
+            }
+            if (isString(style.fontSize)) {
+              const realSize = Number(style.fontSize.replace('px', ''))
+              if (isNumber(realSize) && maxTickTextFontSize < realSize) {
+                maxTickTextFontSize = realSize
+              }
+            }
+          }
+        })
+      })
+    }
+
     return (
       <Group
         display="flex"
@@ -245,84 +346,89 @@ export class Gauge extends BaseVisual {
         alignItems={'center'}
         clipOverflow={false}
       >
-        {data.map((d, i) => (
-          <Group
-            bgcolor="transparent"
-            clipOverflow={false}
-            hoverState={{ bgcolor: hoverBg }}
-          >
-            <Arc
-              lineWidth={lineWidth}
-              lineCap={lineCap}
-              startAngle={startAngle}
-              endAngle={endAngle}
-              color={strokeBgcolor}
-              radius={this.radius}
-              zIndex={10}
-            />
-            <Arc
-              lineCap={lineCap}
-              lineWidth={lineWidth}
-              {...d}
-              zIndex={10}
-              animation={this.resolveAnimation({
-                ...this.animations[i],
-                duration: 300
-              })}
-              {...(gradientColor
-                ? { color: gradientColor }
-                : { strokeColor: this.color[i] })}
-              {...this.style('arc')(d, d.dataOrigin, i)}
-            />
-            {title ? (
-              <Label
-                text={isFunction(title) ? title(d.dataOrigin) : title}
-                pos={labelCenter}
-                textAlign="center"
-                zIndex={10}
-                anchor={[0.5, 1]}
-                {...this.style('title')(d, d.dataOrigin, i)}
-              />
-            ) : null}
-            {subTitle ? (
-              <Label
-                text={isFunction(subTitle) ? subTitle(d.dataOrigin) : subTitle}
-                pos={labelCenter}
-                textAlign="center"
-                zIndex={10}
+        {data.map((d, i) => {
+          return (
+            <Group
+              bgcolor="transparent"
+              clipOverflow={false}
+              hoverState={{ bgcolor: hoverBg }}
+            >
+              <Arc
+                lineWidth={lineWidth}
+                lineCap={lineCap}
+                startAngle={startAngle}
+                endAngle={endAngle}
                 color={strokeBgcolor}
-                anchor={[0.5, 0.5]}
-                {...this.style('subTitle')(d, d.dataOrigin, i)}
+                radius={this.radius}
+                zIndex={10}
               />
-            ) : null}
+              <Arc
+                lineCap={lineCap}
+                lineWidth={lineWidth}
+                {...d}
+                zIndex={10}
+                animation={this.resolveAnimation({
+                  ...this.animations[i],
+                  duration: 300
+                })}
+                {...(gradientColor
+                  ? { strokeColor: gradientColor }
+                  : { strokeColor: this.color[i] })}
+                {...this.style('arc')(d, d.dataOrigin, i)}
+              />
+              {this.renderPointer(d, i, maxTickTextFontSize)}
+              {title ? (
+                <Label
+                  text={isFunction(title) ? title(d.dataOrigin) : title}
+                  pos={labelCenter}
+                  textAlign="center"
+                  zIndex={10}
+                  anchor={[0.5, 1]}
+                  {...this.style('title')(d, d.dataOrigin, i)}
+                />
+              ) : null}
+              {subTitle ? (
+                <Label
+                  text={
+                    isFunction(subTitle) ? subTitle(d.dataOrigin) : subTitle
+                  }
+                  pos={labelCenter}
+                  textAlign="center"
+                  zIndex={10}
+                  color={strokeBgcolor}
+                  anchor={[0.5, 0]}
+                  {...this.style('subTitle')(d, d.dataOrigin, i)}
+                />
+              ) : null}
 
-            {tickLine !== false || tickText !== false
-              ? ticks.map((tick, j) => (
-                <Group
-                  pos={center.map(v => v - lineWidth / 2)}
-                  anchor={[0, 0]}
-                  zIndex={1010}
-                  size={[1, 1]}
-                  clipOverflow={false}
-                >
-                  {tickLine !== false ? (
-                    <Polyline
-                      points={tick.points}
-                      strokeColor={strokeBgcolor}
-                      {...this.style('tickLine')(d, d.dataOrigin, j)}
-                    />
-                  ) : null}
-                  {tickText !== false ? (
-                    <Label
-                      {...tick.label}
-                      {...this.style('tickText')(d, d.dataOrigin, j)}
-                    />
-                  ) : null}
-                </Group>
-              ))
-              : null}
-          </Group>
-        ))}
+              {tickLine !== false || tickText !== false
+                ? ticks.map((tick, j) => (
+                  <Group
+                    pos={center.map(v => v - lineWidth / 2)}
+                    anchor={[0, 0]}
+                    zIndex={1010}
+                    size={[1, 1]}
+                    clipOverflow={false}
+                  >
+                    {tickLine !== false ? (
+                      <Polyline
+                        points={tick.points}
+                        strokeColor={strokeBgcolor}
+                        {...this.style('tickLine')(d, d.dataOrigin, j)}
+                      />
+                    ) : null}
+                    {tickText !== false ? (
+                      <Label
+                        {...tick.label}
+                        {...this.style('tickText')(d, d.dataOrigin, j)}
+                      />
+                    ) : null}
+                  </Group>
+                ))
+                : null}
+            </Group>
+          )
+        })}
       </Group>
     )
   }
