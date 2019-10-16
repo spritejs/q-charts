@@ -1,6 +1,6 @@
 {
   "name": "@qcharts/core",
-  "version": "0.1.38",
+  "version": "0.1.39",
   "description": "A visulization library based on spritejs and sprite-extend-shapes",
   "main": "lib/index.js",
   "miniprogram": "miniprogram",
