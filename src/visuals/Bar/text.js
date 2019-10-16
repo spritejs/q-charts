@@ -6,7 +6,12 @@ export const withText = (visual, attrs) => {
   if (attrs.disabled) {
     return null
   }
-  const textStyle = visual.style('text')(attrs, dataOrigin, index)
+  const textStyle = visual.style('text')(
+    attrs,
+    dataOrigin,
+    index,
+    visual.$group
+  )
   if (!textStyle) {
     return
   }
