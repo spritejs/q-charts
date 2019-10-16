@@ -152,10 +152,10 @@ export class Tooltip extends BasePlugin {
       typeof titleGetter === 'undefined'
         ? null
         : isFunction(titleGetter)
-        ? data && data.length
-          ? titleGetter(data)
-          : null
-        : titleGetter
+          ? data && data.length
+            ? titleGetter(data)
+            : null
+          : titleGetter
 
     const rootPaddingBottom = root.padding
       ? isArray(root.padding)
