@@ -23,7 +23,8 @@ const getTriangleStyle = size => {
 const getRectStyle = size => {
   return {
     angle: 90,
-    sides: size.map(s => s * 2)
+    sides: size.map(s => s * 2),
+    anchor: [0.5, 0.5]
   }
 }
 
