@@ -5,7 +5,9 @@
 :::demo
 
 ```javascript
-const data = [1, 2, 3, 4, 5]
+const data = [1, 2, 3, 4, 5].map(num => {
+  return { value: num }
+})
 
 const { Chart, Pie, Legend, Tooltip } = qcharts
 
@@ -14,7 +16,7 @@ const chart = new Chart({
   size: ['100%', '100%']
 })
 
-chart.source(data)
+chart.source(data, { value: 'value' })
 
 const pie = new Pie()
 
@@ -29,7 +31,9 @@ chart.render()
 :::demo
 
 ```javascript
-const data = [1, 2, 3, 4, 5]
+const data = [1, 2, 3, 4, 5].map(num => {
+  return { value: num }
+})
 
 const { Chart, Pie, Legend, Tooltip } = qcharts
 
@@ -38,7 +42,7 @@ const chart = new Chart({
   size: ['100%', '100%']
 })
 
-chart.source(data)
+chart.source(data, { value: 'value' })
 
 const pie = new Pie()
 

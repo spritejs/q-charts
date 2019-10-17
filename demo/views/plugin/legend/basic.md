@@ -5,11 +5,13 @@
 :::demo
 
 ```javascript
-const data = [2010, 2011, 2012]
+const data = [{ value: 2010 }, { value: 2011 }, { value: 2012 }]
 const { Chart, Legend } = qcharts
 
 const chart = new Chart({ container: '#app' })
-chart.source(data)
+chart.source(data, {
+  value: 'value'
+})
 
 const l1 = new Legend({ orient: 'vertical', align: ['left', 'top'] })
 const l2 = new Legend({ orient: 'vertical', align: ['left', 'bottom'] })

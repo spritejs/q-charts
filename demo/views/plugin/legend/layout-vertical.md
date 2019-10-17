@@ -1,7 +1,9 @@
 :::demo
 
 ```javascript
-const data = Array.from({ length: 40 }, (_, i) => 2000 + i)
+const data = Array.from({ length: 40 }, (_, i) => {
+  return { value: 2000 + i }
+})
 const { Chart, Legend } = qcharts
 
 const chart = new Chart({ container: '#app' })
