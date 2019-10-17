@@ -210,6 +210,7 @@ export class Gauge extends BaseVisual {
     return super.color(i)
   }
 
+  // 将 arc 弧度转为 transform 的 rotate角度，同时加上两者起始位置的偏差度
   transformArcAngle2Rotate(angel) {
     return (180 / Math.PI) * angel + 90
   }
