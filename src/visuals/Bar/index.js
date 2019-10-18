@@ -44,10 +44,11 @@ export class Bar extends BaseVisual {
     const result = layout()(dataInfoObj)
     result.barData.forEach((bar, i) => {
       bar.fillColor = bar.fillColor || this.color(i % dataLength)
+
       bar.dataOrigin =
         data.length > 1
-          ? clone(data[i % dataLength][Math.floor(i / dataLength)])
-          : clone(data[Math.floor(i / dataLength)][i % dataLength])
+          ? clone(data[i % dataLength][Math.floor(i / dataLength)].dataOrigin)
+          : clone(data[Math.floor(i / dataLength)][i % dataLength].dataOrigin)
       bar.index = i
       const normalState = this.style('pillar')(bar, bar.dataOrigin, bar.index)
       Object.assign(bar, normalState)
@@ -61,6 +62,7 @@ export class Bar extends BaseVisual {
   }
 
   beforeRender() {
+    this.$group.attr({ clipOverflow: false })
     super.beforeRender()
     let data = this.getData()
     const result = this.transform(data)
