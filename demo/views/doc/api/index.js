@@ -5,49 +5,49 @@ export default [
     redirect: 'pie'
   },
   {
-    title: '饼图',
+    title: 'Pie',
     path: 'pie',
     component: () => import('./Pie.md')
   },
   {
-    title: '折线图',
+    title: 'Line',
     path: 'line',
     component: () => import('./line-api.md')
   },
   {
-    title: '面积图',
+    title: 'Area',
     path: 'area',
     component: () => import('./area-api.md')
   },
   {
-    title: '雷达图',
+    title: 'Radar',
     path: 'radar',
     component: () => import('./radar.md')
   },
   {
-    title: '散点图',
+    title: 'Scatter',
     path: 'scatter',
     component: () => import('./scatter.md')
   },
   {
-    title: '柱状图',
+    title: 'Bar',
     path: 'bar',
     component: () => import('./bar-api.md')
   },
   {
-    title: '漏斗图',
+    title: 'Funnel',
     path: 'funnel',
     component: () => import('./funnel-api.md')
   },
 
   {
-    title: '仪表盘',
+    title: 'Gauge',
     path: 'gauge',
     component: () => import('./Gauge.md')
   },
 
   {
-    title: '玉玦图',
+    title: 'RadialBar',
     path: 'radialBar',
     component: () => import('./RadialBar.md')
   }
