@@ -33,12 +33,18 @@ const data = [
   2028,
   2029,
   2030
-]
+].map(num => {
+  return {
+    value: num
+  }
+})
 const { Chart, Legend } = qcharts
 
 const chart = new Chart({ container: '#app' })
 
-chart.source(data)
+chart.source(data, {
+  value: 'value'
+})
 
 const l2 = new Legend({ orient: 'horizontal', align: ['left', 'top'] })
 const l3 = new Legend({ orient: 'horizontal', align: ['left', 'center'] })
