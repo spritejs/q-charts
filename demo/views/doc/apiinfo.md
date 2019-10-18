@@ -24,13 +24,33 @@ line.style('point', { pointType: 'star', size: 8 })
 | ----------- | ---------------------------------------- | ------------------------------------ |
 | strokeColor | 颜色值（支持 spritejs 中所有的颜色类型） | #f00 , rgba(0,0,0,0.5) , transparent |
 | lineWidth   | 线宽(像素 px)                            | 1 , 2 , 10                           |
+| opacity     | 透明度(0~1)                              | 1                                    |
 | translate   | 位置变换(像素数组)                       | [-10，-10]                           |
-| display     | 展现类型                                 | '','none','flex'                     |
+| display     | 展现类型'none'为不渲染                   | '','none'                            |
 
 ##### 面
 
-| 名称        | 描述       | 值                                   |
-| ----------- | ---------- | ------------------------------------ |
-| strokeColor | 边框颜色值 | #f00 , rgba(0,0,0,0.5) , transparent |
-| fillColor   | 填充颜色值 | #f00 , rgba(0,0,0,0.5) , transparent |
-| lineWidth   | 线宽(像素) | 1 , 2 , 10                           |
+| 名称        | 描述                   | 值                                   |
+| ----------- | ---------------------- | ------------------------------------ |
+| strokeColor | 边框颜色值             | #f00 , rgba(0,0,0,0.5) , transparent |
+| fillColor   | 填充颜色值             | #f00 , rgba(0,0,0,0.5) , transparent |
+| lineWidth   | 线宽(像素)             | 1 , 2 , 10                           |
+| anchor      | 坐标中心               | [0,0]                                |
+| opacity     | 透明度(0~1)            | 1                                    |
+| translate   | 位置变换(像素数组)     | [-10，-10]                           |
+| display     | 展现类型'none'为不渲染 | '','none'                            |
+
+##### 文本
+
+| 名称       | 描述                                        | 值                                   |
+| ---------- | ------------------------------------------- | ------------------------------------ |
+| bgColor    | 文本背景色                                  | #f00 , rgba(0,0,0,0.5) , transparent |
+| color      | 文本颜色                                    | #f00 , rgba(0,0,0,0.5) , transparent |
+| fontSize   | 文本大小(px)                                | 12                                   |
+| fontFamily | 字体                                        | 'Arial'                              |
+| anchor     | 坐标中心                                    | [0,0]                                |
+| fontWeight | 文本加粗                                    | 'bold',800,300                       |
+| padding    | 文字到包围盒边距(px),同 css[上，右，下，左] | [2,4,5,6]                            |
+| opacity    | 透明度(0~1)                                 | 1                                    |
+| translate  | 位置变换(像素数组)                          | [-10，-10]                           |
+| display    | 展现类型'none'为不渲染                      | '','none'                            |
