@@ -6,7 +6,7 @@ export default [
   {
     title: '',
     path: '',
-    redirect: 'api'
+    redirect: 'apiinfo'
   },
   {
     title: 'Chart 图表主体',
@@ -18,11 +18,11 @@ export default [
     path: 'dataset',
     component: () => import('./dataset.md')
   },
-  // {
-  //   title: 'API简述',
-  //   path: 'apiinfo',
-  //   component: () => import('./apiinfo.md')
-  // },
+  {
+    title: 'API简述',
+    path: 'apiinfo',
+    component: () => import('./apiinfo.md')
+  },
   {
     title: 'Visual(图形)',
     path: 'api',
