@@ -22,6 +22,9 @@ line.style('point', { pointType: 'star', size: 8 })
 
 | 名称        | 描述                                     | 值                                   |
 | ----------- | ---------------------------------------- | ------------------------------------ |
+| strokeColor | 线类型                                   | #f00 , rgba(0,0,0,0.5) , transparent |
+| lineDash    | 虚线设置                                 | #f00 , rgba(0,0,0,0.5) , transparent |
+| lineCap     | 线结合处类型                             | #f00 , rgba(0,0,0,0.5) , transparent |
 | strokeColor | 颜色值（支持 spritejs 中所有的颜色类型） | #f00 , rgba(0,0,0,0.5) , transparent |
 | lineWidth   | 线宽(像素 px)                            | 1 , 2 , 10                           |
 | opacity     | 透明度(0~1)                              | 1                                    |
@@ -48,8 +51,8 @@ line.style('point', { pointType: 'star', size: 8 })
 | color      | 文本颜色                                    | #f00 , rgba(0,0,0,0.5) , transparent |
 | fontSize   | 文本大小(px)                                | 12                                   |
 | fontFamily | 字体                                        | 'Arial'                              |
-| anchor     | 坐标中心                                    | [0,0]                                |
 | fontWeight | 文本加粗                                    | 'bold',800,300                       |
+| anchor     | 坐标中心                                    | [0,0]                                |
 | padding    | 文字到包围盒边距(px),同 css[上，右，下，左] | [2,4,5,6]                            |
 | opacity    | 透明度(0~1)                                 | 1                                    |
 | translate  | 位置变换(像素数组)                          | [-10，-10]                           |
