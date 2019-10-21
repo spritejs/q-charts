@@ -17,10 +17,10 @@
 
 ### 可设置 style 名称
 
-| 名称        | 说明                |     |
-| ----------- | ------------------- | --- |
-| point       | 点的样式            |     |
-| point:hover | 点 hover 样式       |     |
-| label       | label 样式          |     |
-| label:hover | label 的 hover 样式 |     |
-| guideline   | 指导线样式          |     |
+| 名称        | 基本类型 | 说明                |
+| ----------- | -------- | ------------------- |
+| point       | 面       | 点的样式            |
+| point:hover | 面       | 点 hover 样式       |
+| label       | 文本     | label 样式          |
+| label:hover | 文本     | label 的 hover 样式 |
+| guideline   | 线       | 指导线样式          |

@@ -33,7 +33,7 @@ const rightFunnel = new Funnel({
   align: 'right',
   pyramid: true
 })
-  .style('guideLine', true)
+  .style('guideline', true)
   .style('guideText', true)
 
 const leftFunnel = new Funnel({
@@ -42,7 +42,7 @@ const leftFunnel = new Funnel({
   align: 'left',
   pyramid: true
 })
-  .style('guideLine', true)
+  .style('guideline', true)
   .style('guideText', true)
 const legend = new Legend({ align: ['center', 'bottom'] })
 chart.add([rightFunnel, leftFunnel, tooltip, legend])

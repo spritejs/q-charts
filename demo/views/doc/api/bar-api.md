@@ -19,14 +19,14 @@ attrs 包含若干布局属性，将这些属性放入 Object 对象传入组件
 
 组件中可以自定义 css 属性的元素如下表：
 
-| 名称                   | 描述                      |
-| ---------------------- | ------------------------- |
-| backgroundpillar       | 背景柱子样式              |
-| backgroundpillar:hover | 鼠标 hover 时背景柱子样式 |
-| pillar                 | 柱子样式                  |
-| pillar:hover           | 鼠标 hover 时柱子样式     |
-| text                   | 文本样式                  |
-| text:hover             | 鼠标 hover 时文本样式     |
+| 名称                   | 基本类型 | 描述                      |
+| ---------------------- | -------- | ------------------------- |
+| backgroundpillar       | 面       | 背景柱子样式              |
+| backgroundpillar:hover | 面       | 鼠标 hover 时背景柱子样式 |
+| pillar                 | 面       | 柱子样式                  |
+| pillar:hover           | 面       | 鼠标 hover 时柱子样式     |
+| text                   | 文本     | 文本样式                  |
+| text:hover             | 文本     | 鼠标 hover 时文本样式     |
 
 使用方法可在[样式调整 demo](#/demo/column/others)中查看，用法如下：
 

@@ -10,7 +10,7 @@ export class Scatter extends BaseVisual {
   constructor(attr = {}) {
     super(attr)
     this.$scatterEl = {}
-    this.$guideLineEl = []
+    this.$guidelineEl = []
     this._attr = attr
   }
 
@@ -19,7 +19,7 @@ export class Scatter extends BaseVisual {
       labelField: null,
       areaField: null,
       areaRange: null,
-      showGuideLine: false,
+      showguideline: false,
       layoutWay: null
     }
   }
@@ -80,12 +80,12 @@ export class Scatter extends BaseVisual {
       data: { color: attr.fillColor, ...attr.dataOrigin },
       ...evt
     })
-    const { showGuideLine } = this.attr()
-    if (showGuideLine) {
+    const { showguideline } = this.attr()
+    if (showguideline) {
       const { x, y } = evt
       const { size } = this.attr()
       const [offsetX, offsetY] = this.$group.pointToOffset(x, y).map(Math.round)
-      this.$guideLineEl.forEach((el, index) => {
+      this.$guidelineEl.forEach((el, index) => {
         const style = this.style('guideline')(index)
         if (style === false) {
           return
@@ -102,9 +102,9 @@ export class Scatter extends BaseVisual {
 
   hideTooltip() {
     this.dataset.hoverData(null)
-    const { showGuideLine } = this.attr()
-    if (showGuideLine) {
-      this.$guideLineEl.forEach(el => el.attr('points', [[0, 0], [0, 0]]))
+    const { showguideline } = this.attr()
+    if (showguideline) {
+      this.$guidelineEl.forEach(el => el.attr('points', [[0, 0], [0, 0]]))
     }
   }
 
@@ -184,7 +184,7 @@ export class Scatter extends BaseVisual {
     }
   }
 
-  renderGuideLine() {
+  renderguideline() {
     const guildLine = []
     const attr = {
       points: [[0, 0], [0, 0]],
@@ -192,12 +192,12 @@ export class Scatter extends BaseVisual {
       lineWidth: 1
     }
     for (let i = 0; i < 2; i++) {
-      const guideLineType = i === 0 ? 'horizontal' : 'vertical '
+      const guidelineType = i === 0 ? 'horizontal' : 'vertical '
       guildLine.push(
         <Polyline
-          ref={el => this.getEl(i, el, 'guideLine')}
+          ref={el => this.getEl(i, el, 'guideline')}
           {...attr}
-          guideLineType={guideLineType}
+          guidelineType={guidelineType}
           translate={[0.5, 0.5]}
         />
       )
@@ -291,7 +291,7 @@ export class Scatter extends BaseVisual {
     return (
       <Group size={size} padding={padding} zIndex={100} clipOverflow={false}>
         {this.renderScatter(data)}
-        {this.renderGuideLine()}
+        {this.renderguideline()}
       </Group>
     )
   }

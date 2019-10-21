@@ -23,8 +23,8 @@ attrs 包含若干布局属性，将这些属性放入 Object 对象传入组件
 | polygon:hover   | 鼠标 hover 时漏斗区块样式 |
 | guideText       | 组件上的文本样式          |
 | guideText:hover | 组件上的文本样式          |
-| guideLine       | 指示线样式                |
-| guideLine:hover | 鼠标 hover 时指示线样式   |
+| guideline       | 指示线样式                |
+| guideline:hover | 鼠标 hover 时指示线样式   |
 | guideText       | 指示文本文本样式          |
 | guideText:hover | 鼠标 hover 时指示文本样式 |
 
@@ -42,7 +42,7 @@ funnel.style('text', false)
 
 //参考spritejs的attr属性来设置样式
 //设置指示线样式
-funnel.style('guideLine', { length: 20, color: '#000', lineDash: [2, 2] })
+funnel.style('guideline', { length: 20, color: '#000', lineDash: [2, 2] })
 
 //参数polygon为绘制的polygon属性，dataOrigin为原始数据项，index是绘制索引
 funnel.style('polygon', (polygon, dataOrigin, index) => {

@@ -20,16 +20,17 @@ line.style('point', { pointType: 'star', size: 8 })
 
 ##### 线
 
-| 名称        | 描述                                     | 值                                   |
-| ----------- | ---------------------------------------- | ------------------------------------ |
-| strokeColor | 线类型                                   | #f00 , rgba(0,0,0,0.5) , transparent |
-| lineDash    | 虚线设置                                 | #f00 , rgba(0,0,0,0.5) , transparent |
-| lineCap     | 线结合处类型                             | #f00 , rgba(0,0,0,0.5) , transparent |
-| strokeColor | 颜色值（支持 spritejs 中所有的颜色类型） | #f00 , rgba(0,0,0,0.5) , transparent |
-| lineWidth   | 线宽(像素 px)                            | 1 , 2 , 10                           |
-| opacity     | 透明度(0~1)                              | 1                                    |
-| translate   | 位置变换(像素数组)                       | [-10，-10]                           |
-| display     | 展现类型'none'为不渲染                   | '','none'                            |
+| 名称        | 描述                                     | 值                                                                  |
+| ----------- | ---------------------------------------- | ------------------------------------------------------------------- |
+| strokeColor | 线颜色                                   | #f00 , rgba(0,0,0,0.5) , transparent                                |
+| lineDash    | 虚线设置                                 | [6,6,6] 实线部分和白线部分的大小依次是 6,6,6                        |
+| lineCap     | 线条末端绘制样式                         | 'round' ['butt','round','square'] // 平直边缘、圆形线冒、正方形线冒 |
+| lineJoin    | 两线条交汇处样式                         | 'miter' ['bevel','round','miter'] //斜角、圆角、尖角                |
+| strokeColor | 颜色值（支持 spritejs 中所有的颜色类型） | #f00 , rgba(0,0,0,0.5) , transparent                                |
+| lineWidth   | 线宽(像素 px)                            | 1 , 2 , 10                                                          |
+| opacity     | 透明度(0~1)                              | 1                                                                   |
+| translate   | 位置变换(像素数组)                       | [-10，-10]                                                          |
+| display     | 展现类型'none'为不渲染                   | '','none'                                                           |
 
 ##### 面
 

@@ -9,7 +9,7 @@ export const withGuide = (visual, attrs, formatter) => {
     return null
   }
 
-  const lineStyle = visual.style('guideLine')(
+  const lineStyle = visual.style('guideline')(
     attrs,
     attrs.dataOrigin,
     attrs.index
@@ -81,7 +81,7 @@ export const withGuide = (visual, attrs, formatter) => {
           onMouseleave={(_, el) => {
             el.attr('state', 'normal')
           }}
-          hoverState={visual.style('guideLine:hover')(
+          hoverState={visual.style('guideline:hover')(
             attrs,
             attrs.dataOrigin,
             attrs.index

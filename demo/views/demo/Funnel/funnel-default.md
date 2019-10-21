@@ -35,7 +35,7 @@ const funnel = new Funnel({
   align: 'center',
   formatter: d => `${d.value}`
 })
-  .style('guideLine', true)
+  .style('guideline', true)
   .style('guideText', true)
   .style('polygon:hover', (polygon, dataOrigin, index) => {
     return { opacity: 0.5 }

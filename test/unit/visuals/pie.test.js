@@ -2,8 +2,6 @@ import test from 'ava'
 import qcharts from '@/index'
 require('canvas-5-polyfill')
 
-
-
 const { mount } = require('../../utils/index')
 
 const { Chart, Pie } = qcharts
@@ -97,15 +95,15 @@ test('pie text', t => {
   t.pass()
 })
 
-test('pie guideLine', t => {
+test('pie guideline', t => {
   const chart = new Chart({
     container: '#test',
     size: [400, 300]
   })
   chart.source([1, 2, 3, 4])
   const pie = new Pie()
-  pie.style('guideLine', { color: 'red' })
-  pie.style('guideLine:hover', (attrs, data, i) => ({ color: 'blue' }))
+  pie.style('guideline', { color: 'red' })
+  pie.style('guideline:hover', (attrs, data, i) => ({ color: 'blue' }))
   chart.add(pie)
   chart.render()
   t.pass()

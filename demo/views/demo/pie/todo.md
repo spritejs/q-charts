@@ -100,7 +100,7 @@ const pie = new qcharts.Pie({
 })
   .source(data)
   .setDataFields({ x: 'area', y: 'visitors' })
-  .style('guideLine', true)
+  .style('guideline', true)
   .style('guideText', { font: '12px "宋体"' })
 
 chart

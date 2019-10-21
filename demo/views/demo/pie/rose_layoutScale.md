@@ -26,7 +26,7 @@ const pie = new Pie({
   size: ['80%', '100%'],
   rose: true
 })
-pie.style('guideLine', true)
+pie.style('guideline', true)
 pie.style('guideText', { fontSize: '12px' })
 
 const legend = new Legend({

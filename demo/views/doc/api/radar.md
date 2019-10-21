@@ -26,16 +26,16 @@ radar.style('point', { size: 5 })
 
 style 方式支持链式调用，第一个参数为 style 名称，第二个参数为设置的样式 Object，也可以为函数形式，对样式进行详细设置
 
-| 名称          |                               |
-| ------------- | ----------------------------- |
-| guideline     | 指导线样式                    |
-| axis          | 坐标轴的样式                  |
-| axis:hover    | 坐标轴 hover 样式             |
-| grid          | 雷达图背景网格样式            |
-| grid:hover    | 雷达图背景网格 hover 样式     |
-| label         | 类别指示文字的样式(x 轴)      |
-| label:hover   | 类别指示文字的 hover 样式     |
-| scale         | 数值指示文字,(y 轴)           |
-| scale:hover   | 数值指示文字 hover 样式(y 轴) |
-| section       | 雷达图数据区样式              |
-| section:hover | 雷达图数据区 hover 样式       |
+| 名称          | 基础类型 |                               |
+| ------------- | -------- | ----------------------------- |
+| guideline     | 线       | 指导线样式                    |
+| axis          | 线       | 坐标轴的样式                  |
+| axis:hover    | 线       | 坐标轴 hover 样式             |
+| grid          | 线       | 雷达图背景网格样式            |
+| grid:hover    | 线       | 雷达图背景网格 hover 样式     |
+| label         | 文本     | 类别指示文字的样式(x 轴)      |
+| label:hover   | 文本     | 类别指示文字的 hover 样式     |
+| scale         | 文本     | 数值指示文字,(y 轴)           |
+| scale:hover   | 文本     | 数值指示文字 hover 样式(y 轴) |
+| section       | 面       | 雷达图数据区样式              |
+| section:hover | 面       | 雷达图数据区 hover 样式       |

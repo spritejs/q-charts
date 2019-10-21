@@ -50,7 +50,7 @@ const pie = new qcharts.Pie({
     oDemo.appendChild(img)
     return false // 返回 false ，图表便不会进行该部分的渲染
   })
-  .style('guideLine', true)
+  .style('guideline', true)
   .style('text', { color: '#fff' })
   .on('select', (attrs, d, i) => {
     console.log('click', attrs, d, i)
@@ -115,7 +115,7 @@ const pie = new qcharts.Pie({
 })
   .source(data)
   .setDataFields({ x: 'type', y: 'value' })
-  .style('guideLine', (attrs, d, i) => d.value < 0.08)
+  .style('guideline', (attrs, d, i) => d.value < 0.08)
   .style('guideText', true)
   .style('text', (attrs, d, i) => d.value > 0.08)
 
@@ -152,7 +152,7 @@ const pie = new qcharts.Pie({
 })
   .source(data)
   .setDataFields({ x: 'label', y: 'value' })
-  .style('guideLine', (attrs, d, i) => {
+  .style('guideline', (attrs, d, i) => {
     return {
       color: attrs.fillColor,
       offset: 10,

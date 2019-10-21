@@ -31,8 +31,8 @@ pie.style('text', { color: '#fff' }
 | sector:hover    | 面       | 鼠标经过时扇形样式       |
 | text            | 文本     | 扇形上文字样式           |
 | text:hover      | 文本     | 鼠标经过时扇形上文字样式 |
-| guideLine       | 线       | 指导线样式               |
-| guideLine:hover | 线       | 鼠标经过时指导线样式     |
+| guideline       | 线       | 指导线样式               |
+| guideline:hover | 线       | 鼠标经过时指导线样式     |
 | guideText       | 文本     | 指导文字样式             |
 | guideText:hover | 文本     | 鼠标经过时指导文字样式   |
 

@@ -64,7 +64,7 @@ const pie = new Pie({
   size: ['80%', '100%']
 })
 pie.style('sector', { lineWidth: 1, strokeColor: '#fff' })
-pie.style('guideLine', true)
+pie.style('guideline', true)
 pie.style('guideText', { fontSize: '12px' })
 
 const legend = new Legend({ orient: 'vertical', align: ['right', 'center'] })

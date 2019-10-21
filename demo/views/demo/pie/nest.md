@@ -60,7 +60,7 @@ pie2.color([
   '#F79452',
   '#E37474'
 ])
-pie2.style('guideLine', true)
+pie2.style('guideline', true)
 pie2.style('guideText', { fontSize: '12px' })
 
 const legend = new Legend({ orient: 'vertical', align: ['right', 'center'] })

@@ -11,7 +11,7 @@ export class Line extends BaseVisual {
     this.$refs = Object.create(null) // 独立的一些元素
     this.$symbols = [] // symbols
     this.$lines = [] // lines
-    this.__guideLineIndex = -1
+    this.__guidelineIndex = -1
   }
   get name() {
     return 'Line'
@@ -108,7 +108,7 @@ export class Line extends BaseVisual {
         tarIndex = i
       }
     }
-    if ($guideline && tarIndex !== this.__guideLineIndex) {
+    if ($guideline && tarIndex !== this.__guidelineIndex) {
       $guideline.attr({ opacity: 1, x: tarX })
       this.$symbols.forEach(line => {
         line.forEach((symbol, j) => {
@@ -139,7 +139,7 @@ export class Line extends BaseVisual {
         })
       }
       this.dataset.hoverData({ ...evt, data: hoverData })
-      this.__guideLineIndex = tarIndex
+      this.__guidelineIndex = tarIndex
     }
   }
   bgLeave(evt, el) {
@@ -152,7 +152,7 @@ export class Line extends BaseVisual {
         })
       })
       this.dataset.hoverData()
-      this.__guideLineIndex = -1
+      this.__guidelineIndex = -1
     }
   }
   setSymbol(i, j, el) {
@@ -203,13 +203,13 @@ export class Line extends BaseVisual {
     )
   }
   render(lines = []) {
-    let guideLineAttrs = {
+    let guidelineAttrs = {
       size: [1, this.attr('size')[1]],
       fillColor: '#ccc',
       strokeColor: 'transparent',
       opacity: 0
     }
-    let guideStyle = mergeStyle(this.style('guideline'), [guideLineAttrs])
+    let guideStyle = mergeStyle(this.style('guideline'), [guidelineAttrs])
     lines = lines.filter(line => line.points && line.points.length)
     this.renderLines = lines
     return (

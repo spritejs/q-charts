@@ -100,7 +100,7 @@ const ds = chart.dataset
     pos
   }).source(ds.selectRows(row))
 
-  pie.style('guideLine', true)
+  pie.style('guideline', true)
   pie.style('guideText', true)
 
   chart.add(pie)
@@ -219,8 +219,8 @@ const ds = chart.dataset
     pos
   }).source(ds.selectRows(row))
 
-  pie.style('guideLine', { color: 'red' })
-  pie.style('guideLine:hover', { color: 'blue' })
+  pie.style('guideline', { color: 'red' })
+  pie.style('guideline:hover', { color: 'blue' })
   pie.style('guideText', { color: 'red' })
   pie.style('guideText:hover', { color: 'blue' })
 
