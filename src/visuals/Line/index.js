@@ -1,4 +1,4 @@
-import { Group, Polyline, Rect, Polygon, Label } from 'spritejs'
+import { Group, Polyline, Polygon, Label } from 'spritejs'
 import { BaseVisual } from '../../core'
 import { layout } from './layout'
 import { mergeStyle } from '../../util/merge-style'
@@ -204,9 +204,8 @@ export class Line extends BaseVisual {
   }
   render(lines = []) {
     let guidelineAttrs = {
-      size: [1, this.attr('size')[1]],
-      fillColor: '#ccc',
-      strokeColor: 'transparent',
+      points: [[0, 0], [0, this.attr('size')[1]]],
+      strokeColor: '#ccc',
       opacity: 0
     }
     let guideStyle = mergeStyle(this.style('guideline'), [guidelineAttrs])
@@ -215,7 +214,7 @@ export class Line extends BaseVisual {
     return (
       <Group zIndex={100} enableCache={false}>
         {guideStyle === false ? null : (
-          <Rect ref={el => this.ref('guideline', el)} {...guideStyle} />
+          <Polyline ref={el => this.ref('guideline', el)} {...guideStyle} />
         )}
         <Group enableCache={false}></Group>
         <Group clipOverflow={false} enableCache={false}>

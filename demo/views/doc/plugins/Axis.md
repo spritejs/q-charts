@@ -15,8 +15,8 @@ const axis = new Axis({ orient: 'left' })
 axis.style('scale', false)
 ```
 
-| 名称  | 说明         | 类型                  |
-| ----- | ------------ | --------------------- |
-| axis  | 轴体的样式   | 轴体对应 Rect 类      |
-| scale | 刻度的样式   | scale 对应 Rect 类    |
-| label | 轴上文本样式 | label 对应的 label 类 |
+| 名称  | 基本类型 | 说明             |
+| ----- | -------- | ---------------- |
+| axis  | 线       | 坐标轴类型       |
+| scale | 线       | 坐标轴上的刻度   |
+| label | 文本     | 坐标轴上文本类型 |
