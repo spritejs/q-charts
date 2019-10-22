@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Article from '../components/Article.vue'
-
 import docs from '../views/doc/routes.js'
 import demos from '../views/demo/routes.js'
 import plugins from '../views/plugin/routes.js'

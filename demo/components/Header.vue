@@ -7,21 +7,9 @@
 
       <button @click="toggleShowMenu" class="navbar-toggler">
         <span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 30 30"
-            width="30"
-            height="30"
-            focusable="false"
-          >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="30" height="30" focusable="false">
             <title>Menu</title>
-            <path
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-miterlimit="10"
-              d="M4 7h22M4 15h22M4 23h22"
-            />
+            <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22" />
           </svg>
         </span>
       </button>
@@ -42,7 +30,7 @@
           </li>
 
           <li class="nav-item">
-            <router-link to="/plugin">插件示例</router-link>
+            <router-link to="/more">更多图例</router-link>
           </li>
         </ul>
       </div>
@@ -59,19 +47,19 @@ export default {
   },
 
   watch: {
-    $route() {
+    $route () {
       this.showMenu = false
     }
   },
 
-  data() {
+  data () {
     return {
       showMenu: false
     }
   },
 
   methods: {
-    toggleShowMenu() {
+    toggleShowMenu () {
       this.showMenu = !this.showMenu
     }
   }
