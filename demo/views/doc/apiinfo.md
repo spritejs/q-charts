@@ -24,7 +24,7 @@ line.style('point', { pointType: 'star', size: 8 })
 | 名称        | 描述                                     | 值                                                                  |
 | ----------- | ---------------------------------------- | ------------------------------------------------------------------- |
 | strokeColor | 线颜色                                   | #f00 , rgba(0,0,0,0.5) , transparent                                |
-| lineDash    | 虚线设置                                 | [6,6,6] 实线部分和白线部分的大小依次是 6,6,6                        |
+| lineDash    | 虚线设置(默认不设置，不设置为实线)       | [6,6,6] 实线部分和白线部分的大小依次是 6,6,6                        |
 | lineCap     | 线条末端绘制样式                         | 'round' ['butt','round','square'] // 平直边缘、圆形线冒、正方形线冒 |
 | lineJoin    | 两线条交汇处样式                         | 'miter' ['bevel','round','miter'] //斜角、圆角、尖角                |
 | strokeColor | 颜色值（支持 spritejs 中所有的颜色类型） | #f00 , rgba(0,0,0,0.5) , transparent                                |
