@@ -1,6 +1,8 @@
 const path = require('path')
 const merge = require('webpack-merge')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
+
 // const BundleAnalyzer = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const common = require('./webpack.conf.common')
 
@@ -17,15 +19,8 @@ module.exports = merge(common, {
     libraryTarget: 'umd'
   },
   optimization: {
-    minimizer: [
-      new UglifyJsPlugin({
-        uglifyOptions: {
-          compress: {
-            drop_console: true
-          }
-        }
-      })
-    ]
+    minimize: true,
+    minimizer: [new TerserPlugin()]
   },
   externals: {
     spritejs: {

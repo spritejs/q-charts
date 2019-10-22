@@ -94,7 +94,8 @@
     "webpack-merge": "^4.1.5"
   },
   "dependencies": {
-    "@spritejs/shapes": "^1.1.7"
+    "@spritejs/shapes": "^1.1.7",
+    "terser-webpack-plugin": "^2.1.3"
   },
   "husky": {
     "hooks": {
