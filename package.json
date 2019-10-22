@@ -94,7 +94,7 @@
     "webpack-merge": "^4.1.5"
   },
   "dependencies": {
-    "@spritejs/shapes": "^1.1.5"
+    "@spritejs/shapes": "^1.1.7"
   },
   "husky": {
     "hooks": {

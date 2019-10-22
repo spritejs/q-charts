@@ -22,10 +22,10 @@ line.style('point', { pointType: 'star', size: 8 })
 
 组件中可以自定义 css 属性的元素如下表：
 
-| 名称        | 基础类型 | 描述                     |
-| ----------- | -------- | ------------------------ |
-| guideline   | 线       | 指导线样式               |
-| line        | 线       | 线条样式                 |
-| line:hover  | 线       | 鼠标 hover 时线条样式    |
-| point       | 面       | 线条上标记点样式         |
-| point:hover | 面       | hover 时线条上标记点样式 |
+| 名称        | 基础类型        | 描述                     |
+| ----------- | --------------- | ------------------------ |
+| guideline   | 线              | 指导线样式               |
+| line        | 线              | 线条样式                 |
+| line:hover  | 线              | 鼠标 hover 时线条样式    |
+| point       | 面(Symbol 插件) | 线条上标记点样式         |
+| point:hover | 面(Symbol 插件) | hover 时线条上标记点样式 |

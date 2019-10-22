@@ -37,9 +37,8 @@ function layout(obj) {
 
   let originalPoint = [0, 0]
   let axisAttrs = {
-    size: [size[0], 1],
-    fillColor: '#bfbfbf',
-    strokeColor: 'transparent'
+    points: [[0, 0], [size[0], 0]],
+    strokeColor: '#bfbfbf'
   }
   let labelAttrs = {
     padding: [10, 10],
@@ -48,9 +47,8 @@ function layout(obj) {
     clipOverflow: false
   }
   let scaleAttrs = {
-    fillColor: '#bfbfbf',
-    strokeColor: 'transparent',
-    size: [1, 1]
+    strokeColor: '#bfbfbf',
+    points: [[0, 0]]
   }
   let gridAttrs = {
     strokeColor: 'rgba(0,0,0,0.2)',
@@ -117,25 +115,24 @@ function layout(obj) {
   })
 
   if (orient === 'left') {
-    axisAttrs.size = [1, size[1]]
+    axisAttrs.points = [[0, 0], [0, size[1]]]
     labelAttrs.anchor = [1, 0.5]
-    scaleAttrs.size[0] = 4
-    scaleAttrs.anchor = [1, 0]
+    scaleAttrs.points[1] = [-4, 0]
     gridAttrs.points = [[0, 0], [size[0], 0]]
   } else if (orient === 'right') {
     originalPoint = [size[0], 0]
-    axisAttrs.size = [1, size[1]]
+    axisAttrs.points = [[0, 0], [0, size[1]]]
     labelAttrs.anchor = [0, 0.5]
-    scaleAttrs.size[0] = 4
+    scaleAttrs.points = [[0, 0], [4, 0]]
     gridAttrs.points = [[-size[0], 0], [0, 0]]
   } else if (orient === 'top') {
     labelAttrs.anchor = [0.5, 1]
-    scaleAttrs.size[1] = 4
+    scaleAttrs.points[1] = [0, -4]
     gridAttrs.points = [[0, 0], [0, size[1]]]
   } else {
     originalPoint = [0, size[1]]
     labelAttrs.anchor = [0.5, 0]
-    scaleAttrs.size[1] = 4
+    scaleAttrs.points[1] = [0, 4]
     gridAttrs.points = [[0, -size[1]], [0, 0]]
   }
   return {

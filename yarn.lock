@@ -822,10 +822,10 @@
     sprite-math "^1.0.5"
     svg-path-to-canvas "^1.11.3"
 
-"@spritejs/shapes@^1.1.5":
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/@spritejs/shapes/-/shapes-1.1.5.tgz#2ca29810908227bbd020d30de2c9b780f26b1d03"
-  integrity sha512-Ikncs9idy5pZTZgwM3Ej5XCLjP/kssVE4JbILuREIGKRSvUFl58dbHpoKibt0ka79SY2vb5VGnSbtlcdROvszg==
+"@spritejs/shapes@^1.1.7":
+  version "1.1.7"
+  resolved "https://registry.npm.taobao.org/@spritejs/shapes/download/@spritejs/shapes-1.1.7.tgz#6c9f837cb5a6a2b1bf52be076099466cedd53a67"
+  integrity sha1-bJ+DfLWmorG/Ur4HYJlGbO3VOmc=
   dependencies:
     "@babel/runtime" "^7.2.0"
     sprite-draggable "0.1.15"

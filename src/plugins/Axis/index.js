@@ -1,4 +1,4 @@
-import { Group, Label, Rect, Polyline, Circle } from 'spritejs'
+import { Group, Label, Polyline, Circle } from 'spritejs'
 import { BasePlugin } from '../../core'
 import { layout } from './layout'
 import pieLayout from '../../visuals/Pie/layout'
@@ -149,6 +149,7 @@ export class Axis extends BasePlugin {
   }
   render(renderData = {}) {
     let axisStyle = this.mergeTheme('axis', [renderData.axisAttrs])
+    console.log(this.attr('orient'), axisStyle)
     let rings = []
     const { axisGap, formatter, pos, coord, size, coordPos } = this.attr()
     let $target = this.attr('target')
@@ -159,8 +160,8 @@ export class Axis extends BasePlugin {
         .endAngle(endAngle)
         .padAngle(padAngle)
         .value(d => +d[0].__valueGetter__())(
-          this.getData().filter(d => !d[0].disabled)
-        )
+        this.getData().filter(d => !d[0].disabled)
+      )
     }
     return (
       <Group pos={pos}>
@@ -176,6 +177,7 @@ export class Axis extends BasePlugin {
               scale,
               i
             ])
+            // console.log(this.attr('orient'), scaleStyle)
             let gridStyle = this.mergeTheme('grid', [
               renderData.gridAttrs,
               scale,
@@ -209,6 +211,12 @@ export class Axis extends BasePlugin {
             ) {
               labelAnimation = {}
             }
+            if (
+              this.attr('orient') === 'left' ||
+              this.attr('orient') === 'right'
+            ) {
+              console.log('to', this.attr('orient'), scale.to)
+            }
             return (
               <Group
                 size={[1, 1]}
@@ -229,12 +237,12 @@ export class Axis extends BasePlugin {
                     animation={this.resolveAnimation(labelAnimation)}
                   ></Label>
                 )}
-                {scaleStyle === false ? null : <Rect {...scaleStyle} />}
+                {scaleStyle === false ? null : <Polyline {...scaleStyle} />}
                 {coord === 'polar' ||
                 gridStyle === false ||
                 (scale.offset === 0 && !axisGap) ? null : (
-                    <Polyline {...gridStyle} />
-                  )}
+                  <Polyline {...gridStyle} />
+                )}
               </Group>
             )
           })}
@@ -249,13 +257,13 @@ export class Axis extends BasePlugin {
             return coord !== 'polar' ||
               gridStyle === false ||
               (scale.offset === 0 && !axisGap) ? null : (
-                <Circle
-                  pos={coordPos}
-                  radius={scale.offset}
-                  {...gridStyle}
-                  anchor={[0.5]}
-                />
-              )
+              <Circle
+                pos={coordPos}
+                radius={scale.offset}
+                {...gridStyle}
+                anchor={[0.5]}
+              />
+            )
           })}
         </Group>
         <Group clipOverflow={false}>
@@ -303,7 +311,7 @@ export class Axis extends BasePlugin {
           })}
         </Group>
         {axisStyle === false ? null : (
-          <Rect {...axisStyle} pos={renderData.originalPoint} />
+          <Polyline {...axisStyle} pos={renderData.originalPoint} />
         )}
       </Group>
     )
