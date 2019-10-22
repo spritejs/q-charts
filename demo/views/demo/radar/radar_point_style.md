@@ -36,6 +36,15 @@ radar.style('point', false)
 
 const legend = new Legend({ align: ['center', 'bottom'] })
 chart.add([radar, legend])
+chart.add(
+  new Tooltip({
+    title: d => d[0].data[0].category,
+    formatter: d => {
+      const content = d.data.map(d => `${d.label}:${d.value}`)
+      return content.join('\n')
+    }
+  })
+)
 chart.render()
 ```
 
