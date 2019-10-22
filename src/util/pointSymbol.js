@@ -1,11 +1,6 @@
 import { Ellipse, Triangle, Rect, Star, Sprite, Path } from 'spritejs'
 import { isArray, isNumber } from './is'
 
-const getRealPath = (str, start) => {
-  const urls = str.split(start)
-  return urls[urls.length - 1]
-}
-
 const convert2Array = num => {
   return isArray(num) ? num : [num, num]
 }
@@ -53,18 +48,18 @@ const getEllipseStyle = size => {
 const getSpriteStyle = (pointType, size) => {
   return size
     ? {
-      textures: getRealPath(pointType, 'image://'),
+      textures: pointType,
       size
     }
     : {
-      textures: getRealPath(pointType, 'image://')
+      textures: pointType
     }
 }
 
 const getPathStyle = (pointType, scale) => {
   const scaleArray = scale && convert2Array(scale)
   const style = {
-    d: getRealPath(pointType, 'path://'),
+    d: pointType,
     anchor: [0.5, 0.5]
   }
   return scaleArray ? { ...style, scale: scaleArray } : { ...style }
@@ -96,11 +91,12 @@ export function getSymbolAndStyle(style, hStyle) {
     hSizeArray = convert2Array(hStyle.size)
   }
 
-  if (pointType.startsWith('image://')) {
+  // url or base64 img
+  if (pointType.startsWith('http') || pointType.startsWith('data:image')) {
     PointSymbol = Sprite
     normalStyle = getSpriteStyle(pointType, sizeArray)
     hoverStyle = getSpriteStyle(pointType, hSizeArray)
-  } else if (pointType.startsWith('path://')) {
+  } else if (pointType.startsWith('M')) {
     PointSymbol = Path
     normalStyle = getPathStyle(pointType, style && style.scale)
     hoverStyle = getPathStyle(pointType, hStyle && hStyle.scale)
@@ -133,7 +129,7 @@ export function getSymbolAndStyle(style, hStyle) {
   const mergeNormalStyle = { ...style, ...normalStyle }
   const mergeHoverStyle = { ...hStyle, ...hoverStyle }
   // 非图片样式的删除 size属性，避免bug
-  if (!pointType.startsWith('image://')) {
+  if (PointSymbol !== Sprite) {
     if (mergeNormalStyle) {
       delete mergeNormalStyle.size
     }

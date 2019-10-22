@@ -15,14 +15,14 @@ qcharts 中 point 使用面绘制，因此，point 可配置属性除 [api 简�
 
 `pointType` 为`String`类型，用于设置点的样式，可选项有以下 5 种：
 
-| 可选项                    | 描述                |
-| ------------------------- | ------------------- |
-| image://[图片]            | url 地址或者 base64 |
-| path://[SVG 的 Path 路径] | 矢量路径            |
-| circle                    | 圆形(默认值)        |
-| triangle                  | 三角形              |
-| rect                      | 矩形                |
-| star                      | 五角星              |
+| 可选项              | 描述                  |
+| ------------------- | --------------------- |
+| url 地址或者 base64 | 使用图片作为point     |
+| 矢量路径            | 使用矢量路径作为point |
+| circle              | 圆形(默认值)          |
+| triangle            | 三角形                |
+| rect                | 矩形                  |
+| star                | 五角星                |
 
 #### size
 
@@ -60,17 +60,17 @@ chart.source(data, {
 const radar = new Radar()
 const pointObj = {
   image: {
-    pointType: 'image://https://s0.ssl.qhres.com/static/3f2adfd6acc2e390.svg',
+    pointType: 'https://s0.ssl.qhres.com/static/3f2adfd6acc2e390.svg',
     size: [15, 20]
   },
   base64: {
     pointType:
-      'image://data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAAB+CAMAAADyU9RSAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NTc3MiwgMjAxNC8wMS8xMy0xOTo0NDowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkREMTE2MjNERjQ3NjExRTlCMjMxQjdBN0QyMUMwQUFFIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkREMTE2MjNFRjQ3NjExRTlCMjMxQjdBN0QyMUMwQUFFIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6REQxMTYyM0JGNDc2MTFFOUIyMzFCN0E3RDIxQzBBQUUiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6REQxMTYyM0NGNDc2MTFFOUIyMzFCN0E3RDIxQzBBQUUiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4CbbmAAAAAPFBMVEX+ZUj8ZUj9Zkn9Zkj9ZEj9ZUn8ZEj+ZUn7ZEj+Zkj8ZUf9ZEf+ZUf9ZUf9Zkf8ZUn+ZEj8ZEf9ZUgAAADk7rfyAAAAFHRSTlP/////////////////////////AE9P5xEAAAHJSURBVHja7NrZcsMgDAVQgY2XLE17+f9/7UOnD5l4XJDEzZRBH5AzUgyIRTI1ZHBHEbkcuJx0zWFwbtzE5YArkwtYmJxg5xYTTC5yOfTOBS4nXA487srlwOXWN2T3oHEJuk/Tkh0G58GFHy6ROECZno6LXA49c4DWU3HLr5Yo3MzNDu/iZgK3Qp2emJLrnZubcwJ9emJLrj03P3NLY+4OQ3pirCUQm3J4iY64V62qu3XgalY9sQzx+nKKg1bhVXEbYPTEITeUnwuIC1a8OBRynygLB25CTQi0HATaCFMpd09RLvAJuUQccLPX75/a8Tk7LGsb6H5SzPTlmFDhpxKimQp1X+Z19rb+GneTciRs6mH+qLYm46yyu2GFc+buhBVP0bsLVrEATebVoG69Wx20mtU8GAtZ2zycjPtbi9bow9I3KBq/G7XxO26iG3If1C76uJzcDVfLHdDB6ONulslcasst3JOHrNr6/JtDqqwdBQ5c5HKE88zE5bL6r7NykcGlrq8tsm5KyeP+7mzaJHHku9f8Fi53ygmXi9wHJJmbHfklVefcyuUCvZjMJ4W5/kWAkcuD8+ImLhek52JuG5VTLsuDG1xZfAswAIsT9uuvHsgMAAAAAElFTkSuQmCC',
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAAB+CAMAAADyU9RSAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NTc3MiwgMjAxNC8wMS8xMy0xOTo0NDowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkREMTE2MjNERjQ3NjExRTlCMjMxQjdBN0QyMUMwQUFFIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkREMTE2MjNFRjQ3NjExRTlCMjMxQjdBN0QyMUMwQUFFIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6REQxMTYyM0JGNDc2MTFFOUIyMzFCN0E3RDIxQzBBQUUiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6REQxMTYyM0NGNDc2MTFFOUIyMzFCN0E3RDIxQzBBQUUiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4CbbmAAAAAPFBMVEX+ZUj8ZUj9Zkn9Zkj9ZEj9ZUn8ZEj+ZUn7ZEj+Zkj8ZUf9ZEf+ZUf9ZUf9Zkf8ZUn+ZEj8ZEf9ZUgAAADk7rfyAAAAFHRSTlP/////////////////////////AE9P5xEAAAHJSURBVHja7NrZcsMgDAVQgY2XLE17+f9/7UOnD5l4XJDEzZRBH5AzUgyIRTI1ZHBHEbkcuJx0zWFwbtzE5YArkwtYmJxg5xYTTC5yOfTOBS4nXA487srlwOXWN2T3oHEJuk/Tkh0G58GFHy6ROECZno6LXA49c4DWU3HLr5Yo3MzNDu/iZgK3Qp2emJLrnZubcwJ9emJLrj03P3NLY+4OQ3pirCUQm3J4iY64V62qu3XgalY9sQzx+nKKg1bhVXEbYPTEITeUnwuIC1a8OBRynygLB25CTQi0HATaCFMpd09RLvAJuUQccLPX75/a8Tk7LGsb6H5SzPTlmFDhpxKimQp1X+Z19rb+GneTciRs6mH+qLYm46yyu2GFc+buhBVP0bsLVrEATebVoG69Wx20mtU8GAtZ2zycjPtbi9bow9I3KBq/G7XxO26iG3If1C76uJzcDVfLHdDB6ONulslcasst3JOHrNr6/JtDqqwdBQ5c5HKE88zE5bL6r7NykcGlrq8tsm5KyeP+7mzaJHHku9f8Fi53ygmXi9wHJJmbHfklVefcyuUCvZjMJ4W5/kWAkcuD8+ImLhek52JuG5VTLsuDG1xZfAswAIsT9uuvHsgMAAAAAElFTkSuQmCC',
     size: 20
   },
   path: {
     pointType:
-      'path://M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2 c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z',
+      'M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2 c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z',
     scale: 0.4
   },
   circle: {
