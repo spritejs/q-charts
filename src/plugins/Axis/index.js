@@ -149,7 +149,6 @@ export class Axis extends BasePlugin {
   }
   render(renderData = {}) {
     let axisStyle = this.mergeTheme('axis', [renderData.axisAttrs])
-    console.log(this.attr('orient'), axisStyle)
     let rings = []
     const { axisGap, formatter, pos, coord, size, coordPos } = this.attr()
     let $target = this.attr('target')
@@ -177,7 +176,6 @@ export class Axis extends BasePlugin {
               scale,
               i
             ])
-            // console.log(this.attr('orient'), scaleStyle)
             let gridStyle = this.mergeTheme('grid', [
               renderData.gridAttrs,
               scale,
@@ -215,36 +213,35 @@ export class Axis extends BasePlugin {
               this.attr('orient') === 'left' ||
               this.attr('orient') === 'right'
             ) {
-              console.log('to', this.attr('orient'), scale.to)
+              return (
+                <Group
+                  size={[1, 1]}
+                  pos={scale.from.pos}
+                  clipOverflow={false}
+                  animation={this.resolveAnimation({
+                    from: scale.from,
+                    to: scale.to,
+                    duration: 200,
+                    useTween: true
+                  })}
+                >
+                  {labelStyle === false ? null : (
+                    <Label
+                      {...labelStyle}
+                      clipOverflow={false}
+                      text={formatter(scale.labelTo.text)}
+                      animation={this.resolveAnimation(labelAnimation)}
+                    ></Label>
+                  )}
+                  {scaleStyle === false ? null : <Polyline {...scaleStyle} />}
+                  {coord === 'polar' ||
+                  gridStyle === false ||
+                  (scale.offset === 0 && !axisGap) ? null : (
+                    <Polyline {...gridStyle} />
+                  )}
+                </Group>
+              )
             }
-            return (
-              <Group
-                size={[1, 1]}
-                pos={scale.from.pos}
-                clipOverflow={false}
-                animation={this.resolveAnimation({
-                  from: scale.from,
-                  to: scale.to,
-                  duration: 200,
-                  useTween: true
-                })}
-              >
-                {labelStyle === false ? null : (
-                  <Label
-                    {...labelStyle}
-                    clipOverflow={false}
-                    text={formatter(scale.labelTo.text)}
-                    animation={this.resolveAnimation(labelAnimation)}
-                  ></Label>
-                )}
-                {scaleStyle === false ? null : <Polyline {...scaleStyle} />}
-                {coord === 'polar' ||
-                gridStyle === false ||
-                (scale.offset === 0 && !axisGap) ? null : (
-                  <Polyline {...gridStyle} />
-                )}
-              </Group>
-            )
           })}
         </Group>
         <Group size={size}>
