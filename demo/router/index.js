@@ -46,6 +46,10 @@ export default new Router({
       children: demos
     },
     {
+      path: '/more',
+      component: () => import('../views/more/index.vue')
+    },
+    {
       path: '/plugin',
       component: withArticleContainer('plugin', plugins),
       children: plugins
