@@ -87,12 +87,12 @@ export function getSymbolAndStyle(style, hStyle) {
     pointType = style.pointType
   }
   let sizeArray = null
-  if (style && isNumber(style.size)) {
+  if (style && (isNumber(style.size) || isArray(style.size))) {
     sizeArray = convert2Array(style.size)
   }
   // hover
   let hSizeArray = null
-  if (hStyle && isNumber(hStyle.size)) {
+  if (hStyle && (isNumber(hStyle.size) || isArray(hStyle.size))) {
     hSizeArray = convert2Array(hStyle.size)
   }
 

@@ -19,5 +19,10 @@ export default [
     title: 'Tooltip',
     path: 'tooltip',
     component: () => import('./Tooltip.md')
+  },
+  {
+    title: 'Symbol',
+    path: 'Symbol',
+    component: () => import('./Symbol.md')
   }
 ]
