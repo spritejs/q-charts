@@ -75,7 +75,7 @@ export class Scatter extends BaseVisual {
   }
 
   showTooltip(evt, attr) {
-    const cursorStyle = this.style('hover:cursor')(attr, {
+    const cursorStyle = this.style('point:hover:cursor')(attr, {
       ...attr.dataOrigin
     })
     this.chart.setCanvasCursor(cursorStyle || 'pointer')

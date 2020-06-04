@@ -21,6 +21,7 @@
 | ----------- | ------------------- | --- |
 | point       | 点的样式            |     |
 | point:hover | 点 hover 样式       |     |
+| point:hover:cursor | 点 hover时的鼠标样式(默认值：pointer)       |     |
 | label       | label 样式          |     |
 | label:hover | label 的 hover 样式 |     |
 | guideline   | 指导线样式          |     |
