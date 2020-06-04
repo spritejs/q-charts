@@ -114,8 +114,8 @@ export default {
           : 'https://unpkg.com/@qcharts/core@0.1/lib/index.js'
       const spritejsSrc =
         process.env.NODE_ENV === 'development'
-          ? 'https://unpkg.com/spritejs/dist/spritejs.js'
-          : 'https://unpkg.com/spritejs/dist/spritejs.min.js'
+          ? 'https://unpkg.com/spritejs@2.29.7/dist/spritejs.js'
+          : 'https://unpkg.com/spritejs@2.29.7/dist/spritejs.min.js'
 
       const iframe = oDemo.querySelector('iframe')
       iframe.contentWindow.document.write(
